@@ -115,7 +115,7 @@ export default function PaywallScreen() {
       {/* Sticky Header CTA */}
       <div className="sticky top-0 z-50 bg-background-primary border-b border-divider py-3 px-4">
         <div className="max-w-md mx-auto flex items-center justify-between">
-          <span className="text-xl font-bold text-primary">● MEMENTO</span>
+          <span className="text-xl font-bold"><span style={{ color: '#D94F30' }}>●</span> <span style={{ color: '#1F1A17' }}>MEMENTO</span></span>
           <button
             onClick={handleGetPlan}
             className="bg-primary text-white font-bold py-2 px-6 rounded-full text-sm"
@@ -170,7 +170,7 @@ export default function PaywallScreen() {
               </div>
               <div>
                 <p className="font-semibold text-text-primary">Emotional stability</p>
-                <p className="text-accent-green text-sm">High</p>
+                <p className="text-primary text-sm">High</p>
               </div>
             </div>
 
@@ -186,11 +186,11 @@ export default function PaywallScreen() {
               </div>
               <div>
                 <p className="font-semibold text-text-primary">Inner peace</p>
-                <p className="text-accent-green text-sm">Strong</p>
+                <p className="text-primary text-sm">Strong</p>
                 <div className="flex gap-1 mt-1">
-                  <div className="h-2 flex-1 bg-accent-green rounded" />
-                  <div className="h-2 flex-1 bg-accent-green rounded" />
-                  <div className="h-2 flex-1 bg-accent-green rounded" />
+                  <div className="h-2 flex-1 bg-primary rounded" />
+                  <div className="h-2 flex-1 bg-primary rounded" />
+                  <div className="h-2 flex-1 bg-primary rounded" />
                 </div>
               </div>
             </div>
@@ -206,10 +206,10 @@ export default function PaywallScreen() {
               </div>
               <div>
                 <p className="font-semibold text-text-primary">Self-awareness</p>
-                <p className="text-accent-green text-sm">High</p>
-                <div className="relative h-2 bg-accent-green/30 rounded-full mt-1">
-                  <div className="absolute left-0 top-0 h-full w-full bg-accent-green rounded-full" />
-                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white border-2 border-accent-green rounded-full" />
+                <p className="text-primary text-sm">High</p>
+                <div className="relative h-2 bg-primary/30 rounded-full mt-1">
+                  <div className="absolute left-0 top-0 h-full w-full bg-primary rounded-full" />
+                  <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-white border-2 border-primary rounded-full" />
                 </div>
               </div>
             </div>
@@ -237,7 +237,7 @@ export default function PaywallScreen() {
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <div className="w-10 h-10 rounded-full bg-accent-green/10 flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
                 <span className="text-lg">🎯</span>
               </div>
               <div className="text-left">
@@ -263,10 +263,10 @@ export default function PaywallScreen() {
                 selectedPlan === plan.id
                   ? 'border-primary bg-white'
                   : 'border-gray-200 bg-white'
-              } ${plan.popular ? 'ring-2 ring-accent-green' : ''}`}
+              } ${plan.popular ? 'ring-2 ring-primary' : ''}`}
             >
               {plan.popular && (
-                <div className="bg-accent-green text-white text-sm font-bold py-1 px-4 rounded-t-lg flex items-center justify-center gap-1">
+                <div className="bg-primary text-white text-sm font-bold py-1 px-4 rounded-t-lg flex items-center justify-center gap-1">
                   <Star className="w-4 h-4 fill-current" /> MOST POPULAR
                 </div>
               )}
@@ -312,7 +312,7 @@ export default function PaywallScreen() {
 
         {/* Payment security */}
         <div className="flex flex-col items-center gap-3 mb-8">
-          <div className="flex items-center gap-2 text-accent-green">
+          <div className="flex items-center gap-2 text-primary">
             <Shield className="w-5 h-5" />
             <span className="font-medium">Pay Safe & Secure</span>
           </div>
@@ -336,7 +336,7 @@ export default function PaywallScreen() {
           <div className="space-y-3">
             {goals.map((goal, index) => (
               <div key={index} className="flex items-start gap-3">
-                <div className="w-6 h-6 rounded-full bg-accent-green flex items-center justify-center flex-shrink-0">
+                <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center flex-shrink-0">
                   <Check className="w-4 h-4 text-white" />
                 </div>
                 <p className="text-text-secondary">{goal}</p>
@@ -359,49 +359,37 @@ export default function PaywallScreen() {
             Emotional Blueprint!
           </h3>
           
-          {/* Gauge Chart Placeholder */}
-          <div className="relative w-48 h-24 mx-auto mb-4">
-            <svg viewBox="0 0 100 50" className="w-full h-full">
-              <path
-                d="M 10 50 A 40 40 0 0 1 90 50"
-                fill="none"
-                stroke="#E5E7EB"
-                strokeWidth="8"
-                strokeLinecap="round"
-              />
-              <path
-                d="M 10 50 A 40 40 0 0 1 90 50"
-                fill="none"
-                stroke="url(#gaugeGradient)"
-                strokeWidth="8"
-                strokeLinecap="round"
-                strokeDasharray="126"
-                strokeDashoffset="20"
-              />
+          {/* Gauge Chart */}
+          <div className="relative w-56 h-32 mx-auto mb-6">
+            <svg viewBox="0 0 120 70" className="w-full h-full overflow-visible">
               <defs>
-                <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="#D94F30" />
                   <stop offset="50%" stopColor="#EAB308" />
                   <stop offset="100%" stopColor="#22C55E" />
                 </linearGradient>
               </defs>
+              <path d="M 15 55 A 45 45 0 0 1 105 55" fill="none" stroke="url(#gaugeGrad)" strokeWidth="10" strokeLinecap="round" />
+              <circle cx="22" cy="44" r="5" fill="#D94F30" stroke="white" strokeWidth="2" />
+              <circle cx="60" cy="12" r="5" fill="#EAB308" stroke="white" strokeWidth="2" />
+              <circle cx="98" cy="44" r="5" fill="#22C55E" stroke="white" strokeWidth="2" />
+              <text x="10" y="32" fontSize="9" fontWeight="bold" fill="#D94F30">45%</text>
+              <text x="52" y="6" fontSize="9" fontWeight="bold" fill="#D94F30">77%</text>
+              <text x="90" y="32" fontSize="9" fontWeight="bold" fill="#22C55E">83%</text>
             </svg>
-            <div className="absolute left-2 top-6 text-sm font-bold text-accent-green">45%</div>
-            <div className="absolute left-1/2 -translate-x-1/2 top-0 text-sm font-bold text-accent-green">77%</div>
-            <div className="absolute right-2 top-6 text-sm font-bold text-accent-green">83%</div>
           </div>
 
           <div className="space-y-4">
             <div>
-              <p className="text-3xl font-bold text-accent-green">83%</p>
+              <p className="text-3xl font-bold text-primary">83%</p>
               <p className="text-text-secondary">of users were able to <strong>improve their emotional stability</strong> after just 4 weeks</p>
             </div>
             <div>
-              <p className="text-3xl font-bold text-accent-green">77%</p>
+              <p className="text-3xl font-bold text-primary">77%</p>
               <p className="text-text-secondary">of users started with <strong>similar emotional patterns</strong> as you</p>
             </div>
             <div>
-              <p className="text-3xl font-bold text-accent-green">45%</p>
+              <p className="text-3xl font-bold text-primary">45%</p>
               <p className="text-text-secondary">of users suffer from <strong>the same issues</strong> as you</p>
             </div>
           </div>
@@ -432,14 +420,14 @@ export default function PaywallScreen() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6 }}
-          className="bg-white rounded-2xl p-6 mb-8 border-2 border-accent-green"
+          className="bg-white rounded-2xl p-6 mb-8 border-2 border-primary"
         >
           <h3 className="font-bold text-text-primary mb-4">What Memento can help you with</h3>
           <div className="space-y-3">
             {benefits.map((benefit, index) => (
               <div key={index} className="flex items-start gap-3">
-                <div className="w-5 h-5 rounded-full bg-accent-green/10 flex items-center justify-center flex-shrink-0">
-                  <Check className="w-3 h-3 text-accent-green" />
+                <div className="w-5 h-5 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <Check className="w-3 h-3 text-primary" />
                 </div>
                 <p className="text-text-secondary text-sm">{benefit}</p>
               </div>
@@ -456,7 +444,7 @@ export default function PaywallScreen() {
         >
           <Award className="w-12 h-12 text-accent-gold" />
           <p className="text-text-primary">
-            Memento is the <span className="text-accent-green font-bold">2025 Best Wellness App</span> nominee!
+            Memento is the <span className="text-primary font-bold">2025 Best Wellness App</span> nominee!
           </p>
         </motion.div>
 
@@ -475,7 +463,7 @@ export default function PaywallScreen() {
                   onClick={() => setExpandedFaq(expandedFaq === index ? null : index)}
                   className="w-full flex items-start gap-3 text-left"
                 >
-                  <HelpCircle className="w-5 h-5 text-accent-green flex-shrink-0 mt-0.5" />
+                  <HelpCircle className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
                   <div className="flex-1">
                     <p className="font-semibold text-text-primary">{faq.question}</p>
                     {expandedFaq === index && (
@@ -547,10 +535,10 @@ export default function PaywallScreen() {
                   selectedPlan === plan.id
                     ? 'border-primary bg-white'
                     : 'border-gray-200 bg-white'
-                } ${plan.popular ? 'ring-2 ring-accent-green' : ''}`}
+                } ${plan.popular ? 'ring-2 ring-primary' : ''}`}
               >
                 {plan.popular && (
-                  <div className="bg-accent-green text-white text-sm font-bold py-1 px-4 rounded-t-lg flex items-center justify-center gap-1">
+                  <div className="bg-primary text-white text-sm font-bold py-1 px-4 rounded-t-lg flex items-center justify-center gap-1">
                     <Star className="w-4 h-4 fill-current" /> MOST POPULAR
                   </div>
                 )}
@@ -591,7 +579,7 @@ export default function PaywallScreen() {
           </p>
 
           <div className="flex flex-col items-center gap-3 mb-6">
-            <div className="flex items-center gap-2 text-accent-green">
+            <div className="flex items-center gap-2 text-primary">
               <Shield className="w-5 h-5" />
               <span className="font-medium">Pay Safe & Secure</span>
             </div>
@@ -610,7 +598,7 @@ export default function PaywallScreen() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1 }}
-          className="border-2 border-accent-green rounded-2xl p-6 mb-8 bg-white relative"
+          className="border-2 border-primary rounded-2xl p-6 mb-8 bg-white relative"
         >
           <h3 className="text-xl font-bold text-text-primary text-center mb-3">
             30-day money-back guarantee
@@ -618,12 +606,12 @@ export default function PaywallScreen() {
           <p className="text-text-secondary text-center mb-4">
             Our plan is backed by a money-back guarantee. If you reach out within 30 days of purchase, we'll give you a full refund.
           </p>
-          <p className="text-accent-green font-medium text-center underline">Learn more</p>
+          <p className="text-primary font-medium text-center underline">Learn more</p>
           
           {/* Guarantee badge */}
-          <div className="absolute -bottom-6 right-4 w-16 h-16 bg-accent-green rounded-full flex items-center justify-center">
+          <div className="absolute -bottom-6 right-4 w-16 h-16 bg-primary rounded-full flex items-center justify-center">
             <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-              <Check className="w-8 h-8 text-accent-green" />
+              <Check className="w-8 h-8 text-primary" />
             </div>
           </div>
         </motion.div>

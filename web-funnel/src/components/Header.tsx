@@ -49,8 +49,8 @@ export default function Header() {
           
           {/* Logo */}
           <div className="flex-1 flex items-center justify-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-primary"></span>
-            <h1 className="text-lg font-semibold text-primary tracking-widest uppercase">
+            <span className="w-2 h-2 rounded-full bg-[#D94F30]" aria-hidden="true"></span>
+            <h1 className="text-lg font-semibold tracking-widest uppercase" style={{ color: '#1F1A17' }}>
               MEMENTO
             </h1>
           </div>

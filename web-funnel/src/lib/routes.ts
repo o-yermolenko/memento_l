@@ -23,7 +23,6 @@ export const ROUTES = {
   // Results
   loading: '/loading',
   results: '/results',
-  transformation: '/transformation',
   planReady: '/plan-ready',
   
   // Conversion
@@ -95,7 +94,6 @@ export const funnelFlowWithRoutes: FunnelStep[] = [
   // Results
   { type: 'loading', route: ROUTES.loading },
   { type: 'results_summary', route: ROUTES.results },
-  { type: 'transformation', route: ROUTES.transformation },
   { type: 'plan_ready', route: ROUTES.planReady },
   
   // Conversion

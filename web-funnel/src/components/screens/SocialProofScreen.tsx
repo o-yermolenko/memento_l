@@ -84,11 +84,11 @@ export default function SocialProofScreen() {
             <div className="relative">
               <div className="w-10 h-12 flex flex-col items-center">
                 {/* Avatar circle */}
-                <div className="w-8 h-8 rounded-full bg-accent-green border-2 border-white shadow-lg flex items-center justify-center text-lg overflow-hidden">
+                <div className="w-8 h-8 rounded-full border-2 border-white shadow-lg flex items-center justify-center text-lg overflow-hidden" style={{ backgroundColor: '#D94F30' }}>
                   {pin.emoji}
                 </div>
                 {/* Pin point */}
-                <div className="w-0 h-0 border-l-4 border-r-4 border-t-8 border-l-transparent border-r-transparent border-t-accent-green -mt-0.5" />
+                <div className="w-0 h-0 border-l-4 border-r-4 border-t-8 border-l-transparent border-r-transparent -mt-0.5" style={{ borderTopColor: '#D94F30' }} />
               </div>
             </div>
           </motion.div>

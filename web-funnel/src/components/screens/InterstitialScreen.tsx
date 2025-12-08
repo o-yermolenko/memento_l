@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { interstitials, InterstitialScreen as InterstitialData } from '@/data/questions'
 import { ROUTES } from '@/lib/routes'
-import { Users, FlaskConical, UserCheck, TrendingUp, Sparkles, Star, Frown, Smile, ArrowRight } from 'lucide-react'
+import { Users, FlaskConical, UserCheck, TrendingUp, Zap, Star, Frown, Smile, ArrowRight } from 'lucide-react'
 
 interface InterstitialScreenProps {
   interstitialId: string
@@ -38,7 +38,7 @@ const getIcon = (type: InterstitialData['type']) => {
     case 'testimonial':
       return <Star className="w-12 h-12 fill-accent-gold text-accent-gold" />
     default:
-      return <Sparkles className="w-12 h-12" />
+      return <Zap className="w-12 h-12" />
   }
 }
 
@@ -107,8 +107,8 @@ export default function InterstitialScreen({ interstitialId }: InterstitialScree
             
             {/* After */}
             <div className="card p-4 text-center border-primary border-2">
-              <div className="w-12 h-12 mx-auto mb-2 rounded-full bg-accent-green/10 flex items-center justify-center">
-                <Smile className="w-6 h-6 text-accent-green" />
+              <div className="w-12 h-12 mx-auto mb-2 rounded-full bg-primary/10 flex items-center justify-center">
+                <Smile className="w-6 h-6 text-primary" />
               </div>
               <p className="text-sm text-text-tertiary mb-1">After</p>
               <p className="font-semibold text-text-primary">Calm & Stable</p>

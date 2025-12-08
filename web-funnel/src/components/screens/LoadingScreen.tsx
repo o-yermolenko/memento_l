@@ -1,32 +1,31 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useFunnelStore } from '@/store/funnelStore'
 import { ROUTES } from '@/lib/routes'
 import { Check, Star } from 'lucide-react'
 
-// Loading stages like Liven
+// Loading stages
 const loadingStages = [
   { id: 'goals', label: 'Setting goals' },
   { id: 'patterns', label: 'Analyzing patterns' },
   { id: 'content', label: 'Picking content' },
 ]
 
-// Modal questions to keep user engaged during loading (Liven pattern)
+// Modal questions at 50% and 100%
 const modalQuestions = [
-  { question: 'Are you inclined to finish what you start?', delay: 2000 },
-  { question: 'Are you open to trying new emotional wellness practices?', delay: 6000 },
-  { question: 'Do you want to build lasting emotional resilience?', delay: 10000 },
+  { question: 'Are you inclined to finish what you start?', triggerProgress: 50 },
+  { question: 'Do you want to build lasting emotional resilience?', triggerProgress: 100 },
 ]
 
-// Trustpilot-style reviews shown during loading
+// Trustpilot-style reviews
 const reviews = [
   {
     title: 'It has really changed my life',
     author: 'Sarah M.',
-    text: 'I have been using this app for three weeks now. During this time, I have been able to understand my emotional patterns better. The app has helped me respond instead of react.',
+    text: 'I have been using this app for three weeks now. During this time, I have been able to understand my emotional patterns better.',
   },
   {
     title: 'Finally something that works',
@@ -36,72 +35,101 @@ const reviews = [
   {
     title: 'Eye-opening experience',
     author: 'Michelle K.',
-    text: 'I am new to this app but not new to my own struggles. Such little time for eye-opening information about my inner self and emotional patterns.',
+    text: 'Such little time for eye-opening information about my inner self and emotional patterns.',
   },
 ]
 
 export default function LoadingScreen() {
   const router = useRouter()
-  const { calculateResults, profile } = useFunnelStore()
-  const [currentStage, setCurrentStage] = useState(0)
-  const [stageProgress, setStageProgress] = useState(0)
-  const [completedStages, setCompletedStages] = useState<string[]>([])
+  const { calculateResults } = useFunnelStore()
+  const [progress, setProgress] = useState(0)
   const [currentReview, setCurrentReview] = useState(0)
   const [showModal, setShowModal] = useState(false)
-  const [currentModalIndex, setCurrentModalIndex] = useState(0)
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
+  const [isPaused, setIsPaused] = useState(false)
+  const [isComplete, setIsComplete] = useState(false)
+  const answeredQuestions = useRef<Set<number>>(new Set())
+  const hasNavigated = useRef(false)
   
   useEffect(() => {
-    // Calculate results when loading starts
     calculateResults()
-    
-    // Progress through stages
-    const stageInterval = setInterval(() => {
-      setStageProgress(prev => {
-        if (prev >= 100) {
-          // Complete current stage and move to next
-          setCompletedStages(completed => {
-            const newCompleted = [...completed, loadingStages[currentStage].id]
-            return newCompleted
-          })
-          setCurrentStage(stage => {
-            if (stage < loadingStages.length - 1) {
-              return stage + 1
-            }
-            return stage
-          })
-          return 0
-        }
-        return prev + 2
-      })
-    }, 100)
-    
-    // Rotate reviews
-    const reviewInterval = setInterval(() => {
-      setCurrentReview(prev => (prev + 1) % reviews.length)
-    }, 4000)
-    
-    // Show modal questions
-    modalQuestions.forEach((modal, index) => {
-      setTimeout(() => {
-        setCurrentModalIndex(index)
-        setShowModal(true)
-      }, modal.delay)
-    })
-    
-    // Auto-advance after all stages complete
-    const timeout = setTimeout(() => {
-      router.push(ROUTES.results)
-    }, 14000)
-    
-    return () => {
-      clearInterval(stageInterval)
-      clearInterval(reviewInterval)
-      clearTimeout(timeout)
-    }
-  }, [router, calculateResults, currentStage])
+  }, [calculateResults])
   
-  const handleModalAnswer = () => {
+  // Main progress logic
+  useEffect(() => {
+    if (isPaused || isComplete) return
+    
+    const interval = setInterval(() => {
+      setProgress(prev => {
+        const newProgress = prev + 1
+        
+        // Check for question triggers
+        for (let i = 0; i < modalQuestions.length; i++) {
+          if (newProgress >= modalQuestions[i].triggerProgress && !answeredQuestions.current.has(i)) {
+            setCurrentQuestionIndex(i)
+            setShowModal(true)
+            setIsPaused(true)
+            return prev // Don't increment, pause here
+          }
+        }
+        
+        // Check if complete
+        if (newProgress >= 100) {
+          setIsComplete(true)
+          return 100
+        }
+        
+        return newProgress
+      })
+    }, 50) // ~5 seconds total for 100%
+    
+    return () => clearInterval(interval)
+  }, [isPaused, isComplete])
+  
+  // Review rotation
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentReview(prev => (prev + 1) % reviews.length)
+    }, 3000)
+    return () => clearInterval(interval)
+  }, [])
+  
+  // Navigate when complete and all questions answered
+  useEffect(() => {
+    if (isComplete && !showModal && !hasNavigated.current) {
+      hasNavigated.current = true
+      const timeout = setTimeout(() => {
+        router.push(ROUTES.results)
+      }, 800)
+      return () => clearTimeout(timeout)
+    }
+  }, [isComplete, showModal, router])
+  
+  const handleModalAnswer = useCallback(() => {
+    answeredQuestions.current.add(currentQuestionIndex)
     setShowModal(false)
+    setIsPaused(false)
+  }, [currentQuestionIndex])
+  
+  // Calculate which stages are complete based on progress
+  const getStageStatus = (index: number) => {
+    const stageSize = 100 / loadingStages.length
+    const stageStart = index * stageSize
+    const stageEnd = (index + 1) * stageSize
+    
+    if (progress >= stageEnd) return 'completed'
+    if (progress >= stageStart) return 'current'
+    return 'pending'
+  }
+  
+  const getStageProgress = (index: number) => {
+    const stageSize = 100 / loadingStages.length
+    const stageStart = index * stageSize
+    const stageEnd = (index + 1) * stageSize
+    
+    if (progress >= stageEnd) return 100
+    if (progress < stageStart) return 0
+    return Math.round(((progress - stageStart) / stageSize) * 100)
   }
   
   const review = reviews[currentReview]
@@ -138,41 +166,42 @@ export default function LoadingScreen() {
         transition={{ delay: 0.2 }}
       >
         {loadingStages.map((stage, index) => {
-          const isCompleted = completedStages.includes(stage.id)
-          const isCurrent = index === currentStage && !isCompleted
-          const isPending = index > currentStage
+          const status = getStageStatus(index)
+          const stageProgress = getStageProgress(index)
           
           return (
             <div key={stage.id} className="mb-4">
               <div className="flex items-center justify-between mb-2">
-                <span className={`font-medium ${isCompleted ? 'text-text-primary' : isCurrent ? 'text-text-primary' : 'text-text-tertiary'}`}>
+                <span className={`font-medium ${status === 'pending' ? 'text-text-tertiary' : 'text-text-primary'}`}>
                   {stage.label}
                 </span>
-                {isCompleted ? (
-                  <div className="w-6 h-6 rounded-full bg-accent-green flex items-center justify-center">
+                {status === 'completed' ? (
+                  <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
                     <Check className="w-4 h-4 text-white" />
                   </div>
-                ) : isCurrent ? (
+                ) : status === 'current' ? (
                   <span className="text-sm text-text-tertiary">{stageProgress}%</span>
                 ) : null}
               </div>
-              {isCurrent && (
+              {status === 'current' && (
                 <div className="h-2 bg-background-secondary rounded-full overflow-hidden">
                   <motion.div 
-                    className="h-full bg-accent-green rounded-full"
-                    style={{ width: `${stageProgress}%` }}
+                    className="h-full bg-primary rounded-full"
+                    initial={{ width: 0 }}
+                    animate={{ width: `${stageProgress}%` }}
+                    transition={{ duration: 0.1 }}
                   />
                 </div>
               )}
-              {isCompleted && (
-                <div className="h-0.5 bg-accent-green/30 rounded-full" />
+              {status === 'completed' && (
+                <div className="h-0.5 bg-primary/30 rounded-full" />
               )}
             </div>
           )
         })}
       </motion.div>
       
-      {/* Trustpilot-style review card */}
+      {/* Review card */}
       <motion.div 
         className="w-full max-w-md"
         initial={{ opacity: 0, y: 20 }}
@@ -187,10 +216,9 @@ export default function LoadingScreen() {
             exit={{ opacity: 0, x: -20 }}
             className="card p-5"
           >
-            {/* Star rating */}
             <div className="flex gap-1 mb-3">
               {[1, 2, 3, 4, 5].map((i) => (
-                <div key={i} className="w-6 h-6 bg-accent-green flex items-center justify-center">
+                <div key={i} className="w-6 h-6 bg-primary flex items-center justify-center">
                   <Star className="w-4 h-4 fill-white text-white" />
                 </div>
               ))}
@@ -208,7 +236,7 @@ export default function LoadingScreen() {
         </AnimatePresence>
       </motion.div>
       
-      {/* Modal question overlay - Liven engagement pattern */}
+      {/* Modal question overlay */}
       <AnimatePresence>
         {showModal && (
           <motion.div
@@ -227,7 +255,7 @@ export default function LoadingScreen() {
                 To move forward, specify
               </p>
               <h3 className="text-xl font-bold text-text-primary text-center mb-6">
-                {modalQuestions[currentModalIndex]?.question}
+                {modalQuestions[currentQuestionIndex]?.question}
               </h3>
               <div className="flex gap-3">
                 <button

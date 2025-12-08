@@ -80,8 +80,12 @@ export default function PlanReadyScreen() {
             ))}
           </div>
           
-          {/* Progress curve - SVG */}
-          <svg className="absolute inset-0 w-full h-full" preserveAspectRatio="none">
+          {/* Curve SVG with viewBox matching container aspect ratio (roughly 2:1) */}
+          <svg 
+            className="absolute inset-0 w-full h-full overflow-visible"
+            viewBox="0 0 400 192"
+            preserveAspectRatio="none"
+          >
             <defs>
               <linearGradient id="curveGradient" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor="#EF4444" />
@@ -90,8 +94,9 @@ export default function PlanReadyScreen() {
                 <stop offset="100%" stopColor="#22C55E" />
               </linearGradient>
             </defs>
+            {/* Points: (48,154) -> (148,106) -> (248,67) -> (348,35) */}
             <motion.path
-              d="M 0 180 Q 60 170, 90 140 Q 120 110, 180 80 Q 240 50, 300 30 Q 330 20, 360 15"
+              d="M 48 154 C 98 130, 118 115, 148 106 C 178 97, 218 77, 248 67 C 278 57, 318 42, 348 35"
               fill="none"
               stroke="url(#curveGradient)"
               strokeWidth="4"
@@ -100,63 +105,48 @@ export default function PlanReadyScreen() {
               animate={{ pathLength: 1 }}
               transition={{ duration: 2, ease: "easeOut" }}
             />
+            {/* Dot 1 */}
+            <motion.circle cx="48" cy="154" r="8" fill="#EF4444" stroke="white" strokeWidth="3"
+              initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 0.5 }} />
+            {/* Dot 2 */}
+            <motion.circle cx="148" cy="106" r="6" fill="#F97316" stroke="white" strokeWidth="2"
+              initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 1 }} />
+            {/* Dot 3 */}
+            <motion.circle cx="248" cy="67" r="6" fill="#EAB308" stroke="white" strokeWidth="2"
+              initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 1.3 }} />
+            {/* Dot 4 */}
+            <motion.circle cx="348" cy="35" r="8" fill="#22C55E" stroke="white" strokeWidth="3"
+              initial={{ scale: 0 }} animate={{ scale: 1 }} transition={{ delay: 1.6 }} />
           </svg>
           
-          {/* Data points */}
+          {/* Today label */}
           <motion.div 
-            className="absolute"
-            style={{ left: '5%', bottom: '5%' }}
+            className="absolute z-10"
+            style={{ left: '12%', top: '80%' }}
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ delay: 0.5 }}
           >
-            <div className="w-4 h-4 rounded-full bg-red-500 border-2 border-white shadow" />
-            <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-red-500 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
+            <div className="absolute -top-7 left-1/2 -translate-x-1/2 bg-red-500 text-white text-xs px-2 py-1 rounded whitespace-nowrap">
               Today
               <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-red-500" />
             </div>
           </motion.div>
           
-          <motion.div 
-            className="absolute"
-            style={{ left: '30%', bottom: '35%' }}
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 1 }}
-          >
-            <div className="w-3 h-3 rounded-full bg-orange-500 border-2 border-white shadow" />
-          </motion.div>
-          
-          <motion.div 
-            className="absolute"
-            style={{ left: '55%', bottom: '60%' }}
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 1.3 }}
-          >
-            <div className="w-3 h-3 rounded-full bg-yellow-500 border-2 border-white shadow" />
-          </motion.div>
-          
-          <motion.div 
-            className="absolute"
-            style={{ left: '80%', bottom: '85%' }}
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 1.6 }}
-          >
-            <div className="w-4 h-4 rounded-full bg-green-500 border-2 border-white shadow" />
-            {showAfterLabel && (
-              <motion.div 
-                className="absolute -top-10 left-1/2 -translate-x-1/2 bg-green-600 text-white text-xs px-2 py-1 rounded whitespace-nowrap"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-              >
-                After using
-                <br />Memento
-                <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-green-600" />
-              </motion.div>
-            )}
-          </motion.div>
+          {/* After using Memento label */}
+          {showAfterLabel && (
+            <motion.div 
+              className="absolute z-10"
+              style={{ left: '87%', top: '18%' }}
+              initial={{ opacity: 0, y: 5 }}
+              animate={{ opacity: 1, y: 0 }}
+            >
+              <div className="absolute -top-10 left-1/2 -translate-x-1/2 bg-primary text-white text-xs px-2 py-1 rounded whitespace-nowrap text-center">
+                After using<br />Memento
+                <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-primary" />
+              </div>
+            </motion.div>
+          )}
         </div>
         
         {/* Week labels */}

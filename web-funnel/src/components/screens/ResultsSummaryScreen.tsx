@@ -71,7 +71,7 @@ export default function ResultsSummaryScreen() {
   const { profile, primaryPattern, readinessLevel } = useFunnelStore()
   
   const handleContinue = () => {
-    router.push(ROUTES.transformation)
+    router.push(ROUTES.planReady)
   }
   
   const pattern = patternData[primaryPattern] || patternData['The Overthinker']
@@ -202,8 +202,8 @@ export default function ResultsSummaryScreen() {
         
         <div className="card p-4">
           <div className="flex items-center gap-2 mb-1">
-            <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center">
-              <Shield className="w-4 h-4 text-green-600" />
+            <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center">
+              <Shield className="w-4 h-4 text-primary" />
             </div>
           </div>
           <p className="text-xs text-text-tertiary">Coping Pattern</p>
@@ -243,7 +243,7 @@ export default function ResultsSummaryScreen() {
             <p className="text-sm text-text-tertiary">Your Readiness Level</p>
             <p className="text-3xl font-bold text-primary">{readinessLevel || 85}%</p>
           </div>
-          <span className="px-3 py-1 bg-accent-green/10 text-accent-green font-semibold text-sm rounded-full">
+          <span className="px-3 py-1 bg-primary/10 text-primary font-semibold text-sm rounded-full">
             Excellent
           </span>
         </div>
@@ -275,7 +275,7 @@ export default function ResultsSummaryScreen() {
             'Your sensitivity is a strength waiting to be channeled',
           ].map((insight, index) => (
             <div key={index} className="flex items-start gap-3">
-              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-accent-green/10 text-accent-green flex items-center justify-center mt-0.5">
+              <div className="flex-shrink-0 w-6 h-6 rounded-full bg-primary/10 text-primary flex items-center justify-center mt-0.5">
                 <Check className="w-4 h-4" />
               </div>
               <p className="text-text-secondary">{insight}</p>

@@ -4,7 +4,7 @@ import React from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { useFunnelStore } from '@/store/funnelStore'
-import { Sparkles, Check } from 'lucide-react'
+import { Target, Check } from 'lucide-react'
 import { ROUTES } from '@/lib/routes'
 
 export default function PatternIdentifiedScreen() {
@@ -38,12 +38,12 @@ export default function PatternIdentifiedScreen() {
     >
       {/* Animated icon */}
       <motion.div 
-        className="mb-6 p-5 rounded-full bg-accent-green/10 text-accent-green"
+        className="mb-6 p-5 rounded-full bg-primary/10 text-primary"
         initial={{ scale: 0, rotate: -180 }}
         animate={{ scale: 1, rotate: 0 }}
         transition={{ delay: 0.1, type: 'spring', stiffness: 200 }}
       >
-        <Sparkles className="w-10 h-10" />
+        <Target className="w-10 h-10" />
       </motion.div>
       
       {/* Headline */}
@@ -86,7 +86,7 @@ export default function PatternIdentifiedScreen() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.5 }}
       >
-        <div className="flex items-center gap-2 text-accent-green">
+        <div className="flex items-center gap-2 text-primary">
           <Check className="w-5 h-5" />
           <span className="text-sm font-medium">Section 1 Complete</span>
         </div>

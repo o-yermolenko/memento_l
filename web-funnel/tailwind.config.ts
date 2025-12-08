@@ -17,7 +17,7 @@ const config: Config = {
         },
         accent: {
           gold: '#E8A849',       // Warm gold
-          green: '#4A9B6E',      // Success green
+          green: '#D94F30',      // Now uses primary orange
         },
         background: {
           primary: '#FAF7F2',    // Warm Cream

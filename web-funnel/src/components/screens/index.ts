@@ -8,7 +8,6 @@ export { default as EmailOptinScreen } from './EmailOptinScreen'
 export { default as NameCaptureScreen } from './NameCaptureScreen'
 export { default as LoadingScreen } from './LoadingScreen'
 export { default as ResultsSummaryScreen } from './ResultsSummaryScreen'
-export { default as TransformationScreen } from './TransformationScreen'
 export { default as PlanReadyScreen } from './PlanReadyScreen'
 export { default as PaywallScreen } from './PaywallScreen'
 

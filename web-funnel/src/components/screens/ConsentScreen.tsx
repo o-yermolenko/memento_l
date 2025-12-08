@@ -4,7 +4,7 @@ import React from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { useFunnelStore } from '@/store/funnelStore'
-import { Heart, Shield, Sparkles } from 'lucide-react'
+import { Heart, Shield, Brain } from 'lucide-react'
 import { ROUTES } from '@/lib/routes'
 
 export default function ConsentScreen() {
@@ -68,11 +68,11 @@ export default function ConsentScreen() {
         transition={{ delay: 0.4 }}
       >
         <div className="flex items-center gap-2">
-          <Shield className="w-4 h-4 text-accent-green" />
+          <Shield className="w-4 h-4 text-primary" />
           <span>100% Private</span>
         </div>
         <div className="flex items-center gap-2">
-          <Sparkles className="w-4 h-4 text-accent-gold" />
+          <Brain className="w-4 h-4 text-accent-gold" />
           <span>Science-based</span>
         </div>
       </motion.div>

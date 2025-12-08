@@ -64,7 +64,7 @@ export default function EmailOptinScreen() {
           onClick={() => handleChoice(true)}
           className="w-full option-tile flex items-center gap-4 text-left hover:border-primary"
         >
-          <div className="flex-shrink-0 w-12 h-12 rounded-full bg-accent-green/10 text-accent-green flex items-center justify-center">
+          <div className="flex-shrink-0 w-12 h-12 rounded-full bg-primary/10 text-primary flex items-center justify-center">
             <Mail className="w-6 h-6" />
           </div>
           <div>
