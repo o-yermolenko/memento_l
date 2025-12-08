@@ -1,0 +1,187 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Memento Color Palette - Updated */
+  --color-primary: #D94F30;           /* Warm Vermillion */
+  --color-primary-dark: #B8432A;      /* Darker vermillion for hover */
+  --color-primary-light: #E56B4F;     /* Lighter vermillion */
+  
+  --color-accent-gold: #E8A849;       /* Warm gold accent */
+  --color-accent-green: #4A9B6E;      /* Success green */
+  
+  --color-bg-primary: #FAF7F2;        /* Warm Cream */
+  --color-bg-secondary: #F3EDE5;      /* Slightly darker cream */
+  --color-bg-card: #FFFFFF;           /* Pure white cards */
+  
+  --color-divider: #E8E0D5;           /* Warm divider */
+  --color-border: #E5DDD2;            /* Warm border */
+  --color-border-input: #DDD5CA;      /* Input border */
+  
+  --color-text-primary: #1F1A17;      /* Deep Brown-Black */
+  --color-text-secondary: #6B6360;    /* Warm Gray */
+  --color-text-tertiary: #8A8582;     /* Lighter warm gray */
+  
+  --color-success: #4A9B6E;
+  --color-warning: #E8A849;
+  --color-error: #D94F30;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
+  background-color: var(--color-bg-primary);
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* All text uses Inter (like Liven) */
+.font-body {
+  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
+}
+
+/* Headlines - Inter Bold */
+.font-display {
+  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
+  font-weight: 600;
+}
+
+/* Sans-serif (Inter) */
+.font-sans {
+  font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-secondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-divider);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-tertiary);
+}
+
+/* Focus states */
+*:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Button base styles */
+.btn-primary {
+  @apply bg-primary text-white font-semibold py-4 px-8 rounded-pill
+         transition-all duration-200 ease-out
+         hover:bg-primary-dark hover:shadow-lg
+         active:scale-[0.98]
+         disabled:opacity-50 disabled:cursor-not-allowed;
+}
+
+.btn-secondary {
+  @apply bg-transparent border-2 border-primary text-primary font-semibold py-4 px-8 rounded-pill
+         transition-all duration-200 ease-out
+         hover:bg-primary hover:text-white
+         active:scale-[0.98];
+}
+
+/* Card styles */
+.card {
+  @apply bg-background-card rounded-card border border-border shadow-card;
+}
+
+/* Option tile styles */
+.option-tile {
+  @apply bg-background-card rounded-option border border-border p-4
+         transition-all duration-200 ease-out cursor-pointer
+         hover:border-primary hover:shadow-option-hover
+         active:scale-[0.98];
+}
+
+.option-tile.selected {
+  @apply border-primary border-2 bg-primary/5;
+}
+
+/* Progress bar animation */
+.progress-bar {
+  @apply h-1 bg-divider rounded-full overflow-hidden;
+}
+
+.progress-bar-fill {
+  @apply h-full rounded-full transition-all duration-500 ease-out;
+  background: linear-gradient(90deg, var(--color-primary), var(--color-accent-gold));
+}
+
+/* Input styles */
+.input-field {
+  @apply w-full px-4 py-3 rounded-option border border-border-input bg-background-card
+         text-text-primary placeholder:text-text-tertiary
+         transition-all duration-200
+         focus:border-primary focus:ring-2 focus:ring-primary/20;
+}
+
+/* Animation utilities */
+.animate-in {
+  animation: slideUp 0.4s ease-out forwards;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Staggered animation delay */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+
+/* Loading dots */
+.loading-dots::after {
+  content: '';
+  animation: dots 1.5s steps(4) infinite;
+}
+
+@keyframes dots {
+  0% { content: ''; }
+  25% { content: '.'; }
+  50% { content: '..'; }
+  75% { content: '...'; }
+  100% { content: ''; }
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-accent-gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}

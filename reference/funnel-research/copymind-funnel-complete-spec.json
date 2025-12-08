@@ -1,0 +1,1196 @@
+{
+  "funnel_metadata": {
+    "company": "Copymind",
+    "product": "AI Decision-Making Assistant (AI Mind Twin)",
+    "company_legal": "Antipadia Enterprises Limited, Vasili Michailidi, 9, 3026, Limassol, Cyprus",
+    "funnel_type": "Long-form psychological assessment quiz → SaaS subscription",
+    "entry_url": "https://app.copymind.me/welcome-quiz/gender",
+    "total_steps": 34,
+    "total_questions": 31,
+    "interstitials": 6,
+    "estimated_time_actual": "6-8 minutes",
+    "claimed_time": "1-minute quiz",
+    "primary_conversion": "Email capture",
+    "monetization": "Subscription paywall",
+    "tech_stack": "Next.js, React, Facebook Pixel tracking"
+  },
+  
+  "design_system": {
+    "color_palette": {
+      "background": "#0A0B1F",
+      "background_secondary": "#1a1b2e",
+      "primary_accent": "#00D9FF",
+      "cta_gradient": "linear-gradient(135deg, rgb(10, 132, 255), rgb(58, 181, 255))",
+      "text_primary": "#FFFFFF",
+      "text_secondary": "#A7B0C1",
+      "success": "#00FF88",
+      "warning": "#FF6B6B",
+      "trust_badge_bg": "rgba(255, 255, 255, 0.1)"
+    },
+    "typography": {
+      "font_family": "Sans-serif (modern)",
+      "heading_sizes": {
+        "h1": "40-48px",
+        "h2": "28-32px",
+        "body": "16-18px",
+        "small": "14px"
+      },
+      "font_weights": {
+        "heading": "600-700",
+        "body": "400",
+        "cta": "600"
+      }
+    },
+    "spacing": {
+      "section_padding": "24-32px",
+      "button_height": "56px",
+      "button_padding": "24px horizontal"
+    },
+    "visual_elements": {
+      "hero_image": "Silhouette of person with glowing brain/head (blue-cyan glow)",
+      "progress_bar": "Linear, fills left to right, cyan color, 4-6px height",
+      "emoji_strategy": "Every option has relevant emoji prefix",
+      "border_radius": "12-16px cards, full rounded buttons"
+    }
+  },
+
+  "navigation_patterns": {
+    "back_button": "Always present (top-left), arrow icon",
+    "progression_rules": {
+      "single_choice": "Auto-advance on selection (no Next button)",
+      "multi_select": "Manual Next button required",
+      "sliders": "Manual Next button required",
+      "interstitials": "Continue/Get Started button"
+    },
+    "progress_indicator": "Linear bar at top, shows 3-5% increment per question",
+    "no_skip": "Must answer to proceed"
+  },
+
+  "complete_funnel_steps": [
+    {
+      "step": 1,
+      "url_path": "/welcome-quiz/gender",
+      "page_title": "COPYMIND - Decision-Making Quiz",
+      "type": "question",
+      "question_type": "single_choice_buttons",
+      "question_text": null,
+      "headline": "MAKE THE RIGHT DECISIONS ON TIME",
+      "subheadline": "TAKE 1-MINUTE QUIZ",
+      "options": [
+        {
+          "icon": "♂",
+          "text": "Male",
+          "value": "male"
+        },
+        {
+          "icon": "♀",
+          "text": "Female",
+          "value": "female"
+        }
+      ],
+      "visual_elements": {
+        "hero_image": true,
+        "hero_description": "Silhouette with glowing energy in hand",
+        "trust_badges": [
+          "⭐ 4.7 Satisfaction score",
+          "✓ Private & Secure"
+        ],
+        "feature_pills": [
+          "🔍 Face Scan",
+          "👥 AI Twin",
+          "📊 Personal Readings"
+        ]
+      },
+      "legal_disclaimer": "By clicking \"Male\" or \"Female\" you agree with the Terms of Service, Privacy Policy and Subscription Terms",
+      "footer": "COPYMIND product by Antipadia Enterprises Limited. Vasili Michailidi, 9, 3026, Limassol, Cyprus. 2025 ©All Rights Reserved.",
+      "progression": "auto_on_click",
+      "tracking": "Facebook Pixel: PageView, StartQuiz"
+    },
+    
+    {
+      "step": 2,
+      "url_path": "/welcome-quiz/age",
+      "page_title": "COPYMIND - Decision-Making Quiz",
+      "type": "question",
+      "question_type": "visual_card_selection",
+      "question_text": "Select Your Age",
+      "options": [
+        {
+          "icon": null,
+          "text": "18-29",
+          "value": "18-29",
+          "visual": "Photo card: young man in beige sweater"
+        },
+        {
+          "icon": null,
+          "text": "30-39",
+          "value": "30-39",
+          "visual": "Photo card: man 30s in beige sweater"
+        },
+        {
+          "icon": null,
+          "text": "40-49",
+          "value": "40-49",
+          "visual": "Photo card: man 40s in beige sweater"
+        },
+        {
+          "icon": null,
+          "text": "50+",
+          "value": "50+",
+          "visual": "Photo card: mature man in beige sweater"
+        }
+      ],
+      "card_design": {
+        "image_position": "top",
+        "button_position": "bottom",
+        "button_style": "blue gradient rounded pill",
+        "layout": "2x2 grid"
+      },
+      "progression": "auto_on_click"
+    },
+    
+    {
+      "step": 3,
+      "url_path": "/welcome-quiz/quote",
+      "page_title": "COPYMIND - Decision-Making Quiz",
+      "type": "interstitial_social_proof",
+      "headline": "Be among the first 100,000 to build your AI mind twin",
+      "badge": "OUR COMMUNITY",
+      "content": {
+        "quote": "Some call it artificial intelligence, but it's really about enhancing us. Instead of AI, we're augmenting intelligence.",
+        "author": "Ginni Rometty",
+        "author_title": "CEO IBM",
+        "author_photo": true
+      },
+      "subtext": "Your responses will help create your personalized AI model.",
+      "cta_text": "Get Started",
+      "progression": "manual_button"
+    },
+    
+    {
+      "step": 4,
+      "url_path": "/welcome-quiz/biggest_worry",
+      "type": "question",
+      "question_type": "multi_select",
+      "question_text": "What worries you the most?",
+      "subtext": "Choose all that apply",
+      "options": [
+        {"icon": "💔", "text": "Relationship problems", "value": "relationship_problems"},
+        {"icon": "💰", "text": "Financial problems", "value": "financial_problems"},
+        {"icon": "💼", "text": "Career problems", "value": "career_problems"},
+        {"icon": "🎯", "text": "Fear of failure", "value": "fear_failure"},
+        {"icon": "⏰", "text": "Procrastination", "value": "procrastination"},
+        {"icon": "🔥", "text": "Burnout", "value": "burnout"},
+        {"icon": "🧠", "text": "Feeling overwhelmed", "value": "overwhelmed"},
+        {"icon": "⏳", "text": "Anxiety about the future", "value": "anxiety_future"},
+        {"icon": "👥", "text": "Fear of missing out", "value": "fomo"},
+        {"icon": "😟", "text": "Lack of confidence", "value": "lack_confidence"},
+        {"icon": "❓", "text": "Other", "value": "other"}
+      ],
+      "selection_style": "checkbox_buttons",
+      "button_state": {
+        "unselected": "dark background, white text",
+        "selected": "blue border, checkmark visible"
+      },
+      "cta_text": "Next",
+      "progression": "manual_button_after_selection"
+    },
+    
+    {
+      "step": 5,
+      "url_path": "/welcome-quiz/relationship_status",
+      "type": "question",
+      "question_type": "single_choice_list",
+      "question_text": "What is your relationship status?",
+      "options": [
+        {"icon": "🙂", "text": "Single", "value": "single"},
+        {"icon": "💑", "text": "In a relationship", "value": "in_relationship"},
+        {"icon": "💍", "text": "Engaged", "value": "engaged"},
+        {"icon": "💒", "text": "Married", "value": "married"},
+        {"icon": "💔", "text": "Divorced", "value": "divorced"},
+        {"icon": "❓", "text": "Other", "value": "other"}
+      ],
+      "list_style": "full_width_rows_with_arrow",
+      "progression": "auto_on_click"
+    },
+    
+    {
+      "step": 6,
+      "url_path": "/welcome-quiz/career_status",
+      "type": "question",
+      "question_type": "single_choice_list",
+      "question_text": "What is your current work status?",
+      "options": [
+        {"icon": "💼", "text": "Employed", "value": "employed"},
+        {"icon": "📈", "text": "Self-employed / Business owner", "value": "self_employed"},
+        {"icon": "📚", "text": "Student", "value": "student"},
+        {"icon": "🛌", "text": "Not working", "value": "not_working"},
+        {"icon": "❓", "text": "Other", "value": "other"}
+      ],
+      "progression": "auto_on_click"
+    },
+    
+    {
+      "step": 7,
+      "url_path": "/welcome-quiz/daily_activity",
+      "type": "question",
+      "question_type": "single_choice_list",
+      "question_text": "How active are you during the day?",
+      "options": [
+        {"icon": "🏃", "text": "Always on the move", "value": "very_active"},
+        {"icon": "⚖️", "text": "Balanced between moving and sitting", "value": "balanced"},
+        {"icon": "🛋️", "text": "Mostly sedentary, want to be more active", "value": "sedentary"},
+        {"icon": "🛌", "text": "Limited movement due to health reasons", "value": "limited"}
+      ],
+      "progression": "auto_on_click"
+    },
+    
+    {
+      "step": 8,
+      "url_path": "/welcome-quiz/future_planning",
+      "type": "question",
+      "question_type": "single_choice_list",
+      "question_text": "Do you usually know what you'll be doing in the near future?",
+      "options": [
+        {"icon": "🗓️", "text": "Yes, I plan ahead and know my schedule", "value": "planner"},
+        {"icon": "🤔", "text": "I have a general idea, but things may change", "value": "flexible"},
+        {"icon": "😌", "text": "Not really, I take things as they come", "value": "spontaneous"},
+        {"icon": "🎭", "text": "I prefer spontaneity over planning", "value": "very_spontaneous"}
+      ],
+      "progression": "auto_on_click"
+    },
+    
+    {
+      "step": 9,
+      "url_path": "/welcome-quiz/resolutions_are_hard",
+      "type": "interstitial_education",
+      "headline": "Resolutions are Hard. Here's Proof",
+      "subheadline": "A Surprising Statistic",
+      "content": {
+        "statistic_visual": {
+          "type": "circular_progress",
+          "percentage": 92,
+          "color": "coral/salmon (#FF8B7B range)",
+          "size": "large",
+          "animation": "fill_on_load"
+        },
+        "text": "of people who set New Year's resolutions fail to achieve them. This highlights how challenging it is to stick to long-term goals, even with the best intentions.",
+        "citation": {
+          "source": "University of Scranton",
+          "author": "Psychology Professor John C. Norcross",
+          "year": 2016
+        }
+      },
+      "purpose": "Problem awareness, urgency creation",
+      "cta_text": "Continue",
+      "progression": "manual_button"
+    },
+    
+    {
+      "step": 10,
+      "url_path": "/welcome-quiz/life_satisfaction",
+      "type": "question",
+      "question_type": "slider_7_point",
+      "question_text": "How satisfied are you with your life right now?",
+      "slider_config": {
+        "min_label": "Very dissatisfied",
+        "max_label": "Very satisfied",
+        "default_position": 4,
+        "default_label": "Neutral / Balanced",
+        "points": 7,
+        "color": "cyan",
+        "visual_bars": true,
+        "bar_style": "vertical bars with active one highlighted"
+      },
+      "cta_text": "Next",
+      "progression": "manual_button"
+    },
+    
+    {
+      "step": 11,
+      "url_path": "/welcome-quiz/twin_thoughts",
+      "type": "question",
+      "question_type": "single_choice_list",
+      "question_text": "Have you ever thought it would be cool to have a clone?",
+      "options": [
+        {"icon": "👍", "text": "Yes, absolutely!", "value": "yes"},
+        {"icon": "👎", "text": "No, not really", "value": "no"},
+        {"icon": "🤷", "text": "Unsure, it's complicated", "value": "unsure"}
+      ],
+      "progression": "auto_on_click"
+    },
+    
+    {
+      "step": 12,
+      "url_path": "/welcome-quiz/building_your_ai_mind",
+      "type": "interstitial_progress",
+      "headline": "Building your AI mind begins now!",
+      "content": {
+        "progress_indicator": {
+          "type": "animated_bar",
+          "percentage": 37,
+          "color": "cyan",
+          "width": "360px"
+        },
+        "message": "Your AI Mind Is Taking Shape! Let's Explore Further.",
+        "detail": "In the next section, we'll assess how factors like procrastination, distractions, and external influences impact your decisions."
+      },
+      "visual": "Hero silhouette with glowing head",
+      "cta_text": "Continue",
+      "progression": "manual_button"
+    },
+    
+    {
+      "step": 13,
+      "url_path": "/welcome-quiz/decision_procrastination",
+      "type": "question",
+      "question_type": "slider_7_point",
+      "question_text": "How often do you postpone on important decisions?",
+      "slider_config": {
+        "min_label": "Never",
+        "max_label": "Always",
+        "default_position": 4,
+        "default_label": "Sometimes",
+        "points": 7,
+        "color": "cyan"
+      },
+      "cta_text": "Next",
+      "progression": "manual_button"
+    },
+    
+    {
+      "step": 14,
+      "url_path": "/welcome-quiz/delay_reasons",
+      "type": "question",
+      "question_type": "multi_select",
+      "question_text": "What are the main reasons you delay decisions?",
+      "subtext": "Choose all that apply",
+      "options": [
+        {"icon": "⏳", "text": "Waiting for the perfect moment", "value": "perfect_moment"},
+        {"icon": "😨", "text": "Fear of making the wrong choice", "value": "fear_wrong"},
+        {"icon": "😵", "text": "Feeling overwhelmed", "value": "overwhelmed"},
+        {"icon": "🔄", "text": "Getting sidetracked", "value": "sidetracked"},
+        {"icon": "🔁", "text": "It's out of habit", "value": "habit"},
+        {"icon": "🤷", "text": "Not knowing where to begin", "value": "no_start"},
+        {"icon": "😣", "text": "Avoiding stress", "value": "avoid_stress"},
+        {"icon": "🔢", "text": "Too many options", "value": "too_many"},
+        {"icon": "🗣️", "text": "Seeking others' opinions first", "value": "seek_opinions"}
+      ],
+      "cta_text": "Next",
+      "progression": "manual_button"
+    },
+    
+    {
+      "step": 15,
+      "url_path": "/welcome-quiz/focus_level",
+      "type": "question",
+      "question_type": "slider_7_point",
+      "question_text": "How easily can you stay focused when making a decision?",
+      "slider_config": {
+        "min_label": "Easily distracted",
+        "max_label": "Fully focused",
+        "default_position": 4,
+        "default_label": "Neutral",
+        "points": 7
+      },
+      "cta_text": "Next",
+      "progression": "manual_button"
+    },
+    
+    {
+      "step": 16,
+      "url_path": "/welcome-quiz/organized_home",
+      "type": "question",
+      "question_type": "single_choice_list",
+      "question_text": "How do you feel about keeping your home clean and organized?",
+      "options": [
+        {"icon": "🧹", "text": "I can't stand clutter, everything must be neat.", "value": "very_organized"},
+        {"icon": "😕", "text": "I force myself to keep it clean, but I don't enjoy it.", "value": "forced_clean"},
+        {"icon": "🏠", "text": "I try to stay organized, but things pile up.", "value": "try_organized"},
+        {"icon": "😌", "text": "I don't mind a little mess.", "value": "some_mess"},
+        {"icon": "🤷", "text": "I really don't care about cleanliness.", "value": "dont_care"}
+      ],
+      "progression": "auto_on_click"
+    },
+    
+    {
+      "step": 17,
+      "url_path": "/welcome-quiz/past_decision_dwelling",
+      "type": "question",
+      "question_type": "slider_7_point",
+      "question_text": "How often do you dwell on past decisions?",
+      "slider_config": {
+        "min_label": "Never",
+        "max_label": "Always",
+        "default_position": 4,
+        "points": 7
+      },
+      "cta_text": "Next",
+      "progression": "manual_button"
+    },
+    
+    {
+      "step": 18,
+      "url_path": "/welcome-quiz/reflection_past_choices",
+      "type": "question",
+      "question_type": "multi_select",
+      "question_text": "What do you typically do when reflecting on past choices?",
+      "subtext": "Choose all that apply",
+      "options": [
+        {"icon": "🔄", "text": "Review and replay", "value": "review"},
+        {"icon": "😔", "text": "Beat myself up", "value": "self_criticism"},
+        {"icon": "🗣️", "text": "Ask others for feedback", "value": "ask_feedback"},
+        {"icon": "📚", "text": "Learn from it", "value": "learn"},
+        {"icon": "🏃", "text": "I don't dwell on past decisions", "value": "dont_dwell"}
+      ],
+      "cta_text": "Next",
+      "progression": "manual_button"
+    },
+    
+    {
+      "step": 19,
+      "url_path": "/welcome-quiz/influence_of_others",
+      "type": "question",
+      "question_type": "slider_7_point",
+      "question_text": "How much do others' opinions affect your decisions?",
+      "slider_config": {
+        "min_label": "Not at all",
+        "max_label": "A lot",
+        "default_position": 4,
+        "default_label": "Sometimes",
+        "points": 7
+      },
+      "cta_text": "Next",
+      "progression": "manual_button"
+    },
+    
+    {
+      "step": 20,
+      "url_path": "/welcome-quiz/decision_external_factors",
+      "type": "question",
+      "question_type": "single_choice_list",
+      "question_text": "What external factor has the greatest impact on decision-making?",
+      "options": [
+        {"icon": "👥", "text": "Advice from others", "value": "advice"},
+        {"icon": "👀", "text": "Fear of judgment", "value": "fear_judgment"},
+        {"icon": "🏙️", "text": "Social pressure", "value": "social_pressure"},
+        {"icon": "💻", "text": "Research and reviews", "value": "research"},
+        {"icon": "🚫", "text": "None of these", "value": "none"}
+      ],
+      "progression": "auto_on_click"
+    },
+    
+    {
+      "step": 21,
+      "url_path": "/welcome-quiz/sleep_disruption_past_events",
+      "type": "question",
+      "question_type": "slider_7_point",
+      "question_text": "How often do you have trouble falling asleep due to replaying past unpleasant events?",
+      "slider_config": {
+        "min_label": "Very Often",
+        "max_label": "Almost Never",
+        "default_position": 4,
+        "default_label": "Sometimes",
+        "points": 7
+      },
+      "cta_text": "Next",
+      "progression": "manual_button"
+    },
+    
+    {
+      "step": 22,
+      "url_path": "/welcome-quiz/satisfaction_quick_decisions",
+      "type": "question",
+      "question_type": "single_choice_buttons",
+      "question_text": "Would you be satisfied if you could easily and quickly make the right decisions?",
+      "options": [
+        {"icon": "✅", "text": "Yes, absolutely", "value": "yes"},
+        {"icon": "🚫", "text": "Not necessarily", "value": "no"}
+      ],
+      "progression": "auto_on_click"
+    },
+    
+    {
+      "step": 23,
+      "url_path": "/welcome-quiz/decision_making_profile_summary",
+      "type": "interstitial_results_preview",
+      "headline": "Summary of Your Decision-Making Profile",
+      "content": {
+        "risk_assessment": {
+          "label": "Risk of Decision Paralysis",
+          "level": "HIGH RISK",
+          "visual": {
+            "type": "gradient_bar",
+            "gradient": "green → yellow → orange → red",
+            "indicator_position": "right (high)",
+            "labels": ["Low", "Intermediate", "High"]
+          }
+        },
+        "problem_statement": {
+          "text": "You may struggle with stress, overthinking, and decision paralysis caused by too many choices. Ready to explore your potential for change?",
+          "photo": "Concerned man in beige sweater (40s demographic)"
+        },
+        "metrics": [
+          {
+            "icon": "🧠",
+            "label": "Thinking Pattern",
+            "value": "Balanced",
+            "color": "coral"
+          },
+          {
+            "icon": "💪",
+            "label": "Self-Confidence",
+            "value": "Low",
+            "color": "coral"
+          },
+          {
+            "icon": "⚡",
+            "label": "Emotional Block",
+            "value": "Overwhelming choices",
+            "color": "coral"
+          },
+          {
+            "icon": "🧘",
+            "label": "Anxiety Level",
+            "value": "High",
+            "color": "coral"
+          }
+        ]
+      },
+      "layout": "2x2 grid of metrics",
+      "cta_text": "Next",
+      "purpose": "Create urgency through personalized problem diagnosis"
+    },
+    
+    {
+      "step": 24,
+      "url_path": "/welcome-quiz/extroversion_level",
+      "type": "question",
+      "question_type": "slider_7_point",
+      "question_text": "How extroverted are you?",
+      "slider_config": {
+        "min_label": "Very introverted",
+        "max_label": "Very extroverted",
+        "default_position": 4,
+        "default_label": "Balanced",
+        "points": 7
+      },
+      "cta_text": "Next",
+      "progression": "manual_button"
+    },
+    
+    {
+      "step": 25,
+      "url_path": "/welcome-quiz/handling_changes",
+      "type": "question",
+      "question_type": "single_choice_list",
+      "question_text": "How do you usually handle changes?",
+      "options": [
+        {"icon": "🚀", "text": "I love changes", "value": "love"},
+        {"icon": "🤷", "text": "I tolerate changes", "value": "tolerate"},
+        {"icon": "🙅", "text": "I avoid changes", "value": "avoid"}
+      ],
+      "progression": "auto_on_click"
+    },
+    
+    {
+      "step": 26,
+      "url_path": "/welcome-quiz/coping_mechanisms",
+      "type": "question",
+      "question_type": "multi_select",
+      "question_text": "How do you cope with stress or tough situations?",
+      "subtext": "Choose all that apply",
+      "options": [
+        {"icon": "🗣️", "text": "Talking to someone", "value": "talking"},
+        {"icon": "🧘", "text": "Meditating", "value": "meditating"},
+        {"icon": "🌍", "text": "Changing surroundings", "value": "changing_environment"},
+        {"icon": "🎮", "text": "Hobbies or entertainment", "value": "hobbies"},
+        {"icon": "🚶", "text": "Exercising", "value": "exercise"},
+        {"icon": "🎵", "text": "Listening to music", "value": "music"},
+        {"icon": "📖", "text": "Journaling or writing", "value": "journaling"}
+      ],
+      "cta_text": "Next",
+      "progression": "manual_button"
+    },
+    
+    {
+      "step": 27,
+      "url_path": "/welcome-quiz/risk_taking_comfort",
+      "type": "question",
+      "question_type": "slider_7_point",
+      "question_text": "How comfortable are you with taking risks?",
+      "slider_config": {
+        "min_label": "Not comfortable at all",
+        "max_label": "Very comfortable with risks",
+        "default_position": 5,
+        "default_label": "Comfortable with some risks",
+        "points": 7
+      },
+      "cta_text": "Next",
+      "progression": "manual_button"
+    },
+    
+    {
+      "step": 28,
+      "url_path": "/welcome-quiz/annoying_traits",
+      "type": "question",
+      "question_type": "multi_select",
+      "question_text": "What annoys you the most about people?",
+      "subtext": "Choose all that apply",
+      "options": [
+        {"icon": "🤥", "text": "Dishonesty", "value": "dishonesty"},
+        {"icon": "😑", "text": "Indifference", "value": "indifference"},
+        {"icon": "🙄", "text": "Disrespect", "value": "disrespect"},
+        {"icon": "⚔️", "text": "Conflict-proneness", "value": "conflict"},
+        {"icon": "⏳", "text": "Lack of time management", "value": "time_mgmt"},
+        {"icon": "🗣️", "text": "Interrupting while speaking", "value": "interrupting"},
+        {"icon": "👂", "text": "Lack of active listening", "value": "not_listening"},
+        {"icon": "🤯", "text": "Overthinking or excessive complaining", "value": "overthinking"}
+      ],
+      "cta_text": "Next",
+      "progression": "manual_button"
+    },
+    
+    {
+      "step": 29,
+      "url_path": "/welcome-quiz/improve_for_right_decisions",
+      "type": "question",
+      "question_type": "multi_select",
+      "question_text": "To consistently make the right decisions, what do you feel needs improvement?",
+      "subtext": "Choose all that apply",
+      "options": [
+        {"icon": "✨", "text": "My Intuition", "value": "intuition"},
+        {"icon": "⚡️", "text": "My Decisiveness", "value": "decisiveness"},
+        {"icon": "🤝", "text": "My Self-Trust", "value": "self_trust"},
+        {"icon": "😌", "text": "My Emotional Balance", "value": "emotional_balance"},
+        {"icon": "⏳", "text": "My Patience", "value": "patience"},
+        {"icon": "🌱", "text": "My Mindset", "value": "mindset"}
+      ],
+      "cta_text": "Next",
+      "progression": "manual_button"
+    },
+    
+    {
+      "step": 30,
+      "url_path": "/welcome-quiz/special_achievement_relationships",
+      "type": "question",
+      "question_type": "single_choice_list",
+      "question_text": "Is there something special you wish to achieve?",
+      "options": [
+        {"icon": "🏡", "text": "Buy a House", "value": "house"},
+        {"icon": "💒", "text": "A Perfect Wedding", "value": "wedding"},
+        {"icon": "🏖️", "text": "Vacation", "value": "vacation"},
+        {"icon": "🚗", "text": "Buy a Car", "value": "car"},
+        {"icon": "🛋️", "text": "Worry-free Retirement", "value": "retirement"},
+        {"icon": "👶", "text": "Start a Family", "value": "family"},
+        {"icon": "❤️", "text": "Find a Soulmate", "value": "soulmate"},
+        {"icon": "🎉", "text": "Celebrate a Significant Anniversary", "value": "anniversary"},
+        {"icon": "✨", "text": "Other", "value": "other"}
+      ],
+      "progression": "auto_on_click"
+    },
+    
+    {
+      "step": 31,
+      "url_path": "/welcome-quiz/ai_mind_potential",
+      "type": "interstitial_results_major",
+      "headline": "Here's Your AI Mind Potential",
+      "content": {
+        "readiness_score": {
+          "label": "Readiness Score",
+          "value": "HIGH",
+          "badge_color": "green",
+          "visual": {
+            "type": "gradient_bar",
+            "gradient": "red → yellow → green",
+            "position": "high",
+            "labels": ["Low", "Intermediate", "High"]
+          }
+        },
+        "message_card": {
+          "title": "Ready for Change",
+          "text": "You're equipped with the mindset and resilience to embrace challenges, adapt, and make confident decisions with the right guidance.",
+          "photo": "Confident man 40s in beige sweater"
+        },
+        "progress_chart": {
+          "title": "Your Progress Over Time",
+          "type": "line_chart",
+          "x_axis": "Time (1 month, 2 months, 3 months)",
+          "lines": [
+            {
+              "label": "with copymind",
+              "color": "green",
+              "trend": "exponential_growth",
+              "start": "low",
+              "end": "high"
+            },
+            {
+              "label": "without copymind",
+              "color": "orange",
+              "trend": "flat_decline",
+              "start": "low",
+              "end": "lower"
+            }
+          ],
+          "disclaimer": "The chart is a non-customized illustration and results may vary",
+          "visual_style": "dashed grid, gradient fills, arrow indicators"
+        }
+      },
+      "cta_text": "Next",
+      "purpose": "Demonstrate value, visualize transformation"
+    },
+    
+    {
+      "step": 32,
+      "url_path": "/welcome-quiz/loader",
+      "type": "interstitial_loading_with_engagement",
+      "headline": "Preparing Your AI Twin To Guide You",
+      "loading_sequence": [
+        {
+          "message": "Learning Your Preferences...",
+          "percentage": 74,
+          "duration": "3-4 seconds"
+        },
+        {
+          "message": "Enhancing Decision Skills...",
+          "percentage": 94,
+          "duration": "3-4 seconds"
+        },
+        {
+          "message": "Enhancing Decision Skills...",
+          "percentage": 97,
+          "duration": "2-3 seconds"
+        },
+        {
+          "message": "Your AI Twin Is Ready!",
+          "percentage": 100,
+          "duration": "2 seconds"
+        }
+      ],
+      "engagement_questions": [
+        {
+          "trigger_at": "after initial load",
+          "prompt": "To move forward, specify",
+          "question": "Are you inclined to finish what you start?",
+          "options": ["No", "Yes"],
+          "purpose": "Commitment priming"
+        },
+        {
+          "trigger_at": "after question 1",
+          "prompt": "To move forward, specify",
+          "question": "Would you leave your AI mind copy to your descendants?",
+          "options": ["No", "Yes"],
+          "purpose": "Future vision, legacy framing"
+        }
+      ],
+      "visual": {
+        "hero_image": "Silhouette with glowing head",
+        "progress_bar": "animated cyan bar",
+        "motivational_text": "Every step brings your AI Twin closer to helping you make better choices"
+      },
+      "progression": "automatic_with_questions"
+    },
+    
+    {
+      "step": 33,
+      "url_path": "/welcome-quiz/email",
+      "type": "lead_capture",
+      "headline": "Let's Make It Personal",
+      "value_proposition": "Enter your email to create a secure space for your AI Twin and access your personalized insights anytime.",
+      "form_fields": [
+        {
+          "type": "email",
+          "label": "E-mail",
+          "placeholder": "E-mail",
+          "required": true,
+          "validation": "standard_email_format",
+          "error_message": "Please enter a valid email address"
+        }
+      ],
+      "trust_statement": "We respect your privacy and use your data only to personalize your experience.",
+      "cta_text": "Continue",
+      "cta_state": "disabled_until_valid_email",
+      "progression": "manual_button_after_valid_email",
+      "tracking": "Email hashed and sent to Facebook Pixel"
+    },
+    
+    {
+      "step": 34,
+      "url_path": "/welcome-quiz/paywall/decision-making?variant=control",
+      "page_title": "COPYMIND - Your AI Twin",
+      "type": "pricing_paywall",
+      "layout": "sticky_header_cta + pricing_cards + footer_cta",
+      
+      "header": {
+        "sticky": true,
+        "left_element": {
+          "type": "countdown_timer",
+          "text": "Discount expires in",
+          "time_format": "MM:SS",
+          "duration": "8 minutes",
+          "color": "cyan",
+          "urgency_level": "high"
+        },
+        "right_element": {
+          "type": "cta_button",
+          "text": "GET MY PLAN",
+          "style": "blue_gradient",
+          "size": "medium"
+        }
+      },
+      
+      "promo_banner": {
+        "visible": true,
+        "style": "mint_green_card",
+        "icon": "51%",
+        "icon_style": "green_circle",
+        "headline": "Your promo code applied!",
+        "subtext": "Save 51% on your first purchase",
+        "code": {
+          "displayed": true,
+          "value": "alexei2461_nov25",
+          "style": "dark_badge_with_checkmark"
+        },
+        "countdown": {
+          "visible": true,
+          "position": "top_right",
+          "text": "08:XX",
+          "label": "Minutes • Seconds"
+        }
+      },
+      
+      "personalization_display": {
+        "layout": "2_column_cards",
+        "items": [
+          {
+            "icon": "⚙️",
+            "label": "Thinking Pattern",
+            "value": "Balanced"
+          },
+          {
+            "icon": "🎯",
+            "label": "Goal",
+            "value": "Vacation"
+          }
+        ],
+        "style": "dark_cards_with_icons"
+      },
+      
+      "pricing_plans": [
+        {
+          "id": "1_week",
+          "duration": "1-WEEK PLAN",
+          "duration_days": 7,
+          "original_price": 9.99,
+          "discounted_price": 6.99,
+          "currency": "€",
+          "per_day_price": 0.99,
+          "discount_percentage": 31,
+          "discount_badge": "-31%",
+          "badge_color": "orange",
+          "selected_by_default": false,
+          "badge_text": null,
+          "visual_style": "dark_card_with_radio_button"
+        },
+        {
+          "id": "4_weeks",
+          "duration": "4-WEEKS PLAN",
+          "duration_days": 28,
+          "original_price": 39.99,
+          "discounted_price": 19.99,
+          "currency": "€",
+          "per_day_price": 0.71,
+          "discount_percentage": 51,
+          "discount_badge": "-51%",
+          "badge_color": "orange",
+          "selected_by_default": true,
+          "badge_text": "MOST POPULAR",
+          "badge_icon": "🔥",
+          "badge_style": "blue_gradient_pill",
+          "visual_style": "blue_border_highlighted_card",
+          "recommended": true
+        },
+        {
+          "id": "12_weeks",
+          "duration": "12-WEEKS PLAN",
+          "duration_days": 84,
+          "original_price": 79.99,
+          "discounted_price": 39.99,
+          "currency": "€",
+          "per_day_price": 0.48,
+          "discount_percentage": 51,
+          "discount_badge": "-51%",
+          "badge_color": "orange",
+          "selected_by_default": false,
+          "badge_text": null,
+          "visual_style": "dark_card_with_radio_button"
+        }
+      ],
+      
+      "pricing_card_layout": {
+        "card_style": "dark_background_rounded",
+        "border_radius": "16px",
+        "padding": "20px",
+        "spacing_between": "16px",
+        "discount_badge_position": "top_left",
+        "radio_button_position": "left",
+        "price_layout": "right_aligned_large",
+        "strikethrough_style": "original_price_gray_crossed"
+      },
+      
+      "social_proof": {
+        "text": "People using the plan for 4 weeks achieve twice as much as those using it for 1 week.",
+        "citation": "*According to the research by COPYMIND Team",
+        "style": "centered_text_below_cards"
+      },
+      
+      "cta_section": {
+        "button_text": "GET MY PLAN",
+        "button_style": "full_width_blue_gradient_rounded",
+        "button_height": "56px",
+        "appears_twice": true,
+        "locations": ["sticky_header", "bottom_of_page"],
+        "legal_text": "By clicking \"Get My Plan\", you agree that if you don't cancel at least twenty-four hours before the end of the discounted price period, you will automatically be charged the full price of thirty-nine euros ninety-nine cents per month according to the subscription model",
+        "legal_links": [
+          {"text": "Terms & Conditions", "url": "/terms"},
+          {"text": "Privacy Policy", "url": "/privacy"},
+          {"text": "Subscription Terms", "url": "/subscription-terms"}
+        ]
+      },
+      
+      "guarantee_section": {
+        "visible": true,
+        "icon": "💰",
+        "icon_alt": "Money Back Guarantee",
+        "headline": "Money-Back Guarantee",
+        "text": "We believe in our service so much that we're offering a 30-day full refund if you don't see initial results—just show us that you've followed the plan.",
+        "additional_text": "Learn more about all the conditions in our Subscription Terms.",
+        "link": {"text": "Subscription Terms", "url": "/subscription-terms"},
+        "style": "card_with_icon_centered"
+      },
+      
+      "subscription_model": {
+        "type": "auto_renewal",
+        "billing_cycle": "monthly",
+        "discounted_period": "first_period_only",
+        "full_price_after_discount": 39.99,
+        "cancellation_notice": "24_hours_before_renewal",
+        "disclosure_prominence": "small_text_below_cta"
+      }
+    }
+  ],
+
+  "animations_and_transitions": {
+    "page_transitions": {
+      "type": "fade_slide",
+      "duration": "300ms",
+      "easing": "ease-in-out"
+    },
+    "progress_bar": {
+      "animation": "smooth_fill_left_to_right",
+      "duration": "500ms",
+      "increment": "3-5% per question"
+    },
+    "loading_screens": {
+      "visual": "pulsing_glow_on_head",
+      "progress_bar": "animated_fill_with_percentage",
+      "text": "fade_in_out_transitions"
+    },
+    "button_states": {
+      "hover": "slight_scale_up_1.02",
+      "active": "scale_down_0.98",
+      "selected": "blue_border_checkmark_appear"
+    },
+    "slider_interaction": {
+      "drag": "smooth_continuous",
+      "snap": "none",
+      "label_update": "real_time_on_drag"
+    }
+  },
+
+  "tracking_and_analytics": {
+    "facebook_pixel": {
+      "events": [
+        {"event": "PageView", "trigger": "on_every_page_load"},
+        {"event": "StartQuiz", "trigger": "step_1_interaction"},
+        {"event": "CompleteRegistration", "trigger": "email_submitted"},
+        {"event": "InitiateCheckout", "trigger": "paywall_view"},
+        {"event": "Purchase", "trigger": "payment_completed"}
+      ]
+    },
+    "internal_tracking": {
+      "session_data": "stored_in_cookies",
+      "quiz_answers": "stored_server_side_on_email_submit",
+      "user_id_format": "hashed_email"
+    }
+  },
+
+  "psychological_frameworks": {
+    "primary_tactics": [
+      {
+        "name": "Foot-in-the-Door",
+        "implementation": "Easy questions (gender, age) → Personal questions → Commitment questions",
+        "effectiveness": "Very High"
+      },
+      {
+        "name": "Sunk Cost Fallacy",
+        "implementation": "25+ questions + progress bar + time investment",
+        "effectiveness": "Very High"
+      },
+      {
+        "name": "Problem-Agitate-Solution",
+        "implementation": "Pain questions → Negative stats → Profile diagnosis → Solution offer",
+        "effectiveness": "High"
+      },
+      {
+        "name": "Social Proof",
+        "implementation": "CEO quote + research stats + satisfaction score + 'Most Popular' label",
+        "effectiveness": "High"
+      },
+      {
+        "name": "Anchoring Effect",
+        "implementation": "Strikethrough pricing (€39.99 → €19.99)",
+        "effectiveness": "Very High"
+      },
+      {
+        "name": "Decoy Effect",
+        "implementation": "3-tier pricing with middle option optimal",
+        "effectiveness": "High"
+      },
+      {
+        "name": "Zeigarnik Effect",
+        "implementation": "Progress bar creates tension to complete",
+        "effectiveness": "Very High"
+      },
+      {
+        "name": "Reciprocity",
+        "implementation": "Free personalized results before asking for email",
+        "effectiveness": "High"
+      },
+      {
+        "name": "Scarcity/Urgency",
+        "implementation": "Countdown timer + 'First 100,000' + Promo code expires",
+        "effectiveness": "High"
+      },
+      {
+        "name": "Commitment & Consistency",
+        "implementation": "Loading questions: 'Do you finish what you start?'",
+        "effectiveness": "Medium-High"
+      }
+    ]
+  },
+
+  "content_patterns": {
+    "headline_formulas": [
+      "Question-based: 'What [aspect] you the most?'",
+      "Personal: 'How [adjective] are you with [topic]?'",
+      "Binary: 'Would you [action] if you could [benefit]?'",
+      "Status: 'What is your [demographic]?'"
+    ],
+    "option_formulas": [
+      "Emoji + Descriptive phrase",
+      "Spectrum options: Extreme → Moderate → Opposite Extreme",
+      "Always include 'Other' for multi-category questions"
+    ],
+    "interstitial_structure": [
+      "Attention-grabbing headline",
+      "Authority citation or social proof",
+      "Visual element (chart, photo, icon)",
+      "Value proposition or problem statement",
+      "Strong CTA"
+    ]
+  },
+
+  "conversion_sequence_summary": {
+    "stage_1_entry": {
+      "steps": "1-3",
+      "goal": "Establish trust, lower barrier to entry",
+      "conversion_tactics": ["Easy questions", "Social proof", "Authority"]
+    },
+    "stage_2_profiling": {
+      "steps": "4-11",
+      "goal": "Gather psychographic data, identify pain points",
+      "conversion_tactics": ["Problem awareness", "Multi-select engagement", "Educational stat"]
+    },
+    "stage_3_deep_assessment": {
+      "steps": "12-22",
+      "goal": "Deep behavioral profiling, build sunk cost",
+      "conversion_tactics": ["Progress preview", "Varied question types", "Slider interactions"]
+    },
+    "stage_4_results": {
+      "steps": "23-31",
+      "goal": "Demonstrate value, create desire for solution",
+      "conversion_tactics": ["Profile summary", "Risk diagnosis", "Potential visualization"]
+    },
+    "stage_5_conversion": {
+      "steps": "32-34",
+      "goal": "Capture lead, convert to paid",
+      "conversion_tactics": ["Loading engagement", "Email gate", "Pricing with urgency"]
+    }
+  },
+
+  "technical_implementation_notes": {
+    "framework": "Next.js",
+    "routing": "Dynamic routes with clean URLs",
+    "state_management": "Quiz answers stored in session/cookies",
+    "form_validation": "Real-time email validation",
+    "payment_processing": "Not visible (likely Stripe or PayPal)",
+    "service_worker": "Registered for offline capability",
+    "responsive_design": "Mobile-first approach",
+    "performance": "Fast page transitions, optimized images"
+  },
+
+  "key_success_factors": [
+    "Length managed through variety and interstitials",
+    "Strong personalization throughout",
+    "Clear value demonstration via results previews",
+    "Multi-layered urgency tactics",
+    "Professional design builds trust",
+    "Psychological sophistication in question sequencing",
+    "Risk reversal with money-back guarantee",
+    "Smart pricing structure with decoy effect"
+  ],
+
+  "identified_weaknesses": [
+    {
+      "issue": "Time claim mismatch",
+      "detail": "Says '1-minute' but takes 6-8 minutes",
+      "severity": "High",
+      "impact": "Trust violation"
+    },
+    {
+      "issue": "Text rendering errors",
+      "detail": "Multiple spacing/character issues throughout",
+      "severity": "Medium-High",
+      "impact": "Perceived quality"
+    },
+    {
+      "issue": "Email gate timing",
+      "detail": "Requires 100% completion before email",
+      "severity": "Medium",
+      "impact": "Potential drop-offs"
+    },
+    {
+      "issue": "Limited social login",
+      "detail": "Only email option, no OAuth",
+      "severity": "Low-Medium",
+      "impact": "Conversion friction"
+    },
+    {
+      "issue": "Vague product value",
+      "detail": "Unclear what AI actually does daily",
+      "severity": "Medium",
+      "impact": "Purchase hesitation"
+    }
+  ],
+
+  "estimated_performance_metrics": {
+    "quiz_start_to_email_capture": "30-40%",
+    "email_capture_to_paywall_view": "95%+",
+    "paywall_view_to_purchase": "10-15%",
+    "overall_visitor_to_customer": "3-6%",
+    "average_time_to_email": "6-8 minutes",
+    "average_time_to_purchase": "8-10 minutes"
+  }
+}
+

@@ -1,0 +1,1104 @@
+{
+  "funnel_name": "Coursiv AI-Driven Income Growth Challenge",
+  "funnel_url": "https://coursiv.io/dynamic",
+  "brand": "Coursiv",
+  "vertical": "AI Education / Online Courses / Income Growth",
+  "analysis_date": "2025-11-29",
+  
+  "overview": {
+    "total_steps": 30,
+    "total_questions": 23,
+    "average_completion_time": "3-5 minutes",
+    "conversion_goal": "Paid subscription to AI courses platform",
+    "pricing_model": "Subscription (€19.99 for 4 weeks, then €39.99/4 weeks)",
+    "lead_capture": "Email permission request (with opt-out option)",
+    "funnel_type": "Quiz-based lead generation with paywall"
+  },
+
+  "funnel_steps": [
+    {
+      "step_number": 1,
+      "step_type": "demographic",
+      "page_title": "AI-Driven Income Growth Challenge",
+      "url_path": "/dynamic",
+      "question": "SELECT YOUR GENDER",
+      "subtitle": "1-MINUTE QUIZ",
+      "question_type": "single_choice",
+      "auto_progress": true,
+      "options": [
+        {"text": "MALE", "visual": "illustrated_male_avatar", "icon_type": "image"},
+        {"text": "FEMALE", "visual": "illustrated_female_avatar", "icon_type": "image"}
+      ],
+      "design": {
+        "layout": "two_column_cards",
+        "card_style": "rounded_with_purple_border",
+        "images": "full_body_illustrated_avatars",
+        "cta_position": "on_card",
+        "arrow_indicator": true
+      },
+      "footer_text": "By clicking \"Male\" or \"Female\", you agree with Terms and Conditions, Privacy Policy, Subscription Terms",
+      "legal_links": ["Terms and Conditions", "Privacy Policy", "Subscription Terms"],
+      "company_footer": "Coursiv product by Coursiv Limited. 2025 ©All Rights Reserved."
+    },
+    {
+      "step_number": 2,
+      "step_type": "demographic",
+      "page_title": "AI-Driven Income Growth Challenge",
+      "url_path": "/dynamic/square-select-landing",
+      "question": "SELECT YOUR AGE",
+      "subtitle": "1-MINUTE QUIZ",
+      "question_type": "single_choice_grid",
+      "auto_progress": true,
+      "options": [
+        {"text": "Age: 18-24", "visual": "young_male_avatar", "icon_type": "illustrated_person"},
+        {"text": "Age: 25-34", "visual": "confident_male_avatar", "icon_type": "illustrated_person"},
+        {"text": "Age: 35-44", "visual": "mature_male_avatar", "icon_type": "illustrated_person"},
+        {"text": "Age: 45+", "visual": "senior_male_avatar", "icon_type": "illustrated_person"}
+      ],
+      "design": {
+        "layout": "2x2_grid",
+        "card_style": "rounded_with_purple_border",
+        "images": "illustrated_avatars_matching_age_groups",
+        "cta_position": "on_card",
+        "arrow_indicator": true
+      },
+      "footer_text": "By choosing your age, you agree with Terms and Conditions, Privacy Policy, Subscription Terms",
+      "legal_links": ["Terms and Conditions", "Privacy Policy", "Subscription Terms"],
+      "company_footer": "Coursiv Limited. Limassol, Cyprus"
+    },
+    {
+      "step_number": 3,
+      "step_type": "interstitial_social_proof",
+      "page_title": "Social Proof & Authority",
+      "url_path": "/dynamic/quote-social-proof",
+      "content_type": "testimonial_and_media_logos",
+      "headline": "600 000+ people",
+      "subheadline": "already use Coursiv",
+      "quote": {
+        "text": "AI Won't Replace Humans — But Humans With AI Will Replace Humans Without AI",
+        "source": "Harvard Business Review",
+        "source_logo": true
+      },
+      "media_logos": [
+        "TIME",
+        "WIRED",
+        "TechCrunch (TC logo)",
+        "The Guardian",
+        "Forbes",
+        "The Economist"
+      ],
+      "cta": {
+        "text": "CONTINUE",
+        "style": "large_purple_button_full_width"
+      },
+      "design": {
+        "background": "light_purple_gradient",
+        "quote_style": "large_quote_marks",
+        "logo_layout": "two_rows_centered"
+      },
+      "psychology": ["social_proof", "authority", "scarcity_implied_by_popularity"]
+    },
+    {
+      "step_number": 4,
+      "step_type": "quiz_question",
+      "progress_indicator": "1 / 23",
+      "url_path": "/dynamic/quiz-page?step=1",
+      "question": "What is your main goal?",
+      "question_type": "single_choice_visual",
+      "auto_progress": true,
+      "back_button": true,
+      "options": [
+        {"text": "Grow wealth", "visual": "person_with_money", "icon_type": "illustrated_person"},
+        {"text": "Be my own boss", "visual": "confident_businessman", "icon_type": "illustrated_person"},
+        {"text": "Financial freedom", "visual": "person_in_suit_with_cash", "icon_type": "illustrated_person"},
+        {"text": "Travel the world", "visual": "traveler_with_hat_and_coffee", "icon_type": "illustrated_person"},
+        {"text": "Professional growth", "visual": "person_flexing_muscles", "icon_type": "illustrated_person"},
+        {"text": "Work-life balance", "visual": "person_partial_view", "icon_type": "illustrated_person"}
+      ],
+      "design": {
+        "layout": "vertical_stack_cards",
+        "card_style": "light_gray_background",
+        "images": "diverse_illustrated_people",
+        "typography": "bold_dark_text"
+      }
+    },
+    {
+      "step_number": 5,
+      "step_type": "quiz_question",
+      "progress_indicator": "2 / 23",
+      "question": "What income source are you most familiar with?",
+      "question_type": "single_choice",
+      "auto_progress": true,
+      "back_button": true,
+      "options": [
+        {"text": "Full-time job", "icon": "💼"},
+        {"text": "Passive income", "icon": "📝✏️"},
+        {"text": "Other", "icon": "🤔"}
+      ],
+      "design": {
+        "layout": "vertical_stack",
+        "card_style": "light_gray_simple",
+        "icon_size": "large"
+      }
+    },
+    {
+      "step_number": 6,
+      "step_type": "quiz_question",
+      "progress_indicator": "3 / 23",
+      "question": "What is your work schedule like?",
+      "question_type": "single_choice",
+      "auto_progress": true,
+      "back_button": true,
+      "options": [
+        {"text": "9 to 5", "icon": "👔"},
+        {"text": "Night shifts", "icon": "🌓"},
+        {"text": "My hours are flexible", "icon": "👌"},
+        {"text": "I'm retired", "icon": "🧶"}
+      ],
+      "design": {
+        "layout": "vertical_stack",
+        "card_style": "light_gray_simple",
+        "icon_size": "large"
+      }
+    },
+    {
+      "step_number": 7,
+      "step_type": "quiz_question_multiselect",
+      "progress_indicator": "4 / 23",
+      "question": "What about your current situation bothers you the most?",
+      "question_subtext": "Choose all that apply",
+      "question_type": "multi_select",
+      "auto_progress": false,
+      "back_button": true,
+      "options": [
+        {"text": "Feeling underpaid"},
+        {"text": "Financial dependence"},
+        {"text": "No free time"},
+        {"text": "Routine"},
+        {"text": "Constant worry"},
+        {"text": "Toxic environment"},
+        {"text": "Other"}
+      ],
+      "cta": {
+        "text": "NEXT STEP",
+        "enabled_after": "any_selection"
+      },
+      "design": {
+        "layout": "vertical_stack_chips",
+        "card_style": "selectable_buttons",
+        "selected_state": "purple_background"
+      }
+    },
+    {
+      "step_number": 8,
+      "step_type": "interstitial_value",
+      "content_type": "motivational_message",
+      "headline": "Be Human and Smart at Once",
+      "visual": "illustration_of_person",
+      "body_copy": "Learn to combine human creativity with AI efficiency",
+      "cta": {
+        "text": "CONTINUE",
+        "style": "large_purple_button"
+      },
+      "design": {
+        "background": "white",
+        "image_position": "center",
+        "text_alignment": "center"
+      },
+      "psychology": ["pattern_interrupt", "value_proposition", "aspiration"]
+    },
+    {
+      "step_number": 9,
+      "step_type": "quiz_question",
+      "progress_indicator": "5 / 23",
+      "question": "How do you feel about your financial situation?",
+      "question_type": "single_choice",
+      "auto_progress": true,
+      "back_button": true,
+      "options": [
+        {"text": "I'm comfortable", "icon": "😌"},
+        {"text": "I would like to have more stability", "icon": "🤕"},
+        {"text": "I'm struggling to meet my financial goals", "icon": "😐"}
+      ],
+      "design": {
+        "layout": "vertical_stack",
+        "card_style": "light_gray_simple",
+        "icon_size": "large"
+      }
+    },
+    {
+      "step_number": 10,
+      "step_type": "interstitial_value",
+      "content_type": "motivational_message_with_stat",
+      "headline": "Stability Is Within Reach",
+      "visual": "person_meditating_illustration",
+      "body_copy": "Learn the strategies to build a stable and secure financial future, starting today. Did you know that 63% of people feel anxious about their financial future? It's time to turn that anxiety into confidence.",
+      "stat": "63% of people feel anxious about their financial future",
+      "cta": {
+        "text": "CONTINUE",
+        "style": "large_purple_button"
+      },
+      "design": {
+        "background": "white",
+        "image_position": "top",
+        "text_alignment": "center",
+        "stat_highlight": "bold"
+      },
+      "psychology": ["problem_agitation", "statistical_authority", "solution_promise"]
+    },
+    {
+      "step_number": 11,
+      "step_type": "quiz_question",
+      "progress_indicator": "6 / 23",
+      "question": "What annual income level do you want to achieve?",
+      "question_type": "single_choice",
+      "auto_progress": true,
+      "back_button": true,
+      "visual_element": "illustration_person_with_wallet_in_corner",
+      "options": [
+        {"text": "$30,000 – $50,000"},
+        {"text": "$50,000 – $100,000"},
+        {"text": "More than $100,000"}
+      ],
+      "design": {
+        "layout": "vertical_stack",
+        "card_style": "light_gray_simple",
+        "decorative_image": "bottom_right_corner"
+      }
+    },
+    {
+      "step_number": 12,
+      "step_type": "quiz_question",
+      "progress_indicator": "7 / 23",
+      "question": "Do you wish you had more control over your work hours and location?",
+      "question_type": "single_choice",
+      "auto_progress": true,
+      "back_button": true,
+      "options": [
+        {"text": "Yes", "icon": "👍"},
+        {"text": "No", "icon": "👎"},
+        {"text": "Hm, not sure", "icon": "🤔"}
+      ],
+      "design": {
+        "layout": "vertical_stack",
+        "card_style": "light_gray_simple",
+        "icon_size": "large"
+      }
+    },
+    {
+      "step_number": 13,
+      "step_type": "quiz_question",
+      "progress_indicator": "8 / 23",
+      "question": "Would you enjoy a job where something else does the routine work for you?",
+      "question_type": "single_choice",
+      "auto_progress": true,
+      "back_button": true,
+      "visual_element": "illustration_person_with_laptop",
+      "options": [
+        {"text": "It's a dream"},
+        {"text": "Somewhat"},
+        {"text": "Maybe"},
+        {"text": "Not necessarily"}
+      ],
+      "design": {
+        "layout": "vertical_stack",
+        "card_style": "light_gray_simple",
+        "decorative_image": "bottom_right_person"
+      }
+    },
+    {
+      "step_number": 14,
+      "step_type": "quiz_question",
+      "progress_indicator": "9 / 23",
+      "question": "Estimated - similar pattern",
+      "note": "Question not fully captured but follows same pattern"
+    },
+    {
+      "step_number": 15,
+      "step_type": "quiz_question",
+      "progress_indicator": "10 / 23",
+      "question": "Would you enjoy a job that matches your interests?",
+      "question_type": "single_choice",
+      "auto_progress": true,
+      "back_button": true,
+      "visual_element": "illustration_person_in_suit",
+      "options": [
+        {"text": "Absolutely"},
+        {"text": "Somewhat"},
+        {"text": "Maybe"},
+        {"text": "Not necessarily"}
+      ],
+      "design": {
+        "layout": "vertical_stack",
+        "card_style": "light_gray_simple",
+        "decorative_image": "bottom_right_businessman"
+      }
+    },
+    {
+      "step_number": 16,
+      "step_type": "quiz_question",
+      "progress_indicator": "11 / 23",
+      "question": "How much do you know about digital business?",
+      "question_type": "single_choice",
+      "auto_progress": true,
+      "back_button": true,
+      "options": [
+        {"text": "I'm well-informed about it", "icon": "🤓"},
+        {"text": "I'm familiar with some aspects", "icon": "🙂"},
+        {"text": "My knowledge is limited", "icon": "😞"}
+      ],
+      "design": {
+        "layout": "vertical_stack",
+        "card_style": "light_gray_simple",
+        "icon_size": "large"
+      }
+    },
+    {
+      "step_number": 17,
+      "step_type": "quiz_question",
+      "progress_indicator": "12 / 23",
+      "question": "Have you ever explored ways to earn money beyond regular work?",
+      "question_type": "single_choice",
+      "auto_progress": true,
+      "back_button": true,
+      "options": [
+        {"text": "Yes, occasional side gigs", "icon": "💸"},
+        {"text": "No, just a regular job", "icon": "🔧"},
+        {"text": "Freelanced for extra income", "icon": "📝✏️"}
+      ],
+      "design": {
+        "layout": "vertical_stack",
+        "card_style": "light_gray_simple",
+        "icon_size": "large"
+      }
+    },
+    {
+      "step_number": 18,
+      "step_type": "quiz_question",
+      "progress_indicator": "13-14 / 23",
+      "question": "Estimated - likely skills or interests questions",
+      "note": "Questions not captured but inferred from funnel flow"
+    },
+    {
+      "step_number": 19,
+      "step_type": "quiz_question",
+      "progress_indicator": "15 / 23",
+      "question": "Rate your knowledge in content writing",
+      "question_subtext": "According to Upwork, freelance content writer makes around $42,000 annually.",
+      "question_type": "single_choice",
+      "auto_progress": true,
+      "back_button": true,
+      "salary_benchmark": "$42,000 annually",
+      "options": [
+        {"text": "Expert", "icon": "🤩"},
+        {"text": "Proficient", "icon": "😏"},
+        {"text": "Intermediate", "icon": "🤔"},
+        {"text": "Novice", "icon": "😬"}
+      ],
+      "design": {
+        "layout": "vertical_stack",
+        "card_style": "light_gray_simple",
+        "icon_size": "large",
+        "stat_placement": "above_options"
+      },
+      "psychology": ["anchoring_with_salary", "skill_assessment", "income_potential"]
+    },
+    {
+      "step_number": 20,
+      "step_type": "quiz_question",
+      "progress_indicator": "16 / 23",
+      "question": "Rate your knowledge in digital marketing",
+      "question_subtext": "According to Upwork, digital marketer makes around $100,000 annually.",
+      "question_type": "single_choice",
+      "auto_progress": true,
+      "back_button": true,
+      "salary_benchmark": "$100,000 annually",
+      "options": [
+        {"text": "Expert", "icon": "🥳"},
+        {"text": "Proficient", "icon": "😜"},
+        {"text": "Intermediate", "icon": "🤔"},
+        {"text": "Novice", "icon": "😬"}
+      ],
+      "design": {
+        "layout": "vertical_stack",
+        "card_style": "light_gray_simple",
+        "icon_size": "large",
+        "stat_placement": "above_options"
+      },
+      "psychology": ["anchoring_with_high_salary", "skill_assessment", "income_potential"]
+    },
+    {
+      "step_number": 21,
+      "step_type": "quiz_question",
+      "progress_indicator": "17-19 / 23",
+      "note": "Additional skill rating questions - similar pattern"
+    },
+    {
+      "step_number": 22,
+      "step_type": "quiz_question",
+      "progress_indicator": "20 / 23",
+      "question": "Do you find it easy to maintain your focus?",
+      "question_type": "single_choice",
+      "auto_progress": true,
+      "back_button": true,
+      "options": [
+        {"text": "Yes, I can easily stay focused", "icon": "😌"},
+        {"text": "Mostly, but I sometimes get distracted", "icon": "😅"},
+        {"text": "I often struggle", "icon": "😢"},
+        {"text": "No, I frequently procrastinate", "icon": "😬"}
+      ],
+      "design": {
+        "layout": "vertical_stack",
+        "card_style": "light_gray_simple",
+        "icon_size": "large"
+      }
+    },
+    {
+      "step_number": 23,
+      "step_type": "interstitial_profile",
+      "content_type": "personalized_results",
+      "headline": "Here's Your AI-Driven Income Growth Profile",
+      "readiness_score": {
+        "label": "Readiness score",
+        "value": "Moderate",
+        "result": "Perfect",
+        "visual": "gradient_progress_bar",
+        "range": "LOW - INTERMEDIATE - HIGH"
+      },
+      "stat_highlight": {
+        "icon": "👍",
+        "text": "Impressive score to succeed in AI",
+        "subtext": "A study in 2022 found that workers who use AI tools in their work have 10-20% higher hourly rates than those who don't."
+      },
+      "profile_breakdown": [
+        {"attribute": "Motivation", "value": "High", "icon": "🎯"},
+        {"attribute": "Potential", "value": "High", "icon": "⭐"},
+        {"attribute": "Focus", "value": "Limited", "icon": "🕐"},
+        {"attribute": "AI Knowledge", "value": "Low", "icon": "💻"}
+      ],
+      "visual_element": "illustrated_confident_person",
+      "cta": {
+        "text": "CONTINUE",
+        "style": "large_purple_button"
+      },
+      "design": {
+        "layout": "card_based",
+        "background": "white",
+        "profile_card": "light_background_with_icons"
+      },
+      "psychology": ["personalization", "pattern_interrupt", "social_proof_with_stat", "positive_reinforcement"]
+    },
+    {
+      "step_number": 24,
+      "step_type": "quiz_question",
+      "progress_indicator": "22 / 23",
+      "question": "Is there something special you wish to achieve?",
+      "question_subtext": "You're more likely to reach your goal if you have something important to aim for",
+      "question_type": "single_choice",
+      "auto_progress": true,
+      "back_button": true,
+      "options": [
+        {"text": "Buy a house", "icon": "🏠"},
+        {"text": "A perfect wedding", "icon": "💍"},
+        {"text": "Vacation", "icon": "✈️"},
+        {"text": "Buy a car", "icon": "🚗"},
+        {"text": "Worry-free retirement", "icon": "🥂"},
+        {"text": "Other"}
+      ],
+      "design": {
+        "layout": "vertical_stack",
+        "card_style": "light_gray_simple",
+        "icon_size": "large"
+      },
+      "psychology": ["goal_setting", "emotional_connection", "visualization"]
+    },
+    {
+      "step_number": 25,
+      "step_type": "quiz_question_multiselect",
+      "progress_indicator": "18 / 23",
+      "question": "What fields would you personally like to try yourself in?",
+      "question_subtext": "Choose all that apply",
+      "question_type": "multi_select",
+      "auto_progress": false,
+      "back_button": true,
+      "options": [
+        {"text": "Graphic Design", "icon": "🎨"},
+        {"text": "Content Creation", "icon": "✏️"},
+        {"text": "Web Development", "icon": "💻"},
+        {"text": "Artificial Intelligence", "icon": "🤖"},
+        {"text": "Digital Marketing", "icon": "⭐"},
+        {"text": "Social Media Management"},
+        {"text": "Video Editing"},
+        {"text": "Photography"},
+        {"text": "E-commerce"},
+        {"text": "Consulting"}
+      ],
+      "cta": {
+        "text": "NEXT STEP",
+        "enabled_after": "any_selection"
+      },
+      "design": {
+        "layout": "vertical_stack_with_scroll",
+        "card_style": "selectable_buttons",
+        "icons": "emojis_where_applicable"
+      }
+    },
+    {
+      "step_number": 26,
+      "step_type": "quiz_question",
+      "progress_indicator": "23 / 23",
+      "question": "How much time are you ready to spend to achieve your goal?",
+      "question_type": "single_choice",
+      "auto_progress": true,
+      "back_button": true,
+      "visual_element": "illustration_person_celebrating",
+      "options": [
+        {"text": "5 min/day"},
+        {"text": "10 min/day"},
+        {"text": "15 min/day"},
+        {"text": "20 min/day"}
+      ],
+      "design": {
+        "layout": "vertical_stack",
+        "card_style": "light_gray_simple",
+        "decorative_image": "bottom_right_celebrating_person"
+      },
+      "psychology": ["commitment", "time_investment_framing", "low_barrier_entry"]
+    },
+    {
+      "step_number": 27,
+      "step_type": "interstitial_results",
+      "content_type": "personalized_timeline",
+      "headline": "Your Personal AI-Driven Income Growth Challenge",
+      "subheadline": "Based on your answers, we expect you to gain necessary skills of",
+      "main_message": "AI Master by Jan, 2026",
+      "visual_element": {
+        "type": "progress_chart",
+        "x_axis": ["Nov", "Dec", "Jan", "Feb"],
+        "y_axis": ["0", "50%", "100%"],
+        "current_level": "Beginner",
+        "goal_level": "AI Master",
+        "chart_style": "gradient_bars_red_to_green"
+      },
+      "goal_display": "Your goal: Buy a house",
+      "disclaimer": "Individual results may vary.",
+      "cta": {
+        "text": "CONTINUE",
+        "style": "large_purple_button"
+      },
+      "design": {
+        "background": "white",
+        "chart_card": "light_gray_background",
+        "goal_badge": "light_gray_pill"
+      },
+      "psychology": ["personalization", "goal_visualization", "timeline_anchoring", "specificity"]
+    },
+    {
+      "step_number": 28,
+      "step_type": "loading_social_proof",
+      "content_type": "animated_loader_with_testimonial",
+      "headline": "Creating your personal challenge...",
+      "loader": {
+        "type": "circular_progress",
+        "percentage_display": true,
+        "animation": "smooth_progression"
+      },
+      "social_proof": {
+        "stat": "600,000+ people",
+        "subtext": "have chosen Coursiv"
+      },
+      "testimonial": {
+        "rating": "5_stars_trustpilot",
+        "title": "The experience is topnotch",
+        "author": "Jeremy",
+        "quote": "The AI knowledge I've gained from the program can be immediately applied in my job. I've acquired skills that enhance my efficiency and effectiveness at work."
+      },
+      "attribution": "Featured reviews from Trustpilot.",
+      "design": {
+        "background": "white",
+        "loader_color": "purple_gradient",
+        "social_proof_box": "light_purple_background",
+        "testimonial_card": "white_with_shadow"
+      },
+      "psychology": ["anticipation", "social_proof", "credibility", "time_on_page"]
+    },
+    {
+      "step_number": 29,
+      "step_type": "email_permission",
+      "url_path": "/dynamic/email-page",
+      "headline": "Do you want to receive emails with AI & Income Growth tips and product updates?",
+      "question_type": "binary_choice",
+      "options": [
+        {
+          "text": "YES, I'M IN!",
+          "style": "large_purple_button_primary",
+          "action": "subscribe_and_continue"
+        },
+        {
+          "text": "I DON'T WANT TO RECEIVE TIPS OR UPDATES",
+          "style": "gray_text_link_secondary",
+          "action": "skip_and_continue"
+        }
+      ],
+      "design": {
+        "background": "white",
+        "headline_style": "large_bold_with_purple_highlight",
+        "layout": "centered_vertical"
+      },
+      "psychology": ["opt_in_framing", "value_proposition", "low_pressure_opt_out"]
+    },
+    {
+      "step_number": 30,
+      "step_type": "interstitial_pathway",
+      "url_path": "/dynamic/pathway-page",
+      "headline": "Your 4-week AI-Driven Income Growth Challenge is ready!",
+      "content_type": "readiness_chart",
+      "readiness_chart": {
+        "title": "Your readiness level",
+        "visual": "curved_progress_line",
+        "start_point": "Now",
+        "end_point": "After 4 weeks",
+        "color_gradient": "red_to_yellow_to_green",
+        "timeline": ["Week 1", "Week 2", "Week 3", "Week 4"]
+      },
+      "disclaimer": "This chart is for illustrative purposes only",
+      "cta": {
+        "text": "CONTINUE",
+        "style": "large_purple_button"
+      },
+      "design": {
+        "background": "white",
+        "chart_card": "light_gray_background",
+        "text_alignment": "center"
+      },
+      "psychology": ["visualization", "progress_promise", "time_bounded_commitment"]
+    },
+    {
+      "step_number": 31,
+      "step_type": "paywall_conversion",
+      "url_path": "/dynamic/selling-page",
+      "page_title": "Get My Plan - Final Conversion",
+      "sticky_elements": {
+        "countdown_timer": {
+          "text": "Discount expires in",
+          "initial_time": "09:59",
+          "format": "MM:SS",
+          "position": "top_left"
+        },
+        "cta_button": {
+          "text": "GET MY PLAN",
+          "position": "top_right_sticky",
+          "style": "large_purple_button"
+        }
+      },
+      "hero_section": {
+        "comparison_visual": {
+          "layout": "side_by_side",
+          "left_side": {
+            "label": "Now",
+            "image": "frustrated_person_covering_face",
+            "ai_skills": {"level": "Moderate", "color": "orange_yellow"},
+            "income_potential": {"level": "Limited", "color": "blue"}
+          },
+          "right_side": {
+            "label": "Goal",
+            "image": "confident_smiling_person",
+            "money_indicators": ["+35%", "+45%", "+72%"],
+            "ai_skills": {"level": "High", "color": "green"},
+            "income_potential": {"level": "High", "color": "blue"}
+          }
+        },
+        "disclaimer": "This is not a guarantee or promise of results."
+      },
+      "readiness_section": {
+        "text": "Your readiness: 83%",
+        "highlight_color": "green",
+        "recommendation": {
+          "icon": "💡",
+          "text": "4-week program is enough for you to start your AI journey"
+        }
+      },
+      "testimonials": [
+        {
+          "author": "@der_kennndy1",
+          "avatar": "😎",
+          "rating": "5_stars",
+          "quote": "The learning is straightforward and has all the necessary information! It serves as a great starting point if you are new to AI."
+        },
+        {
+          "author": "@dexter_brechtefeld",
+          "avatar": "😎",
+          "rating": "5_stars",
+          "quote": "Coursiv's wide range of educational materials and interactive features enables users of all levels to easily understand complicated AI principles. Kudos to Coursiv for pioneering a new approach to AI learning!"
+        },
+        {
+          "author": "@pattykivuva",
+          "avatar": "😎",
+          "rating": "5_stars",
+          "quote": "Coursiv has simplified understanding complex topics and enhancing my skills across subjects. The customized learning tailored to my needs has significantly boosted my progress towards achieving my goals."
+        }
+      ],
+      "pricing": {
+        "model": "subscription",
+        "trial_period": "4 weeks",
+        "trial_price": "€19.99",
+        "recurring_price": "€39.99",
+        "recurring_interval": "every 4 weeks",
+        "currency": "EUR",
+        "taxes": "excluding taxes",
+        "auto_renewal": true,
+        "cancellation": "anytime via Subscription Terms"
+      },
+      "legal_consent": {
+        "checkbox": {
+          "text": "I agree to the Terms and Conditions, Privacy Policy, Subscription Policy and Refund Policy",
+          "required": true,
+          "links": ["Terms and Conditions", "Privacy Policy", "Subscription Policy", "Refund Policy"]
+        },
+        "subscription_terms": "By clicking \"Get My Plan\", you agree to automatic subscription renewal to Coursiv: first 4 weeks at €19.99, then €39.99 every 4 weeks (both excluding taxes) until you cancel. You can cancel anytime via Subscription Terms"
+      },
+      "guarantee": {
+        "icon": "green_badge_with_checkmark",
+        "headline": "Money-Back Guarantee",
+        "body": "We are so confident in our service that we are ready to offer a full refund within 30 days of your initial purchase OR before the end of your first subscription period, whichever comes first. Additional terms and conditions apply.",
+        "link_text": "For full details, please review our complete refund policy here."
+      },
+      "mobile_app_showcase": {
+        "headline": "Access Coursiv anywhere using your mobile device",
+        "visuals": "three_mobile_device_mockups",
+        "screens_shown": ["schedule", "recommended_courses", "mastering_progress"]
+      },
+      "cta_buttons": [
+        {
+          "position": "top_sticky",
+          "text": "GET MY PLAN",
+          "style": "large_purple_with_shadow"
+        },
+        {
+          "position": "after_terms",
+          "text": "GET MY PLAN",
+          "style": "large_purple_with_shadow"
+        }
+      ],
+      "footer": "Coursiv Limited. Limassol, Cyprus",
+      "design": {
+        "background": "white",
+        "sections": "clearly_separated",
+        "sticky_header": "countdown_and_cta",
+        "comparison_card": "light_gray_background",
+        "testimonials": "white_cards_with_avatars"
+      },
+      "psychology": [
+        "urgency_countdown",
+        "before_after_transformation",
+        "social_proof_testimonials",
+        "risk_reversal_guarantee",
+        "multiple_ctas",
+        "commitment_device_checkbox",
+        "value_demonstration",
+        "mobile_first_showcase",
+        "anchoring_with_readiness_score"
+      ]
+    }
+  ],
+
+  "key_patterns": {
+    "progression_mechanism": "auto_progress_on_single_choice",
+    "multi_select_pattern": "NEXT_STEP_button_appears",
+    "back_button": "available_on_all_quiz_questions",
+    "progress_indicator": "X / 23 format with visual progress bar",
+    "interstitials": "strategic_pattern_interrupts_every_3-5_questions",
+    "personalization": "high - displays user's selected goal throughout",
+    "visual_consistency": "illustrated_people_and_emojis_throughout"
+  },
+
+  "design_system": {
+    "colors": {
+      "primary": "#5B4FFF (vibrant purple)",
+      "secondary": "#E8E6FF (light purple)",
+      "accent": "#50C878 (green for positive)",
+      "text_primary": "#1A1A1A (dark)",
+      "text_secondary": "#6B7280 (gray)",
+      "background": "#FFFFFF (white)",
+      "card_background": "#F3F4F6 (light gray)"
+    },
+    "typography": {
+      "headline": "bold, large, dark navy",
+      "question": "bold, 28-32px",
+      "options": "medium, 18-20px",
+      "body": "regular, 16px",
+      "subtext": "regular, 14px, gray"
+    },
+    "spacing": {
+      "question_to_options": "large (40px)",
+      "between_options": "medium (16px)",
+      "card_padding": "24px",
+      "section_spacing": "60px"
+    },
+    "buttons": {
+      "primary": "purple, white text, rounded, large padding, shadow",
+      "option_cards": "gray background, rounded 12px, hover effect",
+      "selected_state": "purple background, white text"
+    },
+    "illustrations": {
+      "style": "modern, friendly, diverse",
+      "avatar_style": "semi-realistic digital art",
+      "emoji_usage": "extensive for quick visual recognition"
+    }
+  },
+
+  "ux_patterns": {
+    "question_types": [
+      "single_choice_visual (with illustrations)",
+      "single_choice_emoji (with emoji icons)",
+      "multi_select (with NEXT STEP button)",
+      "skill_rating (with salary benchmarks)"
+    ],
+    "navigation": {
+      "forward": "auto_progress_on_click",
+      "backward": "back_button_on_every_question",
+      "skip": "not_allowed",
+      "progress_visible": "always"
+    },
+    "friction_points": {
+      "multi_select_questions": "requires_explicit_next_step",
+      "email_permission": "allows_opt_out",
+      "terms_checkbox": "required_before_purchase"
+    },
+    "delight_moments": [
+      "smooth_transitions_between_questions",
+      "personalized_results_pages",
+      "visual_progress_indicators",
+      "emoji_and_illustration_variety"
+    ]
+  },
+
+  "conversion_psychology": {
+    "tactics_employed": [
+      {
+        "tactic": "Countdown Timer",
+        "location": "Final paywall",
+        "description": "10-minute countdown creating urgency for discount",
+        "principle": "Scarcity / Loss Aversion"
+      },
+      {
+        "tactic": "Social Proof - Volume",
+        "location": "Quote page & Loading page",
+        "description": "600,000+ people statistic",
+        "principle": "Bandwagon Effect"
+      },
+      {
+        "tactic": "Authority Signals",
+        "location": "Quote page",
+        "description": "Harvard Business Review quote + media logos (TIME, WIRED, Forbes, etc.)",
+        "principle": "Authority / Credibility"
+      },
+      {
+        "tactic": "Salary Anchoring",
+        "location": "Skills questions (Q15, Q16)",
+        "description": "$42k-$100k salary benchmarks from Upwork",
+        "principle": "Anchoring / Income Aspiration"
+      },
+      {
+        "tactic": "Before/After Transformation",
+        "location": "Final paywall",
+        "description": "Frustrated vs confident person with income percentages",
+        "principle": "Contrast / Transformation Promise"
+      },
+      {
+        "tactic": "Personalized Results",
+        "location": "Multiple interstitials",
+        "description": "Custom profile, readiness score (83%), timeline",
+        "principle": "Personalization / Investment"
+      },
+      {
+        "tactic": "Readiness Score",
+        "location": "Profile page & Paywall",
+        "description": "83% readiness with perfect result",
+        "principle": "Positive Reinforcement / Self-Efficacy"
+      },
+      {
+        "tactic": "Statistical Authority",
+        "location": "Stability interstitial",
+        "description": "63% anxiety stat, 10-20% higher rates with AI",
+        "principle": "Problem Agitation / Social Proof"
+      },
+      {
+        "tactic": "Goal Visualization",
+        "location": "Special goal question + Results",
+        "description": "Personal goal (e.g., 'Buy a house') shown throughout",
+        "principle": "Emotional Connection / Commitment"
+      },
+      {
+        "tactic": "Progress Charts",
+        "location": "Results pages",
+        "description": "Visual progression from Beginner to AI Master",
+        "principle": "Hope / Achievability"
+      },
+      {
+        "tactic": "Low Time Commitment",
+        "location": "Final question",
+        "description": "5-20 min/day options (lowest = 5min)",
+        "principle": "Friction Reduction"
+      },
+      {
+        "tactic": "Money-Back Guarantee",
+        "location": "Final paywall",
+        "description": "30-day full refund promise",
+        "principle": "Risk Reversal"
+      },
+      {
+        "tactic": "Testimonial Stacking",
+        "location": "Paywall",
+        "description": "3 detailed 5-star reviews from named users",
+        "principle": "Social Proof / Trust"
+      },
+      {
+        "tactic": "Mobile App Showcase",
+        "location": "Paywall bottom",
+        "description": "3 device mockups showing app interface",
+        "principle": "Tangibility / Product Demonstration"
+      },
+      {
+        "tactic": "Micro-Commitments",
+        "location": "Throughout quiz",
+        "description": "23 small yes/no decisions building commitment",
+        "principle": "Consistency / Foot-in-the-Door"
+      },
+      {
+        "tactic": "Recommended Program",
+        "location": "Final paywall",
+        "description": "4-week program specifically recommended for user",
+        "principle": "Personalization / Expert Guidance"
+      },
+      {
+        "tactic": "Pattern Interrupts",
+        "location": "Every 3-5 questions",
+        "description": "Motivational interstitials with visuals",
+        "principle": "Zeigarnik Effect / Engagement"
+      },
+      {
+        "tactic": "Dual CTA Placement",
+        "location": "Paywall",
+        "description": "Sticky top CTA + bottom CTA after content",
+        "principle": "Conversion Optimization"
+      },
+      {
+        "tactic": "1-Minute Quiz Promise",
+        "location": "Entry pages",
+        "description": "Sets low time expectation upfront",
+        "principle": "Friction Reduction"
+      },
+      {
+        "tactic": "Email Opt-Out Available",
+        "location": "Email permission page",
+        "description": "Allows users to decline email but still proceed",
+        "principle": "Trust / Transparency"
+      }
+    ]
+  },
+
+  "monetization": {
+    "pricing_structure": {
+      "offer_type": "subscription_with_trial_discount",
+      "trial": {
+        "duration": "4 weeks",
+        "price": "€19.99",
+        "label": "discounted_introductory"
+      },
+      "recurring": {
+        "price": "€39.99",
+        "interval": "every 4 weeks",
+        "auto_renewal": true
+      },
+      "payment_terms": "Prices exclude taxes. Auto-renewal unless cancelled 24 hours before period ends."
+    },
+    "value_proposition": [
+      "AI skills training",
+      "Income growth potential (10-20% higher rates)",
+      "Flexible learning (5-20 min/day)",
+      "Mobile access",
+      "Personalized learning path",
+      "Multiple high-income skills (content writing, digital marketing, etc.)"
+    ],
+    "risk_reversal": {
+      "guarantee": "30-day money-back OR before end of first period (whichever first)",
+      "conditions": "Must show engagement with program",
+      "trust_signals": ["Trustpilot reviews", "600k+ users", "Harvard quote"]
+    }
+  },
+
+  "technical_implementation": {
+    "url_structure": "dynamic_routing_with_query_params",
+    "state_management": "URL_based_step_tracking",
+    "progress_tracking": "step parameter in URL",
+    "user_data": "likely stored via tid parameter and cookies",
+    "animations": {
+      "page_transitions": "smooth_fade",
+      "progress_bar": "animated_fill",
+      "loader": "circular_with_percentage",
+      "button_hovers": "subtle_scale_and_shadow"
+    }
+  },
+
+  "competitor_comparison": {
+    "vs_copymind": {
+      "similarities": [
+        "Quiz-based funnel",
+        "Gender + Age segmentation",
+        "Social proof with user count",
+        "Authority quote and media logos",
+        "Interstitial pattern interrupts",
+        "Personalized results pages",
+        "Email capture before paywall",
+        "Subscription pricing model",
+        "Money-back guarantee",
+        "Countdown timer on paywall",
+        "Before/after visual comparison",
+        "Progress indicators",
+        "Back buttons available",
+        "Emoji and illustration usage"
+      ],
+      "differences": [
+        "Coursiv: 23 questions vs Copymind: ~25-30 questions",
+        "Coursiv: Income/career focus vs Copymind: Decision-making/psychology focus",
+        "Coursiv: Salary benchmarking throughout vs Copymind: Personality insights",
+        "Coursiv: Email opt-out available vs Copymind: Email required",
+        "Coursiv: Explicit skill rating vs Copymind: Psychological assessments",
+        "Coursiv: 4-week program vs Copymind: 1/4/12 week options",
+        "Coursiv: €19.99 trial vs Copymind: Various pricing tiers",
+        "Coursiv: Income growth promise vs Copymind: AI decision-making twin",
+        "Coursiv: More professional/business tone vs Copymind: More personal/psychological",
+        "Coursiv: Single plan recommendation vs Copymind: 3-tier selection"
+      ]
+    }
+  },
+
+  "strengths": [
+    "Clear value proposition (income growth via AI skills)",
+    "Strong authority signals (Harvard, major media)",
+    "Salary anchoring creates aspiration",
+    "Low time commitment (5 min/day option)",
+    "Transparent opt-out for emails",
+    "Comprehensive money-back guarantee",
+    "Mobile app demonstration",
+    "Readiness score creates positive reinforcement",
+    "Visual before/after comparison",
+    "Specific timeline (AI Master by Jan 2026)",
+    "Trustpilot integration for credibility"
+  ],
+
+  "potential_optimizations": [
+    "Consider A/B testing countdown timer duration",
+    "Test multiple pricing tiers vs single recommendation",
+    "Add video testimonials for higher engagement",
+    "Test removing email opt-out to increase list",
+    "Add specific course previews/curriculum",
+    "Test different trial periods (1 week vs 4 weeks)",
+    "Add income calculator tool",
+    "Test urgency messaging variations",
+    "Add chat support widget for objection handling",
+    "Test different readiness score thresholds"
+  ]
+}
+
