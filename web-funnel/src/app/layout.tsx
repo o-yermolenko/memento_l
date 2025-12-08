@@ -18,6 +18,7 @@ export const viewport: Viewport = {
 }
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://memento.app'),
   title: 'Memento - Your Personalized Emotional Wellness Journey',
   description: 'Take a 3-minute assessment to discover your Emotional Blueprint and get a personalized plan for lasting inner stability.',
   keywords: 'emotional wellness, mental health, emotional intelligence, anxiety relief, stress management, AI companion',

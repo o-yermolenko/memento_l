@@ -61,7 +61,7 @@ export const useFunnelStore = create<FunnelState>()(
   persist(
     (set, get) => ({
       currentStep: 0,
-      totalSteps: 36,
+      totalSteps: 37,
       profile: initialProfile,
       answers: [],
       emotionalBlueprintScore: 0,

@@ -364,7 +364,6 @@ export type ScreenType =
   | 'name_capture'
   | 'loading'
   | 'results_summary'
-  | 'transformation'
   | 'plan_ready'
   | 'paywall'
 
@@ -431,11 +430,10 @@ export const funnelFlow: ScreenConfig[] = [
   // Results
   { type: 'loading' },                    // 33
   { type: 'results_summary' },            // 34
-  { type: 'transformation' },             // 35
-  { type: 'plan_ready' },                 // 36
+  { type: 'plan_ready' },                 // 35
   
   // Conversion
-  { type: 'paywall' },                    // 37
+  { type: 'paywall' },                    // 36
 ]
 
 export const getQuestionNumber = (stepIndex: number): number => {
