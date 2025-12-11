@@ -196,9 +196,13 @@ async function handleInvoicePaid(
   invoice: Stripe.Invoice,
   supabase: ReturnType<typeof createServerClient>
 ) {
+  const subscriptionId = typeof invoice.subscription === 'string' 
+    ? invoice.subscription 
+    : invoice.subscription?.id
+
   console.log('Invoice paid:', {
     id: invoice.id,
-    subscriptionId: invoice.subscription,
+    subscriptionId,
     amountPaid: invoice.amount_paid,
   })
 
@@ -209,16 +213,20 @@ async function handleInvoicePaymentFailed(
   invoice: Stripe.Invoice,
   supabase: ReturnType<typeof createServerClient>
 ) {
+  const subscriptionId = typeof invoice.subscription === 'string' 
+    ? invoice.subscription 
+    : invoice.subscription?.id
+
   console.log('Invoice payment failed:', {
     id: invoice.id,
-    subscriptionId: invoice.subscription,
+    subscriptionId,
   })
 
   // Update purchase status
-  if (invoice.subscription) {
+  if (subscriptionId) {
     await supabase
       .from('purchases')
       .update({ status: 'failed' })
-      .eq('payment_id', invoice.subscription as string)
+      .eq('payment_id', subscriptionId)
   }
 }
