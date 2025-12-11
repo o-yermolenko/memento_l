@@ -316,12 +316,50 @@ export default function PaywallScreen() {
             <Shield className="w-5 h-5" />
             <span className="font-medium">Pay Safe & Secure</span>
           </div>
-          <div className="flex gap-2">
-            {['PayPal', 'Apple Pay', 'Visa', 'MC', 'Maestro', 'Discover', 'Amex'].map((payment) => (
-              <div key={payment} className="w-10 h-6 bg-white border border-gray-200 rounded flex items-center justify-center text-xs font-bold text-text-tertiary">
-                {payment.substring(0, 2)}
-              </div>
-            ))}
+          <div className="flex gap-2 flex-wrap justify-center">
+            {/* PayPal */}
+            <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
+              <svg viewBox="0 0 101 32" className="h-5 w-auto">
+                <path fill="#003087" d="M12.5 3.8h7.2c3.5 0 6.3 1.1 6.7 5.1.3 2.8-.6 4.7-2.5 5.9 2.4.9 3.8 2.9 3.4 6.2-.5 4.5-3.8 6.8-8.5 6.8H8.1c-.5 0-.9.4-1 .9L5.3 39h-5l5.2-34.3c.1-.5.5-.9 1-.9h6zm4.3 10.3h2.5c1.7 0 3-.7 3.2-2.5.2-1.6-.8-2.5-2.5-2.5h-2.4l-.8 5zm-.8 5.1l-.9 5.5h2.9c1.8 0 3.2-.8 3.5-2.8.2-1.8-.8-2.7-2.6-2.7h-2.9z"/>
+                <path fill="#009cde" d="M38.7 3.8h7.2c3.5 0 6.3 1.1 6.7 5.1.3 2.8-.6 4.7-2.5 5.9 2.4.9 3.8 2.9 3.4 6.2-.5 4.5-3.8 6.8-8.5 6.8h-10.7c-.5 0-.9.4-1 .9L31.5 39h-5l5.2-34.3c.1-.5.5-.9 1-.9h6zm4.3 10.3h2.5c1.7 0 3-.7 3.2-2.5.2-1.6-.8-2.5-2.5-2.5h-2.4l-.8 5zm-.8 5.1l-.9 5.5h2.9c1.8 0 3.2-.8 3.5-2.8.2-1.8-.8-2.7-2.6-2.7h-2.9z"/>
+              </svg>
+            </div>
+            {/* Apple Pay */}
+            <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
+              <svg viewBox="0 0 50 20" className="h-5 w-auto">
+                <path fill="#000" d="M9.2 3c.6-.8 1-1.8.9-2.8-.9 0-2 .6-2.6 1.4-.6.6-1 1.7-.9 2.7 1 0 1.9-.6 2.6-1.3zm.9 1.4c-1.4-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.9-.7-1.5 0-2.8.9-3.6 2.2-1.5 2.6-.4 6.5 1.1 8.6.7 1 1.6 2.2 2.8 2.1 1.1 0 1.5-.7 2.8-.7 1.3 0 1.7.7 2.9.7 1.2 0 2-1 2.7-2 .9-1.2 1.2-2.3 1.2-2.4 0 0-2.4-1-2.4-3.7 0-2.3 1.9-3.4 2-3.5-.9-1.4-2.4-1.5-2.9-1.6zm12.8-2.2v14.6h2.3V12h3.2c2.9 0 5-2 5-5 0-3-2-5-4.9-5h-5.6zm2.3 2h2.6c2 0 3.2 1.1 3.2 3s-1.1 3-3.2 3h-2.6V4.2zm12.8 12.8c1.4 0 2.8-.7 3.4-1.9h0v1.8h2.1V9.3c0-2.2-1.7-3.5-4.4-3.5-2.4 0-4.3 1.4-4.4 3.3h2.1c.2-1 1.1-1.6 2.2-1.6 1.4 0 2.2.7 2.2 1.9v.9l-2.9.2c-2.7.2-4.2 1.3-4.2 3.2 0 2 1.6 3.3 3.9 3.3zm.6-1.8c-1.2 0-2-.6-2-1.5 0-1 .8-1.5 2.2-1.6l2.6-.2v.9c0 1.4-1.2 2.4-2.8 2.4zm7.4 6c2.2 0 3.3-.9 4.2-3.5l4-11.1h-2.4l-2.7 8.6h0l-2.7-8.6h-2.4l3.9 10.8-.2.7c-.4 1.2-1 1.6-2.1 1.6-.2 0-.6 0-.7 0v1.8c.2 0 .8.1 1.1.1z"/>
+              </svg>
+            </div>
+            {/* Visa */}
+            <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
+              <svg viewBox="0 0 50 16" className="h-4 w-auto">
+                <path fill="#1A1F71" d="M19.5 15.5h-3.9l2.4-15h3.9l-2.4 15zM33.7.5l-3.7 15h-3.7l.2-.8c-1.1.6-2.4 1-3.7 1-3.4 0-5.8-2.6-5.8-6.3 0-4.9 3.4-9.1 8.3-9.1 1.4 0 2.8.4 3.9 1.1l.4-1.9h4.1zm-5.2 9.8c1.8 0 3.3-1.5 3.3-3.5 0-1.3-.9-2.3-2.3-2.3-1.8 0-3.3 1.5-3.3 3.5 0 1.3.9 2.3 2.3 2.3zM44.7.5L41 15.5h-3.6l2.2-9.1-4.4 9.1h-2.7l-.5-9.2-2.1 9.2h-3.5l3.7-15h5.2l.3 7.5 3.6-7.5h5.5zM47.9.5l-3.7 15h-3.5l3.7-15h3.5z"/>
+              </svg>
+            </div>
+            {/* Mastercard */}
+            <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
+              <svg viewBox="0 0 40 24" className="h-5 w-auto">
+                <rect fill="#FF5F00" x="14.5" y="4" width="11" height="16"/>
+                <path fill="#EB001B" d="M15.5 12c0-3.2 1.5-6 3.8-8-1.7-1.3-3.8-2-6-2C7.1 2 2 7.5 2 12s5.1 10 11.3 10c2.2 0 4.3-.7 6-2-2.3-2-3.8-4.8-3.8-8z"/>
+                <path fill="#F79E1B" d="M38 12c0 4.5-5.1 10-11.3 10-2.2 0-4.3-.7-6-2 2.3-2 3.8-4.8 3.8-8s-1.5-6-3.8-8c1.7-1.3 3.8-2 6-2C32.9 2 38 7.5 38 12z"/>
+              </svg>
+            </div>
+            {/* Maestro */}
+            <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
+              <svg viewBox="0 0 40 24" className="h-5 w-auto">
+                <rect fill="#6C6BBD" x="14.5" y="4" width="11" height="16"/>
+                <path fill="#EB001B" d="M15.5 12c0-3.2 1.5-6 3.8-8-1.7-1.3-3.8-2-6-2C7.1 2 2 7.5 2 12s5.1 10 11.3 10c2.2 0 4.3-.7 6-2-2.3-2-3.8-4.8-3.8-8z"/>
+                <path fill="#00A2E5" d="M38 12c0 4.5-5.1 10-11.3 10-2.2 0-4.3-.7-6-2 2.3-2 3.8-4.8 3.8-8s-1.5-6-3.8-8c1.7-1.3 3.8-2 6-2C32.9 2 38 7.5 38 12z"/>
+              </svg>
+            </div>
+            {/* Discover */}
+            <div className="h-8 px-2 bg-[#F6F6F6] border border-gray-200 rounded flex items-center justify-center">
+              <span className="text-xs font-bold text-[#FF6600]">DISCOVER</span>
+            </div>
+            {/* Amex */}
+            <div className="h-8 px-2 bg-[#006FCF] border border-gray-200 rounded flex items-center justify-center">
+              <span className="text-xs font-bold text-white">AMEX</span>
+            </div>
           </div>
         </div>
 
@@ -359,23 +397,51 @@ export default function PaywallScreen() {
             Emotional Blueprint!
           </h3>
           
-          {/* Gauge Chart */}
-          <div className="relative w-56 h-32 mx-auto mb-6">
-            <svg viewBox="0 0 120 70" className="w-full h-full overflow-visible">
+          {/* Multi-Arc Gauge Chart - Liven Style */}
+          <div className="relative w-72 h-40 mx-auto mb-6">
+            <svg viewBox="0 0 200 120" className="w-full h-full overflow-visible">
               <defs>
-                <linearGradient id="gaugeGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <linearGradient id="gaugeGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
                   <stop offset="0%" stopColor="#D94F30" />
-                  <stop offset="50%" stopColor="#EAB308" />
+                  <stop offset="100%" stopColor="#F59E0B" />
+                </linearGradient>
+                <linearGradient id="gaugeGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#F59E0B" />
                   <stop offset="100%" stopColor="#22C55E" />
                 </linearGradient>
+                <linearGradient id="gaugeGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stopColor="#22C55E" />
+                  <stop offset="100%" stopColor="#16A34A" />
+                </linearGradient>
               </defs>
-              <path d="M 15 55 A 45 45 0 0 1 105 55" fill="none" stroke="url(#gaugeGrad)" strokeWidth="10" strokeLinecap="round" />
-              <circle cx="22" cy="44" r="5" fill="#D94F30" stroke="white" strokeWidth="2" />
-              <circle cx="60" cy="12" r="5" fill="#EAB308" stroke="white" strokeWidth="2" />
-              <circle cx="98" cy="44" r="5" fill="#22C55E" stroke="white" strokeWidth="2" />
-              <text x="10" y="32" fontSize="9" fontWeight="bold" fill="#D94F30">45%</text>
-              <text x="52" y="6" fontSize="9" fontWeight="bold" fill="#D94F30">77%</text>
-              <text x="90" y="32" fontSize="9" fontWeight="bold" fill="#22C55E">83%</text>
+              
+              {/* Three concentric arcs with gradient fills */}
+              {/* Inner arc - smallest */}
+              <path d="M 45 95 A 55 55 0 0 1 155 95" fill="none" stroke="url(#gaugeGrad1)" strokeWidth="18" strokeLinecap="round" opacity="0.3"/>
+              {/* Middle arc */}
+              <path d="M 35 95 A 65 65 0 0 1 165 95" fill="none" stroke="url(#gaugeGrad2)" strokeWidth="18" strokeLinecap="round" opacity="0.5"/>
+              {/* Outer arc - largest */}
+              <path d="M 25 95 A 75 75 0 0 1 175 95" fill="none" stroke="url(#gaugeGrad3)" strokeWidth="18" strokeLinecap="round" opacity="0.8"/>
+              
+              {/* Filled portion overlays */}
+              <path d="M 45 95 A 55 55 0 0 1 70 52" fill="none" stroke="#D94F30" strokeWidth="18" strokeLinecap="round"/>
+              <path d="M 35 95 A 65 65 0 0 1 100 30" fill="none" stroke="#F59E0B" strokeWidth="18" strokeLinecap="round"/>
+              <path d="M 25 95 A 75 75 0 0 1 145 35" fill="none" stroke="#22C55E" strokeWidth="18" strokeLinecap="round"/>
+              
+              {/* Dotted connector lines */}
+              <line x1="55" y1="58" x2="40" y2="35" stroke="#666" strokeWidth="1" strokeDasharray="2,2"/>
+              <line x1="100" y1="30" x2="100" y2="8" stroke="#666" strokeWidth="1" strokeDasharray="2,2"/>
+              <line x1="150" y1="45" x2="165" y2="25" stroke="#666" strokeWidth="1" strokeDasharray="2,2"/>
+              
+              {/* Percentage markers with circles */}
+              <circle cx="40" cy="30" r="6" fill="white" stroke="#D94F30" strokeWidth="2"/>
+              <circle cx="100" cy="5" r="6" fill="white" stroke="#F59E0B" strokeWidth="2"/>
+              <circle cx="168" cy="22" r="6" fill="white" stroke="#22C55E" strokeWidth="2"/>
+              
+              {/* Percentage labels */}
+              <text x="28" y="20" fontSize="12" fontWeight="600" fill="#1F1A17">45%</text>
+              <text x="92" y="-5" fontSize="12" fontWeight="600" fill="#1F1A17">77%</text>
+              <text x="168" y="12" fontSize="12" fontWeight="600" fill="#1F1A17">83%</text>
             </svg>
           </div>
 
@@ -583,12 +649,50 @@ export default function PaywallScreen() {
               <Shield className="w-5 h-5" />
               <span className="font-medium">Pay Safe & Secure</span>
             </div>
-            <div className="flex gap-2">
-              {['PayPal', 'Apple Pay', 'Visa', 'MC', 'Maestro', 'Discover', 'Amex'].map((payment) => (
-                <div key={`repeat-${payment}`} className="w-10 h-6 bg-white border border-gray-200 rounded flex items-center justify-center text-xs font-bold text-text-tertiary">
-                  {payment.substring(0, 2)}
-                </div>
-              ))}
+            <div className="flex gap-2 flex-wrap justify-center">
+              {/* PayPal */}
+              <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
+                <svg viewBox="0 0 101 32" className="h-5 w-auto">
+                  <path fill="#003087" d="M12.5 3.8h7.2c3.5 0 6.3 1.1 6.7 5.1.3 2.8-.6 4.7-2.5 5.9 2.4.9 3.8 2.9 3.4 6.2-.5 4.5-3.8 6.8-8.5 6.8H8.1c-.5 0-.9.4-1 .9L5.3 39h-5l5.2-34.3c.1-.5.5-.9 1-.9h6zm4.3 10.3h2.5c1.7 0 3-.7 3.2-2.5.2-1.6-.8-2.5-2.5-2.5h-2.4l-.8 5zm-.8 5.1l-.9 5.5h2.9c1.8 0 3.2-.8 3.5-2.8.2-1.8-.8-2.7-2.6-2.7h-2.9z"/>
+                  <path fill="#009cde" d="M38.7 3.8h7.2c3.5 0 6.3 1.1 6.7 5.1.3 2.8-.6 4.7-2.5 5.9 2.4.9 3.8 2.9 3.4 6.2-.5 4.5-3.8 6.8-8.5 6.8h-10.7c-.5 0-.9.4-1 .9L31.5 39h-5l5.2-34.3c.1-.5.5-.9 1-.9h6zm4.3 10.3h2.5c1.7 0 3-.7 3.2-2.5.2-1.6-.8-2.5-2.5-2.5h-2.4l-.8 5zm-.8 5.1l-.9 5.5h2.9c1.8 0 3.2-.8 3.5-2.8.2-1.8-.8-2.7-2.6-2.7h-2.9z"/>
+                </svg>
+              </div>
+              {/* Apple Pay */}
+              <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
+                <svg viewBox="0 0 50 20" className="h-5 w-auto">
+                  <path fill="#000" d="M9.2 3c.6-.8 1-1.8.9-2.8-.9 0-2 .6-2.6 1.4-.6.6-1 1.7-.9 2.7 1 0 1.9-.6 2.6-1.3zm.9 1.4c-1.4-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.9-.7-1.5 0-2.8.9-3.6 2.2-1.5 2.6-.4 6.5 1.1 8.6.7 1 1.6 2.2 2.8 2.1 1.1 0 1.5-.7 2.8-.7 1.3 0 1.7.7 2.9.7 1.2 0 2-1 2.7-2 .9-1.2 1.2-2.3 1.2-2.4 0 0-2.4-1-2.4-3.7 0-2.3 1.9-3.4 2-3.5-.9-1.4-2.4-1.5-2.9-1.6zm12.8-2.2v14.6h2.3V12h3.2c2.9 0 5-2 5-5 0-3-2-5-4.9-5h-5.6zm2.3 2h2.6c2 0 3.2 1.1 3.2 3s-1.1 3-3.2 3h-2.6V4.2zm12.8 12.8c1.4 0 2.8-.7 3.4-1.9h0v1.8h2.1V9.3c0-2.2-1.7-3.5-4.4-3.5-2.4 0-4.3 1.4-4.4 3.3h2.1c.2-1 1.1-1.6 2.2-1.6 1.4 0 2.2.7 2.2 1.9v.9l-2.9.2c-2.7.2-4.2 1.3-4.2 3.2 0 2 1.6 3.3 3.9 3.3zm.6-1.8c-1.2 0-2-.6-2-1.5 0-1 .8-1.5 2.2-1.6l2.6-.2v.9c0 1.4-1.2 2.4-2.8 2.4zm7.4 6c2.2 0 3.3-.9 4.2-3.5l4-11.1h-2.4l-2.7 8.6h0l-2.7-8.6h-2.4l3.9 10.8-.2.7c-.4 1.2-1 1.6-2.1 1.6-.2 0-.6 0-.7 0v1.8c.2 0 .8.1 1.1.1z"/>
+                </svg>
+              </div>
+              {/* Visa */}
+              <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
+                <svg viewBox="0 0 50 16" className="h-4 w-auto">
+                  <path fill="#1A1F71" d="M19.5 15.5h-3.9l2.4-15h3.9l-2.4 15zM33.7.5l-3.7 15h-3.7l.2-.8c-1.1.6-2.4 1-3.7 1-3.4 0-5.8-2.6-5.8-6.3 0-4.9 3.4-9.1 8.3-9.1 1.4 0 2.8.4 3.9 1.1l.4-1.9h4.1zm-5.2 9.8c1.8 0 3.3-1.5 3.3-3.5 0-1.3-.9-2.3-2.3-2.3-1.8 0-3.3 1.5-3.3 3.5 0 1.3.9 2.3 2.3 2.3zM44.7.5L41 15.5h-3.6l2.2-9.1-4.4 9.1h-2.7l-.5-9.2-2.1 9.2h-3.5l3.7-15h5.2l.3 7.5 3.6-7.5h5.5zM47.9.5l-3.7 15h-3.5l3.7-15h3.5z"/>
+                </svg>
+              </div>
+              {/* Mastercard */}
+              <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
+                <svg viewBox="0 0 40 24" className="h-5 w-auto">
+                  <rect fill="#FF5F00" x="14.5" y="4" width="11" height="16"/>
+                  <path fill="#EB001B" d="M15.5 12c0-3.2 1.5-6 3.8-8-1.7-1.3-3.8-2-6-2C7.1 2 2 7.5 2 12s5.1 10 11.3 10c2.2 0 4.3-.7 6-2-2.3-2-3.8-4.8-3.8-8z"/>
+                  <path fill="#F79E1B" d="M38 12c0 4.5-5.1 10-11.3 10-2.2 0-4.3-.7-6-2 2.3-2 3.8-4.8 3.8-8s-1.5-6-3.8-8c1.7-1.3 3.8-2 6-2C32.9 2 38 7.5 38 12z"/>
+                </svg>
+              </div>
+              {/* Maestro */}
+              <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
+                <svg viewBox="0 0 40 24" className="h-5 w-auto">
+                  <rect fill="#6C6BBD" x="14.5" y="4" width="11" height="16"/>
+                  <path fill="#EB001B" d="M15.5 12c0-3.2 1.5-6 3.8-8-1.7-1.3-3.8-2-6-2C7.1 2 2 7.5 2 12s5.1 10 11.3 10c2.2 0 4.3-.7 6-2-2.3-2-3.8-4.8-3.8-8z"/>
+                  <path fill="#00A2E5" d="M38 12c0 4.5-5.1 10-11.3 10-2.2 0-4.3-.7-6-2 2.3-2 3.8-4.8 3.8-8s-1.5-6-3.8-8c1.7-1.3 3.8-2 6-2C32.9 2 38 7.5 38 12z"/>
+                </svg>
+              </div>
+              {/* Discover */}
+              <div className="h-8 px-2 bg-[#F6F6F6] border border-gray-200 rounded flex items-center justify-center">
+                <span className="text-xs font-bold text-[#FF6600]">DISCOVER</span>
+              </div>
+              {/* Amex */}
+              <div className="h-8 px-2 bg-[#006FCF] border border-gray-200 rounded flex items-center justify-center">
+                <span className="text-xs font-bold text-white">AMEX</span>
+              </div>
             </div>
           </div>
         </motion.div>
@@ -598,7 +702,7 @@ export default function PaywallScreen() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1 }}
-          className="border-2 border-primary rounded-2xl p-6 mb-8 bg-white relative"
+          className="border-2 border-primary rounded-2xl p-6 pb-10 mb-12 bg-white relative"
         >
           <h3 className="text-xl font-bold text-text-primary text-center mb-3">
             30-day money-back guarantee
@@ -606,13 +710,31 @@ export default function PaywallScreen() {
           <p className="text-text-secondary text-center mb-4">
             Our plan is backed by a money-back guarantee. If you reach out within 30 days of purchase, we'll give you a full refund.
           </p>
-          <p className="text-primary font-medium text-center underline">Learn more</p>
+          <p className="text-primary font-medium text-center underline cursor-pointer">Learn more</p>
           
-          {/* Guarantee badge */}
-          <div className="absolute -bottom-6 right-4 w-16 h-16 bg-primary rounded-full flex items-center justify-center">
-            <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
-              <Check className="w-8 h-8 text-primary" />
+          {/* Guarantee badge with ribbon - Liven style */}
+          <div className="absolute -bottom-10 right-6 flex flex-col items-center">
+            {/* Badge circle */}
+            <div className="relative">
+              <svg viewBox="0 0 80 80" className="w-20 h-20">
+                {/* Scalloped edge circle */}
+                <path 
+                  d="M40 5 L44 15 L55 10 L55 22 L67 22 L62 33 L73 40 L62 47 L67 58 L55 58 L55 70 L44 65 L40 75 L36 65 L25 70 L25 58 L13 58 L18 47 L7 40 L18 33 L13 22 L25 22 L25 10 L36 15 Z" 
+                  fill="#D94F30"
+                />
+                {/* Inner white circle */}
+                <circle cx="40" cy="40" r="24" fill="white"/>
+                {/* Checkmark */}
+                <path d="M30 40 L37 47 L52 32" fill="none" stroke="#D94F30" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
             </div>
+            {/* Ribbon tails */}
+            <svg viewBox="0 0 60 24" className="w-14 h-6 -mt-2">
+              <path d="M0 0 L15 0 L20 12 L15 24 L0 24 L5 12 Z" fill="#D94F30"/>
+              <path d="M60 0 L45 0 L40 12 L45 24 L60 24 L55 12 Z" fill="#D94F30"/>
+              <path d="M0 0 L15 0 L20 12 L15 24 L0 24 L5 12 Z" fill="#B8412A" opacity="0.3"/>
+              <path d="M60 0 L45 0 L40 12 L45 24 L60 24 L55 12 Z" fill="#B8412A" opacity="0.3"/>
+            </svg>
           </div>
         </motion.div>
 
