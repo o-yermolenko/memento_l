@@ -42,6 +42,19 @@ const getIcon = (type: InterstitialData['type']) => {
   }
 }
 
+const getBackgroundImage = (type: InterstitialData['type']) => {
+  switch (type) {
+    case 'science':
+      return '/images/interstitials/science.png'
+    case 'expert':
+      return '/images/interstitials/expert.png'
+    case 'stat':
+      return '/images/interstitials/progress.png'
+    default:
+      return null
+  }
+}
+
 export default function InterstitialScreen({ interstitialId }: InterstitialScreenProps) {
   const router = useRouter()
   const interstitial = interstitials[interstitialId]
@@ -138,15 +151,33 @@ export default function InterstitialScreen({ interstitialId }: InterstitialScree
         </motion.div>
       ) : (
         <>
-          {/* Icon */}
-          <motion.div
-            className="mb-8 p-6 rounded-full bg-primary/10 text-primary"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
-          >
-            {getIcon(interstitial.type)}
-          </motion.div>
+          {/* Background Image for science/expert/stat */}
+          {getBackgroundImage(interstitial.type) && (
+            <motion.div
+              className="w-full max-w-md mb-6 rounded-2xl overflow-hidden"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.1, duration: 0.4 }}
+            >
+              <img 
+                src={getBackgroundImage(interstitial.type)!} 
+                alt="" 
+                className="w-full h-auto object-cover"
+              />
+            </motion.div>
+          )}
+          
+          {/* Icon - only show if no background image */}
+          {!getBackgroundImage(interstitial.type) && (
+            <motion.div
+              className="mb-8 p-6 rounded-full bg-primary/10 text-primary"
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
+            >
+              {getIcon(interstitial.type)}
+            </motion.div>
+          )}
           
           {/* Stat value if present */}
           {interstitial.statValue && (

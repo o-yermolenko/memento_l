@@ -46,20 +46,16 @@ export default function GenderScreen() {
           className="group relative overflow-hidden rounded-2xl border-2 transition-all duration-300 hover:shadow-lg"
           style={{ borderColor: '#E5DDD2', backgroundColor: '#FFFFFF' }}
         >
-          <div 
-            className="aspect-[3/4] relative"
-            style={{ background: 'linear-gradient(to bottom, rgba(217,79,48,0.05), rgba(217,79,48,0.1))' }}
-          >
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div 
-                className="w-32 h-32 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: 'rgba(217, 79, 48, 0.2)' }}
-              >
-                <svg className="w-20 h-20" viewBox="0 0 24 24" fill="rgba(217, 79, 48, 0.6)">
-                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                </svg>
-              </div>
-            </div>
+          <div className="aspect-[3/4] relative overflow-hidden bg-gradient-to-b from-primary/5 to-primary/10">
+            <img 
+              src="/images/avatars/male.png" 
+              alt="Male" 
+              className="w-full h-full object-cover object-top"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+              }}
+            />
           </div>
           <div className="p-4 flex items-center justify-between" style={{ backgroundColor: '#D94F30' }}>
             <span className="text-white font-semibold text-lg">Male</span>
@@ -73,20 +69,16 @@ export default function GenderScreen() {
           className="group relative overflow-hidden rounded-2xl border-2 transition-all duration-300 hover:shadow-lg"
           style={{ borderColor: '#E5DDD2', backgroundColor: '#FFFFFF' }}
         >
-          <div 
-            className="aspect-[3/4] relative"
-            style={{ background: 'linear-gradient(to bottom, rgba(217,79,48,0.05), rgba(217,79,48,0.1))' }}
-          >
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div 
-                className="w-32 h-32 rounded-full flex items-center justify-center"
-                style={{ backgroundColor: 'rgba(217, 79, 48, 0.2)' }}
-              >
-                <svg className="w-20 h-20" viewBox="0 0 24 24" fill="rgba(217, 79, 48, 0.6)">
-                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                </svg>
-              </div>
-            </div>
+          <div className="aspect-[3/4] relative overflow-hidden bg-gradient-to-b from-primary/5 to-primary/10">
+            <img 
+              src="/images/avatars/female.png" 
+              alt="Female" 
+              className="w-full h-full object-cover object-top"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+              }}
+            />
           </div>
           <div className="p-4 flex items-center justify-between" style={{ backgroundColor: '#D94F30' }}>
             <span className="text-white font-semibold text-lg">Female</span>

@@ -7,14 +7,13 @@ import { ROUTES } from '@/lib/routes'
 
 // Avatar positions on world map - like Liven
 const avatarPins = [
-  { x: 15, y: 35, delay: 0.2, emoji: '👨🏽' },   // South America
-  { x: 25, y: 25, delay: 0.3, emoji: '👩🏼' },   // North America
-  { x: 35, y: 15, delay: 0.4, emoji: '👩🏻' },   // Canada
-  { x: 48, y: 20, delay: 0.5, emoji: '👨🏻' },   // Europe
-  { x: 52, y: 35, delay: 0.6, emoji: '👩🏾' },   // Africa
-  { x: 65, y: 25, delay: 0.7, emoji: '👨🏼' },   // Middle East
-  { x: 75, y: 30, delay: 0.8, emoji: '👩🏻' },   // Asia
-  { x: 85, y: 45, delay: 0.9, emoji: '👨🏿' },   // Australia
+  { x: 15, y: 35, delay: 0.2, photo: '/images/map/avatar-3.png' },   // South America - Hispanic Man
+  { x: 25, y: 25, delay: 0.3, photo: '/images/map/avatar-1.png' },   // North America - Asian Woman
+  { x: 35, y: 15, delay: 0.4, photo: '/images/map/avatar-5.png' },   // Canada - Black Woman
+  { x: 48, y: 20, delay: 0.5, photo: '/images/map/avatar-4.png' },   // Europe - White Man
+  { x: 52, y: 35, delay: 0.6, photo: '/images/map/avatar-2.png' },   // Africa - Black Man
+  { x: 65, y: 25, delay: 0.7, photo: '/images/map/avatar-7.png' },   // Middle East - Middle Eastern Man
+  { x: 75, y: 30, delay: 0.8, photo: '/images/map/avatar-6.png' },   // Asia - Asian Man
 ]
 
 export default function SocialProofScreen() {
@@ -84,8 +83,12 @@ export default function SocialProofScreen() {
             <div className="relative">
               <div className="w-10 h-12 flex flex-col items-center">
                 {/* Avatar circle */}
-                <div className="w-8 h-8 rounded-full border-2 border-white shadow-lg flex items-center justify-center text-lg overflow-hidden" style={{ backgroundColor: '#D94F30' }}>
-                  {pin.emoji}
+                <div className="w-8 h-8 rounded-full border-2 border-white shadow-lg overflow-hidden" style={{ backgroundColor: '#D94F30' }}>
+                  <img 
+                    src={pin.photo} 
+                    alt="" 
+                    className="w-full h-full object-cover"
+                  />
                 </div>
                 {/* Pin point */}
                 <div className="w-0 h-0 border-l-4 border-r-4 border-t-8 border-l-transparent border-r-transparent -mt-0.5" style={{ borderTopColor: '#D94F30' }} />

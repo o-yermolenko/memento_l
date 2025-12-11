@@ -85,16 +85,19 @@ const reviews = [
   {
     title: 'It has really changed my life',
     author: 'Sarah M.',
+    photo: '/images/testimonials/sarah.png',
     text: 'I have been using Memento for three months now. During this time, I have been able to understand my emotional triggers and respond differently. It has truly transformed how I handle stress.',
   },
   {
     title: 'Finally something that works',
     author: 'James L.',
+    photo: '/images/testimonials/james.png',
     text: 'After trying many wellness apps, Memento actually addresses the root causes. I feel more in control of my emotions than ever before. The personalized approach makes all the difference.',
   },
   {
     title: 'Eye-opening experience',
     author: 'Michelle K.',
+    photo: '/images/testimonials/michelle.png',
     text: "I'm not new to my own struggles with emotions. Memento helped me see patterns I never noticed before. Such valuable insights for understanding my inner self.",
   },
 ]
@@ -138,8 +141,12 @@ export default function PaywallScreen() {
               <span className="inline-block px-3 py-1 bg-red-100 text-red-600 rounded-full text-sm font-medium mb-3">
                 Now
               </span>
-              <div className="w-20 h-20 mx-auto mb-3 rounded-full bg-red-50 flex items-center justify-center">
-                <span className="text-4xl">😔</span>
+              <div className="w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden border-2 border-red-200">
+                <img 
+                  src="/images/transformation/before.png" 
+                  alt="Before" 
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
 
@@ -155,8 +162,12 @@ export default function PaywallScreen() {
               <span className="inline-block px-3 py-1 bg-primary text-white rounded-full text-sm font-medium mb-3">
                 Your Goal
               </span>
-              <div className="w-20 h-20 mx-auto mb-3 rounded-full bg-primary/10 flex items-center justify-center">
-                <span className="text-4xl">😊</span>
+              <div className="w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden border-2 border-primary">
+                <img 
+                  src="/images/transformation/after.png" 
+                  alt="After" 
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>
@@ -487,9 +498,16 @@ export default function PaywallScreen() {
                     <Star key={star} className="w-5 h-5 fill-accent-gold text-accent-gold" />
                   ))}
                 </div>
-                <div className="flex items-center justify-between mb-2">
-                  <h4 className="font-bold text-text-primary">{review.title}</h4>
-                  <span className="text-text-tertiary text-sm">{review.author}</span>
+                <div className="flex items-center gap-3 mb-3">
+                  <img 
+                    src={review.photo} 
+                    alt={review.author} 
+                    className="w-12 h-12 rounded-full object-cover"
+                  />
+                  <div>
+                    <h4 className="font-bold text-text-primary">{review.title}</h4>
+                    <span className="text-text-tertiary text-sm">{review.author}</span>
+                  </div>
                 </div>
                 <p className="text-text-secondary text-sm">{review.text}</p>
               </div>
