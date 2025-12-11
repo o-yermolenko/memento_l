@@ -229,7 +229,7 @@ function PaywallContent() {
               <span className="inline-block px-3 py-1 bg-red-100 text-red-600 rounded-full text-sm font-medium mb-3">
                 Now
               </span>
-              <div className="w-full aspect-square max-w-[160px] mx-auto mb-3 rounded-full overflow-hidden border-4 border-red-200">
+              <div className="w-full aspect-square max-w-[160px] mx-auto mb-3 rounded-full overflow-hidden border-4 border-red-400">
                 <img 
                   src={beforeImage} 
                   alt="Before" 
