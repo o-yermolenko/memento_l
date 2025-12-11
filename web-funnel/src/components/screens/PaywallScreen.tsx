@@ -316,14 +316,14 @@ export default function PaywallScreen() {
             <Shield className="w-5 h-5" />
             <span className="font-medium">Pay Safe & Secure</span>
           </div>
-          <div className="flex gap-2 flex-wrap justify-center">
-            <img src="/images/payments/paypal.svg" alt="PayPal" className="h-6" />
-            <img src="/images/payments/applepay.svg" alt="Apple Pay" className="h-6" />
-            <img src="/images/payments/visa.svg" alt="Visa" className="h-6" />
-            <img src="/images/payments/mastercard.svg" alt="Mastercard" className="h-6" />
-            <img src="/images/payments/maestro.svg" alt="Maestro" className="h-6" />
-            <img src="/images/payments/discover.svg" alt="Discover" className="h-6" />
-            <img src="/images/payments/amex.svg" alt="Amex" className="h-6" />
+          <div className="flex gap-1.5 flex-wrap justify-center">
+            <img src="/images/payments/paypal.svg" alt="PayPal" className="h-7" />
+            <img src="/images/payments/applepay.svg" alt="Apple Pay" className="h-7" />
+            <img src="/images/payments/visa.svg" alt="Visa" className="h-7" />
+            <img src="/images/payments/mastercard.svg" alt="Mastercard" className="h-7" />
+            <img src="/images/payments/maestro.svg" alt="Maestro" className="h-7" />
+            <img src="/images/payments/discover.svg" alt="Discover" className="h-7" />
+            <img src="/images/payments/amex.svg" alt="Amex" className="h-7" />
           </div>
         </div>
 
@@ -613,14 +613,14 @@ export default function PaywallScreen() {
               <Shield className="w-5 h-5" />
               <span className="font-medium">Pay Safe & Secure</span>
             </div>
-            <div className="flex gap-2 flex-wrap justify-center">
-              <img src="/images/payments/paypal.svg" alt="PayPal" className="h-6" />
-              <img src="/images/payments/applepay.svg" alt="Apple Pay" className="h-6" />
-              <img src="/images/payments/visa.svg" alt="Visa" className="h-6" />
-              <img src="/images/payments/mastercard.svg" alt="Mastercard" className="h-6" />
-              <img src="/images/payments/maestro.svg" alt="Maestro" className="h-6" />
-              <img src="/images/payments/discover.svg" alt="Discover" className="h-6" />
-              <img src="/images/payments/amex.svg" alt="Amex" className="h-6" />
+            <div className="flex gap-1.5 flex-wrap justify-center">
+              <img src="/images/payments/paypal.svg" alt="PayPal" className="h-7" />
+              <img src="/images/payments/applepay.svg" alt="Apple Pay" className="h-7" />
+              <img src="/images/payments/visa.svg" alt="Visa" className="h-7" />
+              <img src="/images/payments/mastercard.svg" alt="Mastercard" className="h-7" />
+              <img src="/images/payments/maestro.svg" alt="Maestro" className="h-7" />
+              <img src="/images/payments/discover.svg" alt="Discover" className="h-7" />
+              <img src="/images/payments/amex.svg" alt="Amex" className="h-7" />
             </div>
           </div>
         </motion.div>
