@@ -317,49 +317,13 @@ export default function PaywallScreen() {
             <span className="font-medium">Pay Safe & Secure</span>
           </div>
           <div className="flex gap-2 flex-wrap justify-center">
-            {/* PayPal */}
-            <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
-              <svg viewBox="0 0 101 32" className="h-5 w-auto">
-                <path fill="#003087" d="M12.5 3.8h7.2c3.5 0 6.3 1.1 6.7 5.1.3 2.8-.6 4.7-2.5 5.9 2.4.9 3.8 2.9 3.4 6.2-.5 4.5-3.8 6.8-8.5 6.8H8.1c-.5 0-.9.4-1 .9L5.3 39h-5l5.2-34.3c.1-.5.5-.9 1-.9h6zm4.3 10.3h2.5c1.7 0 3-.7 3.2-2.5.2-1.6-.8-2.5-2.5-2.5h-2.4l-.8 5zm-.8 5.1l-.9 5.5h2.9c1.8 0 3.2-.8 3.5-2.8.2-1.8-.8-2.7-2.6-2.7h-2.9z"/>
-                <path fill="#009cde" d="M38.7 3.8h7.2c3.5 0 6.3 1.1 6.7 5.1.3 2.8-.6 4.7-2.5 5.9 2.4.9 3.8 2.9 3.4 6.2-.5 4.5-3.8 6.8-8.5 6.8h-10.7c-.5 0-.9.4-1 .9L31.5 39h-5l5.2-34.3c.1-.5.5-.9 1-.9h6zm4.3 10.3h2.5c1.7 0 3-.7 3.2-2.5.2-1.6-.8-2.5-2.5-2.5h-2.4l-.8 5zm-.8 5.1l-.9 5.5h2.9c1.8 0 3.2-.8 3.5-2.8.2-1.8-.8-2.7-2.6-2.7h-2.9z"/>
-              </svg>
-            </div>
-            {/* Apple Pay */}
-            <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
-              <svg viewBox="0 0 50 20" className="h-5 w-auto">
-                <path fill="#000" d="M9.2 3c.6-.8 1-1.8.9-2.8-.9 0-2 .6-2.6 1.4-.6.6-1 1.7-.9 2.7 1 0 1.9-.6 2.6-1.3zm.9 1.4c-1.4-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.9-.7-1.5 0-2.8.9-3.6 2.2-1.5 2.6-.4 6.5 1.1 8.6.7 1 1.6 2.2 2.8 2.1 1.1 0 1.5-.7 2.8-.7 1.3 0 1.7.7 2.9.7 1.2 0 2-1 2.7-2 .9-1.2 1.2-2.3 1.2-2.4 0 0-2.4-1-2.4-3.7 0-2.3 1.9-3.4 2-3.5-.9-1.4-2.4-1.5-2.9-1.6zm12.8-2.2v14.6h2.3V12h3.2c2.9 0 5-2 5-5 0-3-2-5-4.9-5h-5.6zm2.3 2h2.6c2 0 3.2 1.1 3.2 3s-1.1 3-3.2 3h-2.6V4.2zm12.8 12.8c1.4 0 2.8-.7 3.4-1.9h0v1.8h2.1V9.3c0-2.2-1.7-3.5-4.4-3.5-2.4 0-4.3 1.4-4.4 3.3h2.1c.2-1 1.1-1.6 2.2-1.6 1.4 0 2.2.7 2.2 1.9v.9l-2.9.2c-2.7.2-4.2 1.3-4.2 3.2 0 2 1.6 3.3 3.9 3.3zm.6-1.8c-1.2 0-2-.6-2-1.5 0-1 .8-1.5 2.2-1.6l2.6-.2v.9c0 1.4-1.2 2.4-2.8 2.4zm7.4 6c2.2 0 3.3-.9 4.2-3.5l4-11.1h-2.4l-2.7 8.6h0l-2.7-8.6h-2.4l3.9 10.8-.2.7c-.4 1.2-1 1.6-2.1 1.6-.2 0-.6 0-.7 0v1.8c.2 0 .8.1 1.1.1z"/>
-              </svg>
-            </div>
-            {/* Visa */}
-            <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
-              <svg viewBox="0 0 50 16" className="h-4 w-auto">
-                <path fill="#1A1F71" d="M19.5 15.5h-3.9l2.4-15h3.9l-2.4 15zM33.7.5l-3.7 15h-3.7l.2-.8c-1.1.6-2.4 1-3.7 1-3.4 0-5.8-2.6-5.8-6.3 0-4.9 3.4-9.1 8.3-9.1 1.4 0 2.8.4 3.9 1.1l.4-1.9h4.1zm-5.2 9.8c1.8 0 3.3-1.5 3.3-3.5 0-1.3-.9-2.3-2.3-2.3-1.8 0-3.3 1.5-3.3 3.5 0 1.3.9 2.3 2.3 2.3zM44.7.5L41 15.5h-3.6l2.2-9.1-4.4 9.1h-2.7l-.5-9.2-2.1 9.2h-3.5l3.7-15h5.2l.3 7.5 3.6-7.5h5.5zM47.9.5l-3.7 15h-3.5l3.7-15h3.5z"/>
-              </svg>
-            </div>
-            {/* Mastercard */}
-            <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
-              <svg viewBox="0 0 40 24" className="h-5 w-auto">
-                <rect fill="#FF5F00" x="14.5" y="4" width="11" height="16"/>
-                <path fill="#EB001B" d="M15.5 12c0-3.2 1.5-6 3.8-8-1.7-1.3-3.8-2-6-2C7.1 2 2 7.5 2 12s5.1 10 11.3 10c2.2 0 4.3-.7 6-2-2.3-2-3.8-4.8-3.8-8z"/>
-                <path fill="#F79E1B" d="M38 12c0 4.5-5.1 10-11.3 10-2.2 0-4.3-.7-6-2 2.3-2 3.8-4.8 3.8-8s-1.5-6-3.8-8c1.7-1.3 3.8-2 6-2C32.9 2 38 7.5 38 12z"/>
-              </svg>
-            </div>
-            {/* Maestro */}
-            <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
-              <svg viewBox="0 0 40 24" className="h-5 w-auto">
-                <rect fill="#6C6BBD" x="14.5" y="4" width="11" height="16"/>
-                <path fill="#EB001B" d="M15.5 12c0-3.2 1.5-6 3.8-8-1.7-1.3-3.8-2-6-2C7.1 2 2 7.5 2 12s5.1 10 11.3 10c2.2 0 4.3-.7 6-2-2.3-2-3.8-4.8-3.8-8z"/>
-                <path fill="#00A2E5" d="M38 12c0 4.5-5.1 10-11.3 10-2.2 0-4.3-.7-6-2 2.3-2 3.8-4.8 3.8-8s-1.5-6-3.8-8c1.7-1.3 3.8-2 6-2C32.9 2 38 7.5 38 12z"/>
-              </svg>
-            </div>
-            {/* Discover */}
-            <div className="h-8 px-2 bg-[#F6F6F6] border border-gray-200 rounded flex items-center justify-center">
-              <span className="text-xs font-bold text-[#FF6600]">DISCOVER</span>
-            </div>
-            {/* Amex */}
-            <div className="h-8 px-2 bg-[#006FCF] border border-gray-200 rounded flex items-center justify-center">
-              <span className="text-xs font-bold text-white">AMEX</span>
-            </div>
+            <img src="/images/payments/paypal.svg" alt="PayPal" className="h-6" />
+            <img src="/images/payments/applepay.svg" alt="Apple Pay" className="h-6" />
+            <img src="/images/payments/visa.svg" alt="Visa" className="h-6" />
+            <img src="/images/payments/mastercard.svg" alt="Mastercard" className="h-6" />
+            <img src="/images/payments/maestro.svg" alt="Maestro" className="h-6" />
+            <img src="/images/payments/discover.svg" alt="Discover" className="h-6" />
+            <img src="/images/payments/amex.svg" alt="Amex" className="h-6" />
           </div>
         </div>
 
@@ -650,49 +614,13 @@ export default function PaywallScreen() {
               <span className="font-medium">Pay Safe & Secure</span>
             </div>
             <div className="flex gap-2 flex-wrap justify-center">
-              {/* PayPal */}
-              <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
-                <svg viewBox="0 0 101 32" className="h-5 w-auto">
-                  <path fill="#003087" d="M12.5 3.8h7.2c3.5 0 6.3 1.1 6.7 5.1.3 2.8-.6 4.7-2.5 5.9 2.4.9 3.8 2.9 3.4 6.2-.5 4.5-3.8 6.8-8.5 6.8H8.1c-.5 0-.9.4-1 .9L5.3 39h-5l5.2-34.3c.1-.5.5-.9 1-.9h6zm4.3 10.3h2.5c1.7 0 3-.7 3.2-2.5.2-1.6-.8-2.5-2.5-2.5h-2.4l-.8 5zm-.8 5.1l-.9 5.5h2.9c1.8 0 3.2-.8 3.5-2.8.2-1.8-.8-2.7-2.6-2.7h-2.9z"/>
-                  <path fill="#009cde" d="M38.7 3.8h7.2c3.5 0 6.3 1.1 6.7 5.1.3 2.8-.6 4.7-2.5 5.9 2.4.9 3.8 2.9 3.4 6.2-.5 4.5-3.8 6.8-8.5 6.8h-10.7c-.5 0-.9.4-1 .9L31.5 39h-5l5.2-34.3c.1-.5.5-.9 1-.9h6zm4.3 10.3h2.5c1.7 0 3-.7 3.2-2.5.2-1.6-.8-2.5-2.5-2.5h-2.4l-.8 5zm-.8 5.1l-.9 5.5h2.9c1.8 0 3.2-.8 3.5-2.8.2-1.8-.8-2.7-2.6-2.7h-2.9z"/>
-                </svg>
-              </div>
-              {/* Apple Pay */}
-              <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
-                <svg viewBox="0 0 50 20" className="h-5 w-auto">
-                  <path fill="#000" d="M9.2 3c.6-.8 1-1.8.9-2.8-.9 0-2 .6-2.6 1.4-.6.6-1 1.7-.9 2.7 1 0 1.9-.6 2.6-1.3zm.9 1.4c-1.4-.1-2.6.8-3.3.8-.7 0-1.7-.8-2.9-.7-1.5 0-2.8.9-3.6 2.2-1.5 2.6-.4 6.5 1.1 8.6.7 1 1.6 2.2 2.8 2.1 1.1 0 1.5-.7 2.8-.7 1.3 0 1.7.7 2.9.7 1.2 0 2-1 2.7-2 .9-1.2 1.2-2.3 1.2-2.4 0 0-2.4-1-2.4-3.7 0-2.3 1.9-3.4 2-3.5-.9-1.4-2.4-1.5-2.9-1.6zm12.8-2.2v14.6h2.3V12h3.2c2.9 0 5-2 5-5 0-3-2-5-4.9-5h-5.6zm2.3 2h2.6c2 0 3.2 1.1 3.2 3s-1.1 3-3.2 3h-2.6V4.2zm12.8 12.8c1.4 0 2.8-.7 3.4-1.9h0v1.8h2.1V9.3c0-2.2-1.7-3.5-4.4-3.5-2.4 0-4.3 1.4-4.4 3.3h2.1c.2-1 1.1-1.6 2.2-1.6 1.4 0 2.2.7 2.2 1.9v.9l-2.9.2c-2.7.2-4.2 1.3-4.2 3.2 0 2 1.6 3.3 3.9 3.3zm.6-1.8c-1.2 0-2-.6-2-1.5 0-1 .8-1.5 2.2-1.6l2.6-.2v.9c0 1.4-1.2 2.4-2.8 2.4zm7.4 6c2.2 0 3.3-.9 4.2-3.5l4-11.1h-2.4l-2.7 8.6h0l-2.7-8.6h-2.4l3.9 10.8-.2.7c-.4 1.2-1 1.6-2.1 1.6-.2 0-.6 0-.7 0v1.8c.2 0 .8.1 1.1.1z"/>
-                </svg>
-              </div>
-              {/* Visa */}
-              <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
-                <svg viewBox="0 0 50 16" className="h-4 w-auto">
-                  <path fill="#1A1F71" d="M19.5 15.5h-3.9l2.4-15h3.9l-2.4 15zM33.7.5l-3.7 15h-3.7l.2-.8c-1.1.6-2.4 1-3.7 1-3.4 0-5.8-2.6-5.8-6.3 0-4.9 3.4-9.1 8.3-9.1 1.4 0 2.8.4 3.9 1.1l.4-1.9h4.1zm-5.2 9.8c1.8 0 3.3-1.5 3.3-3.5 0-1.3-.9-2.3-2.3-2.3-1.8 0-3.3 1.5-3.3 3.5 0 1.3.9 2.3 2.3 2.3zM44.7.5L41 15.5h-3.6l2.2-9.1-4.4 9.1h-2.7l-.5-9.2-2.1 9.2h-3.5l3.7-15h5.2l.3 7.5 3.6-7.5h5.5zM47.9.5l-3.7 15h-3.5l3.7-15h3.5z"/>
-                </svg>
-              </div>
-              {/* Mastercard */}
-              <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
-                <svg viewBox="0 0 40 24" className="h-5 w-auto">
-                  <rect fill="#FF5F00" x="14.5" y="4" width="11" height="16"/>
-                  <path fill="#EB001B" d="M15.5 12c0-3.2 1.5-6 3.8-8-1.7-1.3-3.8-2-6-2C7.1 2 2 7.5 2 12s5.1 10 11.3 10c2.2 0 4.3-.7 6-2-2.3-2-3.8-4.8-3.8-8z"/>
-                  <path fill="#F79E1B" d="M38 12c0 4.5-5.1 10-11.3 10-2.2 0-4.3-.7-6-2 2.3-2 3.8-4.8 3.8-8s-1.5-6-3.8-8c1.7-1.3 3.8-2 6-2C32.9 2 38 7.5 38 12z"/>
-                </svg>
-              </div>
-              {/* Maestro */}
-              <div className="h-8 px-2 bg-white border border-gray-200 rounded flex items-center justify-center">
-                <svg viewBox="0 0 40 24" className="h-5 w-auto">
-                  <rect fill="#6C6BBD" x="14.5" y="4" width="11" height="16"/>
-                  <path fill="#EB001B" d="M15.5 12c0-3.2 1.5-6 3.8-8-1.7-1.3-3.8-2-6-2C7.1 2 2 7.5 2 12s5.1 10 11.3 10c2.2 0 4.3-.7 6-2-2.3-2-3.8-4.8-3.8-8z"/>
-                  <path fill="#00A2E5" d="M38 12c0 4.5-5.1 10-11.3 10-2.2 0-4.3-.7-6-2 2.3-2 3.8-4.8 3.8-8s-1.5-6-3.8-8c1.7-1.3 3.8-2 6-2C32.9 2 38 7.5 38 12z"/>
-                </svg>
-              </div>
-              {/* Discover */}
-              <div className="h-8 px-2 bg-[#F6F6F6] border border-gray-200 rounded flex items-center justify-center">
-                <span className="text-xs font-bold text-[#FF6600]">DISCOVER</span>
-              </div>
-              {/* Amex */}
-              <div className="h-8 px-2 bg-[#006FCF] border border-gray-200 rounded flex items-center justify-center">
-                <span className="text-xs font-bold text-white">AMEX</span>
-              </div>
+              <img src="/images/payments/paypal.svg" alt="PayPal" className="h-6" />
+              <img src="/images/payments/applepay.svg" alt="Apple Pay" className="h-6" />
+              <img src="/images/payments/visa.svg" alt="Visa" className="h-6" />
+              <img src="/images/payments/mastercard.svg" alt="Mastercard" className="h-6" />
+              <img src="/images/payments/maestro.svg" alt="Maestro" className="h-6" />
+              <img src="/images/payments/discover.svg" alt="Discover" className="h-6" />
+              <img src="/images/payments/amex.svg" alt="Amex" className="h-6" />
             </div>
           </div>
         </motion.div>
