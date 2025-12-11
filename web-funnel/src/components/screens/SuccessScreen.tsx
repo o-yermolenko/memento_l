@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { CheckCircle, Sparkles, ArrowRight } from 'lucide-react'
+import { CheckCircle, ArrowRight } from 'lucide-react'
 import { useFunnelStore } from '@/store/funnelStore'
 
 export default function SuccessScreen() {
@@ -57,14 +57,6 @@ export default function SuccessScreen() {
           <div className="w-32 h-32 rounded-full bg-green-100 flex items-center justify-center">
             <CheckCircle className="w-20 h-20 text-green-500" />
           </div>
-          <motion.div
-            className="absolute -top-2 -right-2"
-            initial={{ scale: 0, rotate: -30 }}
-            animate={{ scale: 1, rotate: 0 }}
-            transition={{ delay: 0.3 }}
-          >
-            <Sparkles className="w-8 h-8 text-primary" />
-          </motion.div>
         </motion.div>
 
         {/* Congratulations Text */}
