@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { motion } from 'framer-motion'
 import { useFunnelStore } from '@/store/funnelStore'
 import { useSupabase } from '@/components/SupabaseProvider'
 import { quizQuestions } from '@/data/questions'
@@ -121,21 +120,12 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
   const canSubmit = selectedValues.length >= (question.minSelect || 1)
   
   return (
-    <motion.div
+    <div
       key={question.id}
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
-      transition={{ duration: 0.3 }}
       className="flex flex-col items-center px-4 py-6"
     >
       {/* Question */}
-      <motion.div 
-        className="text-center mb-6 max-w-lg"
-        initial={{ opacity: 0, y: 10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-      >
+      <div className="text-center mb-6 max-w-lg">
         <h2 className="text-xl md:text-2xl font-semibold text-text-primary mb-2 leading-relaxed">
           {question.question}
         </h2>
@@ -144,41 +134,31 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
             {question.description}
           </p>
         )}
-      </motion.div>
+      </div>
       
       {/* Options - Likert scale (horizontal) vs regular (vertical) */}
       {question.type === 'likert' ? (
         // Horizontal Likert scale - centered in remaining space
-        <motion.div 
-          className="w-full max-w-lg flex-1 flex flex-col justify-center min-h-[40vh]"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.15 }}
-        >
+        <div className="w-full max-w-lg flex-1 flex flex-col justify-center min-h-[40vh]">
           <div className="flex items-stretch gap-2 justify-center">
             {question.options.map((option, index) => {
               const isSelected = selectedValues.includes(option.id)
               
               return (
-                <motion.button
+                <button
                   key={option.id}
                   onClick={() => handleSingleSelect(option.id, option.score)}
                   className={`
                     flex-1 max-w-[90px] aspect-square card flex items-center justify-center
-                    transition-all duration-200 hover:shadow-option-hover
+                    transition-all duration-150 active:scale-95
                     ${isSelected 
                       ? 'border-primary border-2 bg-primary/5' 
                       : 'hover:border-primary/50'
                     }
                   `}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.15 + index * 0.05 }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
                 >
                   <LikertIcon index={index} isSelected={isSelected} />
-                </motion.button>
+                </button>
               )
             })}
           </div>
@@ -188,7 +168,7 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
             <span className="text-sm text-text-tertiary">Strongly disagree</span>
             <span className="text-sm text-text-tertiary">Strongly agree</span>
           </div>
-        </motion.div>
+        </div>
       ) : (
         // Regular vertical options
         <div className="w-full max-w-md space-y-3">
@@ -196,23 +176,19 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
             const isSelected = selectedValues.includes(option.id)
             
             return (
-              <motion.button
+              <button
                 key={option.id}
                 onClick={() => isMultiSelect ? handleMultiSelect(option.id) : handleSingleSelect(option.id, option.score)}
                 className={`
                   w-full option-tile text-left flex items-center gap-4 group
+                  transition-transform duration-150 active:scale-[0.98]
                   ${isSelected ? 'selected' : ''}
                 `}
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15 + index * 0.05 }}
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
               >
                 {/* Selection indicator / icon */}
                 <div className={`
                   flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center
-                  transition-colors duration-200
+                  transition-colors duration-150
                   ${isSelected 
                     ? 'bg-primary text-white' 
                     : 'bg-background-secondary text-text-tertiary group-hover:bg-primary/10 group-hover:text-primary'
@@ -248,7 +224,7 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
                     ${isSelected ? 'text-primary' : 'text-text-tertiary group-hover:text-primary group-hover:translate-x-1'}
                   `} />
                 )}
-              </motion.button>
+              </button>
             )
           })}
         </div>
@@ -256,12 +232,7 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
       
       {/* Submit button for multi-select */}
       {isMultiSelect && (
-        <motion.div 
-          className="mt-8 w-full max-w-md"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.4 }}
-        >
+        <div className="mt-8 w-full max-w-md">
           <button
             onClick={handleMultiSubmit}
             disabled={!canSubmit}
@@ -274,8 +245,8 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
               Select at least {question.minSelect} option{question.minSelect > 1 ? 's' : ''}
             </p>
           )}
-        </motion.div>
+        </div>
       )}
-    </motion.div>
+    </div>
   )
 }
