@@ -8,7 +8,7 @@ import { useSupabase } from '@/components/SupabaseProvider'
 import { createPurchase } from '@/lib/supabase'
 import { Check, X, Star, Shield, HelpCircle, ChevronDown, ChevronUp, Award, AlertCircle } from 'lucide-react'
 
-// Pricing plans
+// Pricing plans - Updated Dec 2024
 const plans = [
   {
     id: '1-week',
