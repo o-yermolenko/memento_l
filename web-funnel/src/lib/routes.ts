@@ -26,6 +26,7 @@ export const ROUTES = {
   
   // Conversion
   paywall: '/paywall',
+  success: '/success',
 } as const
 
 // Funnel flow with routes
