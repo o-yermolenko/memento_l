@@ -29,22 +29,23 @@ export async function POST(request: NextRequest) {
     }
 
     // Get or create customer
-    let customer: { id: string }
+    let customerId: string
     const existingCustomers = await stripe.customers.list({
       email,
       limit: 1,
     })
 
     if (existingCustomers.data.length > 0) {
-      customer = existingCustomers.data[0]
+      customerId = existingCustomers.data[0].id
     } else {
-      customer = await stripe.customers.create({
+      const customer = await stripe.customers.create({
         email,
         name: name || undefined,
         metadata: {
           funnel_session_id: sessionId || '',
         },
       })
+      customerId = customer.id
     }
 
     // Determine the base URL for redirects
@@ -52,7 +53,7 @@ export async function POST(request: NextRequest) {
 
     // Create checkout session
     const checkoutSession = await stripe.checkout.sessions.create({
-      customer: customer.id,
+      customer: customerId,
       mode: 'subscription',
       payment_method_types: ['card'],
       line_items: [
@@ -76,14 +77,9 @@ export async function POST(request: NextRequest) {
       },
       allow_promotion_codes: true,
       billing_address_collection: 'auto',
-      customer_update: {
-        address: 'auto',
-        name: 'auto',
-      },
     })
 
     return NextResponse.json({
-      sessionId: checkoutSession.id,
       url: checkoutSession.url,
     })
   } catch (error) {

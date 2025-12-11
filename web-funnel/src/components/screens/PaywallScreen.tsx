@@ -6,7 +6,6 @@ import { motion } from 'framer-motion'
 import { useFunnelStore } from '@/store/funnelStore'
 import { useSupabase } from '@/components/SupabaseProvider'
 import { createPurchase } from '@/lib/supabase'
-import { getStripe } from '@/lib/stripe'
 import { Check, X, Star, Shield, HelpCircle, ChevronDown, ChevronUp, Award, AlertCircle } from 'lucide-react'
 
 // Pricing plans
@@ -181,17 +180,10 @@ function PaywallContent() {
       }
 
       // Redirect to Stripe Checkout
-      const stripe = await getStripe()
-      if (stripe && data.sessionId) {
-        const { error: stripeError } = await stripe.redirectToCheckout({
-          sessionId: data.sessionId,
-        })
-        if (stripeError) {
-          throw new Error(stripeError.message)
-        }
-      } else if (data.url) {
-        // Fallback: redirect directly to checkout URL
+      if (data.url) {
         window.location.href = data.url
+      } else {
+        throw new Error('No checkout URL returned')
       }
     } catch (err) {
       console.error('Payment error:', err)

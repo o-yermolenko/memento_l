@@ -4,7 +4,6 @@ import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 import { createServerClient } from '@/lib/supabase/client'
 
-// Disable body parsing, we need the raw body for webhook verification
 export const dynamic = 'force-dynamic'
 
 export async function POST(request: NextRequest) {
@@ -14,10 +13,7 @@ export async function POST(request: NextRequest) {
 
   if (!signature) {
     console.error('No Stripe signature found')
-    return NextResponse.json(
-      { error: 'No signature' },
-      { status: 400 }
-    )
+    return NextResponse.json({ error: 'No signature' }, { status: 400 })
   }
 
   let event: Stripe.Event
@@ -31,13 +27,9 @@ export async function POST(request: NextRequest) {
   } catch (err) {
     const message = err instanceof Error ? err.message : 'Unknown error'
     console.error(`Webhook signature verification failed: ${message}`)
-    return NextResponse.json(
-      { error: `Webhook Error: ${message}` },
-      { status: 400 }
-    )
+    return NextResponse.json({ error: `Webhook Error: ${message}` }, { status: 400 })
   }
 
-  // Get Supabase client for database operations
   const supabase = createServerClient()
 
   try {
@@ -48,15 +40,10 @@ export async function POST(request: NextRequest) {
         break
       }
 
-      case 'customer.subscription.created': {
-        const subscription = event.data.object as Stripe.Subscription
-        await handleSubscriptionCreated(subscription, supabase)
-        break
-      }
-
+      case 'customer.subscription.created':
       case 'customer.subscription.updated': {
         const subscription = event.data.object as Stripe.Subscription
-        await handleSubscriptionUpdated(subscription, supabase)
+        console.log('Subscription event:', event.type, subscription.id, subscription.status)
         break
       }
 
@@ -68,13 +55,21 @@ export async function POST(request: NextRequest) {
 
       case 'invoice.paid': {
         const invoice = event.data.object as Stripe.Invoice
-        await handleInvoicePaid(invoice, supabase)
+        console.log('Invoice paid:', invoice.id)
         break
       }
 
       case 'invoice.payment_failed': {
         const invoice = event.data.object as Stripe.Invoice
-        await handleInvoicePaymentFailed(invoice, supabase)
+        console.log('Invoice payment failed:', invoice.id)
+        // Get subscription ID from invoice lines
+        const subscriptionId = invoice.lines?.data?.[0]?.subscription
+        if (subscriptionId && typeof subscriptionId === 'string') {
+          await supabase
+            .from('purchases')
+            .update({ status: 'failed' })
+            .eq('payment_id', subscriptionId)
+        }
         break
       }
 
@@ -85,10 +80,7 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ received: true })
   } catch (error) {
     console.error('Webhook handler error:', error)
-    return NextResponse.json(
-      { error: 'Webhook handler failed' },
-      { status: 500 }
-    )
+    return NextResponse.json({ error: 'Webhook handler failed' }, { status: 500 })
   }
 }
 
@@ -97,19 +89,16 @@ async function handleCheckoutComplete(
   supabase: ReturnType<typeof createServerClient>
 ) {
   const { planId, funnel_session_id, email } = session.metadata || {}
+  const customerEmail = session.customer_details?.email || email
   
   console.log('Checkout completed:', {
     sessionId: session.id,
     customerId: session.customer,
     subscriptionId: session.subscription,
-    planId,
-    email: session.customer_details?.email || email,
+    email: customerEmail,
   })
 
-  // Update purchase record to completed
-  if (email || session.customer_details?.email) {
-    const customerEmail = (session.customer_details?.email || email)!
-    
+  if (customerEmail) {
     // Update existing pending purchase or create new one
     const { error } = await supabase
       .from('purchases')
@@ -120,13 +109,10 @@ async function handleCheckoutComplete(
       })
       .eq('email', customerEmail)
       .eq('status', 'pending')
-      .order('created_at', { ascending: false })
-      .limit(1)
 
     if (error) {
       console.error('Error updating purchase:', error)
-      
-      // If no pending purchase found, create a new completed one
+      // Create new completed purchase if no pending found
       await supabase.from('purchases').insert({
         email: customerEmail,
         plan_type: planId || 'unknown',
@@ -147,90 +133,13 @@ async function handleCheckoutComplete(
   }
 }
 
-async function handleSubscriptionCreated(
-  subscription: Stripe.Subscription,
-  supabase: ReturnType<typeof createServerClient>
-) {
-  console.log('Subscription created:', {
-    id: subscription.id,
-    status: subscription.status,
-    customerId: subscription.customer,
-  })
-  
-  // Additional subscription tracking can be added here
-}
-
-async function handleSubscriptionUpdated(
-  subscription: Stripe.Subscription,
-  supabase: ReturnType<typeof createServerClient>
-) {
-  console.log('Subscription updated:', {
-    id: subscription.id,
-    status: subscription.status,
-  })
-
-  // Handle subscription status changes (e.g., past_due, canceled)
-  if (subscription.status === 'past_due' || subscription.status === 'unpaid') {
-    // Update purchase status
-    await supabase
-      .from('purchases')
-      .update({ status: 'failed' })
-      .eq('payment_id', subscription.id)
-  }
-}
-
 async function handleSubscriptionCanceled(
   subscription: Stripe.Subscription,
   supabase: ReturnType<typeof createServerClient>
 ) {
   console.log('Subscription canceled:', subscription.id)
-
-  // Update purchase status to refunded/canceled
   await supabase
     .from('purchases')
     .update({ status: 'refunded' })
     .eq('payment_id', subscription.id)
-}
-
-async function handleInvoicePaid(
-  invoice: Stripe.Invoice,
-  supabase: ReturnType<typeof createServerClient>
-) {
-  // Access subscription from invoice metadata or parent subscription
-  const invoiceData = invoice as unknown as { subscription?: string | { id: string } }
-  const subscriptionId = typeof invoiceData.subscription === 'string' 
-    ? invoiceData.subscription 
-    : invoiceData.subscription?.id
-
-  console.log('Invoice paid:', {
-    id: invoice.id,
-    subscriptionId,
-    amountPaid: invoice.amount_paid,
-  })
-
-  // Track recurring payments if needed
-}
-
-async function handleInvoicePaymentFailed(
-  invoice: Stripe.Invoice,
-  supabase: ReturnType<typeof createServerClient>
-) {
-  // Access subscription from invoice metadata or parent subscription
-  const invoiceData = invoice as unknown as { subscription?: string | { id: string } }
-  const subscriptionId = typeof invoiceData.subscription === 'string' 
-    ? invoiceData.subscription 
-    : invoiceData.subscription?.id
-
-  console.log('Invoice payment failed:', {
-    id: invoice.id,
-    subscriptionId,
-  })
-
-  // Update purchase status
-  if (subscriptionId) {
-    await supabase
-      .from('purchases')
-      .update({ status: 'failed' })
-      .eq('payment_id', subscriptionId)
-  }
 }
