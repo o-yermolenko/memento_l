@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useTransition, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import { useFunnelStore } from '@/store/funnelStore'
 import { useSupabase } from '@/components/SupabaseProvider'
@@ -69,7 +69,14 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
   const router = useRouter()
   const { addAnswer, getAnswer } = useFunnelStore()
   const { syncAnswer } = useSupabase()
+  const [isPending, startTransition] = useTransition()
   const question = quizQuestions[questionIndex]
+  const nextRoute = getNextRouteForQuestion(questionIndex)
+  
+  // Prefetch next route for instant navigation
+  useEffect(() => {
+    router.prefetch(nextRoute)
+  }, [router, nextRoute])
   
   const existingAnswer = getAnswer(question.id)
   const [selectedValues, setSelectedValues] = useState<string[]>(
@@ -79,15 +86,18 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
   )
   
   const handleSingleSelect = (optionId: string, score?: number) => {
+    // Save answer to store immediately
     addAnswer({
       questionId: question.id,
       value: optionId,
       score: score,
     })
-    // Sync to Supabase (async, non-blocking)
+    // Navigate immediately, don't wait for Supabase
+    startTransition(() => {
+      router.push(nextRoute)
+    })
+    // Sync to Supabase in background (fire and forget)
     syncAnswer(question.id, optionId, score)
-    const nextRoute = getNextRouteForQuestion(questionIndex)
-    router.push(nextRoute)
   }
   
   const handleMultiSelect = (optionId: string) => {
@@ -109,10 +119,12 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
         value: selectedValues,
         score: totalScore,
       })
-      // Sync to Supabase (async, non-blocking)
+      // Navigate immediately
+      startTransition(() => {
+        router.push(nextRoute)
+      })
+      // Sync to Supabase in background
       syncAnswer(question.id, selectedValues, totalScore)
-      const nextRoute = getNextRouteForQuestion(questionIndex)
-      router.push(nextRoute)
     }
   }
   
@@ -148,9 +160,10 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
                 <button
                   key={option.id}
                   onClick={() => handleSingleSelect(option.id, option.score)}
+                  disabled={isPending}
                   className={`
                     flex-1 max-w-[90px] aspect-square card flex items-center justify-center
-                    transition-all duration-150 active:scale-95
+                    transition-all duration-150 active:scale-95 disabled:opacity-50
                     ${isSelected 
                       ? 'border-primary border-2 bg-primary/5' 
                       : 'hover:border-primary/50'
@@ -179,9 +192,10 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
               <button
                 key={option.id}
                 onClick={() => isMultiSelect ? handleMultiSelect(option.id) : handleSingleSelect(option.id, option.score)}
+                disabled={isPending && !isMultiSelect}
                 className={`
                   w-full option-tile text-left flex items-center gap-4 group
-                  transition-transform duration-150 active:scale-[0.98]
+                  transition-transform duration-150 active:scale-[0.98] disabled:opacity-50
                   ${isSelected ? 'selected' : ''}
                 `}
               >
@@ -235,10 +249,10 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
         <div className="mt-8 w-full max-w-md">
           <button
             onClick={handleMultiSubmit}
-            disabled={!canSubmit}
+            disabled={!canSubmit || isPending}
             className="btn-primary w-full"
           >
-            Continue
+            {isPending ? 'Loading...' : 'Continue'}
           </button>
           {question.minSelect && selectedValues.length < question.minSelect && (
             <p className="text-center text-sm text-text-tertiary mt-2">
