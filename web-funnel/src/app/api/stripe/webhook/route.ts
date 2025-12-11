@@ -196,9 +196,11 @@ async function handleInvoicePaid(
   invoice: Stripe.Invoice,
   supabase: ReturnType<typeof createServerClient>
 ) {
-  const subscriptionId = typeof invoice.subscription === 'string' 
-    ? invoice.subscription 
-    : invoice.subscription?.id
+  // Access subscription from invoice metadata or parent subscription
+  const invoiceData = invoice as unknown as { subscription?: string | { id: string } }
+  const subscriptionId = typeof invoiceData.subscription === 'string' 
+    ? invoiceData.subscription 
+    : invoiceData.subscription?.id
 
   console.log('Invoice paid:', {
     id: invoice.id,
@@ -213,9 +215,11 @@ async function handleInvoicePaymentFailed(
   invoice: Stripe.Invoice,
   supabase: ReturnType<typeof createServerClient>
 ) {
-  const subscriptionId = typeof invoice.subscription === 'string' 
-    ? invoice.subscription 
-    : invoice.subscription?.id
+  // Access subscription from invoice metadata or parent subscription
+  const invoiceData = invoice as unknown as { subscription?: string | { id: string } }
+  const subscriptionId = typeof invoiceData.subscription === 'string' 
+    ? invoiceData.subscription 
+    : invoiceData.subscription?.id
 
   console.log('Invoice payment failed:', {
     id: invoice.id,
