@@ -6,6 +6,7 @@ import { motion } from 'framer-motion'
 import { useFunnelStore } from '@/store/funnelStore'
 import { useSupabase } from '@/components/SupabaseProvider'
 import { createPurchase } from '@/lib/supabase'
+import { trackInitiateCheckout } from '@/lib/meta-pixel'
 import { Check, X, Star, Shield, HelpCircle, ChevronDown, ChevronUp, Award, AlertCircle } from 'lucide-react'
 
 // Pricing plans - Updated Dec 2024
@@ -147,6 +148,12 @@ function PaywallContent() {
       // Get selected plan details
       const plan = plans.find(p => p.id === selectedPlan)
       if (!plan) return
+      
+      // Track InitiateCheckout event for Meta Pixel
+      trackInitiateCheckout(plan.price, 'EUR')
+      
+      // Save selected plan for success page
+      localStorage.setItem('selectedPlan', selectedPlan)
       
       // Try to create pending purchase record in Supabase (non-blocking)
       try {

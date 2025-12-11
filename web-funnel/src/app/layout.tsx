@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import { SupabaseProvider } from '@/components/SupabaseProvider'
+import { MetaPixel } from '@/components/MetaPixel'
 
 // Inter - clean, geometric sans-serif (like Liven)
 const inter = Inter({
@@ -38,6 +39,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} antialiased bg-background-primary min-h-screen`}>
+        <MetaPixel />
         <SupabaseProvider>
           {children}
         </SupabaseProvider>
