@@ -361,52 +361,23 @@ export default function PaywallScreen() {
             Emotional Blueprint!
           </h3>
           
-          {/* Multi-Arc Gauge Chart - Liven Style */}
-          <div className="relative w-72 h-40 mx-auto mb-6">
-            <svg viewBox="0 0 200 120" className="w-full h-full overflow-visible">
-              <defs>
-                <linearGradient id="gaugeGrad1" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#D94F30" />
-                  <stop offset="100%" stopColor="#F59E0B" />
-                </linearGradient>
-                <linearGradient id="gaugeGrad2" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#F59E0B" />
-                  <stop offset="100%" stopColor="#22C55E" />
-                </linearGradient>
-                <linearGradient id="gaugeGrad3" x1="0%" y1="0%" x2="100%" y2="0%">
-                  <stop offset="0%" stopColor="#22C55E" />
-                  <stop offset="100%" stopColor="#16A34A" />
-                </linearGradient>
-              </defs>
-              
-              {/* Three concentric arcs with gradient fills */}
-              {/* Inner arc - smallest */}
-              <path d="M 45 95 A 55 55 0 0 1 155 95" fill="none" stroke="url(#gaugeGrad1)" strokeWidth="18" strokeLinecap="round" opacity="0.3"/>
-              {/* Middle arc */}
-              <path d="M 35 95 A 65 65 0 0 1 165 95" fill="none" stroke="url(#gaugeGrad2)" strokeWidth="18" strokeLinecap="round" opacity="0.5"/>
-              {/* Outer arc - largest */}
-              <path d="M 25 95 A 75 75 0 0 1 175 95" fill="none" stroke="url(#gaugeGrad3)" strokeWidth="18" strokeLinecap="round" opacity="0.8"/>
-              
-              {/* Filled portion overlays */}
-              <path d="M 45 95 A 55 55 0 0 1 70 52" fill="none" stroke="#D94F30" strokeWidth="18" strokeLinecap="round"/>
-              <path d="M 35 95 A 65 65 0 0 1 100 30" fill="none" stroke="#F59E0B" strokeWidth="18" strokeLinecap="round"/>
-              <path d="M 25 95 A 75 75 0 0 1 145 35" fill="none" stroke="#22C55E" strokeWidth="18" strokeLinecap="round"/>
-              
-              {/* Dotted connector lines */}
-              <line x1="55" y1="58" x2="40" y2="35" stroke="#666" strokeWidth="1" strokeDasharray="2,2"/>
-              <line x1="100" y1="30" x2="100" y2="8" stroke="#666" strokeWidth="1" strokeDasharray="2,2"/>
-              <line x1="150" y1="45" x2="165" y2="25" stroke="#666" strokeWidth="1" strokeDasharray="2,2"/>
-              
-              {/* Percentage markers with circles */}
-              <circle cx="40" cy="30" r="6" fill="white" stroke="#D94F30" strokeWidth="2"/>
-              <circle cx="100" cy="5" r="6" fill="white" stroke="#F59E0B" strokeWidth="2"/>
-              <circle cx="168" cy="22" r="6" fill="white" stroke="#22C55E" strokeWidth="2"/>
-              
-              {/* Percentage labels */}
-              <text x="28" y="20" fontSize="12" fontWeight="600" fill="#1F1A17">45%</text>
-              <text x="92" y="-5" fontSize="12" fontWeight="600" fill="#1F1A17">77%</text>
-              <text x="168" y="12" fontSize="12" fontWeight="600" fill="#1F1A17">83%</text>
-            </svg>
+          {/* Stats visualization - simple and clean */}
+          <div className="flex justify-center gap-8 mb-6">
+            <div className="text-center">
+              <div className="w-16 h-16 rounded-full border-4 border-[#D94F30] flex items-center justify-center mb-2">
+                <span className="text-lg font-bold text-[#D94F30]">45%</span>
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 rounded-full border-4 border-[#F59E0B] flex items-center justify-center mb-2">
+                <span className="text-lg font-bold text-[#F59E0B]">77%</span>
+              </div>
+            </div>
+            <div className="text-center">
+              <div className="w-16 h-16 rounded-full border-4 border-[#22C55E] flex items-center justify-center mb-2">
+                <span className="text-lg font-bold text-[#22C55E]">83%</span>
+              </div>
+            </div>
           </div>
 
           <div className="space-y-4">
