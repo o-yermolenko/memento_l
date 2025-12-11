@@ -23,7 +23,6 @@ export const ROUTES = {
   // Results
   loading: '/loading',
   results: '/results',
-  planReady: '/plan-ready',
   
   // Conversion
   paywall: '/paywall',
@@ -94,7 +93,6 @@ export const funnelFlowWithRoutes: FunnelStep[] = [
   // Results
   { type: 'loading', route: ROUTES.loading },
   { type: 'results_summary', route: ROUTES.results },
-  { type: 'plan_ready', route: ROUTES.planReady },
   
   // Conversion
   { type: 'paywall', route: ROUTES.paywall },

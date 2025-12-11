@@ -4,12 +4,14 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { useFunnelStore } from '@/store/funnelStore'
+import { useSupabase } from '@/components/SupabaseProvider'
 import { ROUTES } from '@/lib/routes'
 import { Mail, Shield, ArrowRight } from 'lucide-react'
 
 export default function EmailCaptureScreen() {
   const router = useRouter()
   const { setEmail, profile } = useFunnelStore()
+  const { syncProfile, syncLead } = useSupabase()
   const [email, setEmailValue] = useState(profile.email || '')
   const [error, setError] = useState('')
   
@@ -18,7 +20,7 @@ export default function EmailCaptureScreen() {
     return re.test(email)
   }
   
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
     if (!email.trim()) {
@@ -32,6 +34,11 @@ export default function EmailCaptureScreen() {
     }
     
     setEmail(email)
+    
+    // Sync to Supabase (async, non-blocking)
+    syncProfile()
+    syncLead()
+    
     router.push(ROUTES.emailOptin)
   }
   

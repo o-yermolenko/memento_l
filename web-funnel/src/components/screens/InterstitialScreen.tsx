@@ -5,7 +5,8 @@ import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { interstitials, InterstitialScreen as InterstitialData } from '@/data/questions'
 import { ROUTES } from '@/lib/routes'
-import { Users, FlaskConical, UserCheck, TrendingUp, Zap, Star, Frown, Smile, ArrowRight } from 'lucide-react'
+import { useFunnelStore } from '@/store/funnelStore'
+import { Users, FlaskConical, UserCheck, TrendingUp, Zap, Star, ArrowRight } from 'lucide-react'
 
 interface InterstitialScreenProps {
   interstitialId: string
@@ -57,7 +58,13 @@ const getBackgroundImage = (type: InterstitialData['type']) => {
 
 export default function InterstitialScreen({ interstitialId }: InterstitialScreenProps) {
   const router = useRouter()
+  const { profile } = useFunnelStore()
   const interstitial = interstitials[interstitialId]
+  
+  // Gender-specific transformation images
+  const isFemale = profile.gender === 'female'
+  const beforeImage = isFemale ? '/images/transformation/before-female.png' : '/images/transformation/before.png'
+  const afterImage = isFemale ? '/images/transformation/after-female.png' : '/images/transformation/after.png'
   
   const handleContinue = () => {
     const nextRoute = getNextRouteForInterstitial(interstitialId)
@@ -94,18 +101,25 @@ export default function InterstitialScreen({ interstitialId }: InterstitialScree
               "{interstitial.headline}"
             </h2>
             <p className="text-lg text-text-secondary mb-6">
-              {interstitial.subheadline}
+              {interstitial.subheadline?.split('•').map((part, i) => (
+                <span key={i} className={i > 0 ? 'block' : ''}>
+                  {part.trim()}
+                </span>
+              ))}
             </p>
           </div>
           
           <div className="w-full grid grid-cols-[1fr,auto,1fr] gap-4 items-center mb-8">
             {/* Before */}
             <div className="card p-4 text-center">
-              <div className="w-12 h-12 mx-auto mb-2 rounded-full bg-status-error/10 flex items-center justify-center">
-                <Frown className="w-6 h-6 text-status-error" />
+              <div className="w-32 h-32 mx-auto mb-2 rounded-full overflow-hidden shadow-lg">
+                <img 
+                  src={beforeImage} 
+                  alt="Before" 
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <p className="text-sm text-text-tertiary mb-1">Before</p>
-              <p className="font-semibold text-text-primary">Overwhelmed</p>
+              <p className="text-sm text-text-tertiary">Before</p>
             </div>
             
             {/* Arrow */}
@@ -120,11 +134,14 @@ export default function InterstitialScreen({ interstitialId }: InterstitialScree
             
             {/* After */}
             <div className="card p-4 text-center border-primary border-2">
-              <div className="w-12 h-12 mx-auto mb-2 rounded-full bg-primary/10 flex items-center justify-center">
-                <Smile className="w-6 h-6 text-primary" />
+              <div className="w-32 h-32 mx-auto mb-2 rounded-full overflow-hidden shadow-lg">
+                <img 
+                  src={afterImage} 
+                  alt="After" 
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <p className="text-sm text-text-tertiary mb-1">After</p>
-              <p className="font-semibold text-text-primary">Calm & Stable</p>
+              <p className="text-sm text-text-tertiary">After</p>
             </div>
           </div>
           
@@ -226,11 +243,13 @@ export default function InterstitialScreen({ interstitialId }: InterstitialScree
               {[1, 2, 3].map((i) => (
                 <div
                   key={i}
-                  className="w-14 h-14 rounded-full bg-primary/20 border-4 border-background-primary flex items-center justify-center"
+                  className="w-14 h-14 rounded-full border-4 border-background-primary overflow-hidden"
                 >
-                  <svg className="w-8 h-8 text-primary/60" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                  </svg>
+                  <img 
+                    src={`/images/map/avatar-${i}.png`}
+                    alt=""
+                    className="w-full h-full object-cover"
+                  />
                 </div>
               ))}
             </motion.div>

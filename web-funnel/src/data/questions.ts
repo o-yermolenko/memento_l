@@ -328,7 +328,7 @@ export const interstitials: Record<string, InterstitialScreen> = {
     id: 'science',
     type: 'testimonial',
     headline: '"I used to spiral for hours. Now I catch myself in minutes."',
-    subheadline: 'Sarah M., 34 • Using Memento for 3 weeks',
+    subheadline: 'Sean M., 34 • Using Memento for 3 weeks',
     statValue: '3 weeks',
     statLabel: 'to feel noticeably different',
     ctaText: 'Continue',
@@ -364,7 +364,6 @@ export type ScreenType =
   | 'name_capture'
   | 'loading'
   | 'results_summary'
-  | 'plan_ready'
   | 'paywall'
 
 export interface ScreenConfig {
@@ -430,10 +429,9 @@ export const funnelFlow: ScreenConfig[] = [
   // Results
   { type: 'loading' },                    // 33
   { type: 'results_summary' },            // 34
-  { type: 'plan_ready' },                 // 35
   
   // Conversion
-  { type: 'paywall' },                    // 36
+  { type: 'paywall' },                    // 35
 ]
 
 export const getQuestionNumber = (stepIndex: number): number => {

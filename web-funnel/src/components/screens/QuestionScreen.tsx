@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { useFunnelStore } from '@/store/funnelStore'
+import { useSupabase } from '@/components/SupabaseProvider'
 import { quizQuestions } from '@/data/questions'
 import { ROUTES } from '@/lib/routes'
 import { Check, Circle, HelpCircle, X, ChevronRight, ThumbsDown, ThumbsUp } from 'lucide-react'
@@ -68,6 +69,7 @@ const LikertIcon = ({ index, isSelected }: { index: number; isSelected: boolean 
 export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
   const router = useRouter()
   const { addAnswer, getAnswer } = useFunnelStore()
+  const { syncAnswer } = useSupabase()
   const question = quizQuestions[questionIndex]
   
   const existingAnswer = getAnswer(question.id)
@@ -83,6 +85,8 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
       value: optionId,
       score: score,
     })
+    // Sync to Supabase (async, non-blocking)
+    syncAnswer(question.id, optionId, score)
     const nextRoute = getNextRouteForQuestion(questionIndex)
     router.push(nextRoute)
   }
@@ -106,6 +110,8 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
         value: selectedValues,
         score: totalScore,
       })
+      // Sync to Supabase (async, non-blocking)
+      syncAnswer(question.id, selectedValues, totalScore)
       const nextRoute = getNextRouteForQuestion(questionIndex)
       router.push(nextRoute)
     }

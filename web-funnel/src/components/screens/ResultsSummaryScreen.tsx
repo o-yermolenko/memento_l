@@ -1,9 +1,10 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { useFunnelStore } from '@/store/funnelStore'
+import { useSupabase } from '@/components/SupabaseProvider'
 import { ROUTES } from '@/lib/routes'
 import { Heart, Brain, Shield, Zap, AlertCircle, Check } from 'lucide-react'
 
@@ -69,9 +70,20 @@ const patternData: Record<string, {
 export default function ResultsSummaryScreen() {
   const router = useRouter()
   const { profile, primaryPattern, readinessLevel } = useFunnelStore()
+  const { syncCompletion, syncLead } = useSupabase()
+  const hasSynced = useRef(false)
+  
+  // Sync completion to Supabase when results are shown
+  useEffect(() => {
+    if (!hasSynced.current) {
+      hasSynced.current = true
+      syncCompletion()
+      syncLead() // Update lead with final results
+    }
+  }, [syncCompletion, syncLead])
   
   const handleContinue = () => {
-    router.push(ROUTES.planReady)
+    router.push(ROUTES.paywall)
   }
   
   const pattern = patternData[primaryPattern] || patternData['The Overthinker']

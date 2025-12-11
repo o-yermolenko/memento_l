@@ -3,6 +3,8 @@
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useFunnelStore } from '@/store/funnelStore'
+import { useSupabase } from '@/components/SupabaseProvider'
+import { createPurchase } from '@/lib/supabase'
 import { Check, X, Star, Shield, HelpCircle, ChevronDown, ChevronUp, Award } from 'lucide-react'
 
 // Pricing plans
@@ -104,13 +106,45 @@ const reviews = [
 
 export default function PaywallScreen() {
   const { profile, primaryPattern } = useFunnelStore()
+  const { sessionId } = useSupabase()
   const [selectedPlan, setSelectedPlan] = useState('1-month')
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
+  const [isProcessing, setIsProcessing] = useState(false)
 
-  const handleGetPlan = () => {
-    // In production, this would go to payment processor
-    console.log('Plan selected:', selectedPlan)
-    alert('Payment flow would start here!')
+  // Gender-specific transformation images
+  const isFemale = profile.gender === 'female'
+  const beforeImage = isFemale ? '/images/transformation/before-female.png' : '/images/transformation/before.png'
+  const afterImage = isFemale ? '/images/transformation/after-female.png' : '/images/transformation/after.png'
+
+  const handleGetPlan = async () => {
+    if (isProcessing) return
+    setIsProcessing(true)
+    
+    try {
+      // Get selected plan details
+      const plan = plans.find(p => p.id === selectedPlan)
+      if (!plan) return
+      
+      // Create purchase record in Supabase
+      if (profile.email) {
+        await createPurchase({
+          session_id: sessionId ?? undefined,
+          email: profile.email,
+          plan_type: plan.id,
+          amount: plan.price,
+          currency: 'EUR',
+          status: 'pending',
+        })
+      }
+      
+      // In production, this would redirect to payment processor (Stripe, etc.)
+      console.log('Plan selected:', selectedPlan)
+      alert('Payment flow would start here!')
+    } catch (error) {
+      console.error('Failed to create purchase:', error)
+    } finally {
+      setIsProcessing(false)
+    }
   }
 
   return (
@@ -141,9 +175,9 @@ export default function PaywallScreen() {
               <span className="inline-block px-3 py-1 bg-red-100 text-red-600 rounded-full text-sm font-medium mb-3">
                 Now
               </span>
-              <div className="w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden border-2 border-red-200">
+              <div className="w-full aspect-square max-w-[140px] mx-auto mb-3 rounded-full overflow-hidden border-3 border-red-200">
                 <img 
-                  src="/images/transformation/before.png" 
+                  src={beforeImage} 
                   alt="Before" 
                   className="w-full h-full object-cover"
                 />
@@ -162,9 +196,9 @@ export default function PaywallScreen() {
               <span className="inline-block px-3 py-1 bg-primary text-white rounded-full text-sm font-medium mb-3">
                 Your Goal
               </span>
-              <div className="w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden border-2 border-primary">
+              <div className="w-full aspect-square max-w-[140px] mx-auto mb-3 rounded-full overflow-hidden border-3 border-primary">
                 <img 
-                  src="/images/transformation/after.png" 
+                  src={afterImage} 
                   alt="After" 
                   className="w-full h-full object-cover"
                 />
@@ -274,7 +308,7 @@ export default function PaywallScreen() {
                 selectedPlan === plan.id
                   ? 'border-primary bg-white'
                   : 'border-gray-200 bg-white'
-              } ${plan.popular ? 'ring-2 ring-primary' : ''}`}
+              }`}
             >
               {plan.popular && (
                 <div className="bg-primary text-white text-sm font-bold py-1 px-4 rounded-t-lg flex items-center justify-center gap-1">
@@ -343,7 +377,7 @@ export default function PaywallScreen() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="mb-8"
+          className="bg-white rounded-2xl p-6 mb-6"
         >
           <h3 className="text-xl font-bold text-text-primary text-center mb-4">Our goals</h3>
           <div className="space-y-3">
@@ -363,7 +397,7 @@ export default function PaywallScreen() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.4 }}
-          className="text-center mb-8"
+          className="bg-white rounded-2xl p-6 mb-6 text-center"
         >
           <h3 className="text-xl font-bold text-text-primary mb-2">
             People just like you achieved great results using our
@@ -535,7 +569,7 @@ export default function PaywallScreen() {
                   selectedPlan === plan.id
                     ? 'border-primary bg-white'
                     : 'border-gray-200 bg-white'
-                } ${plan.popular ? 'ring-2 ring-primary' : ''}`}
+                }`}
               >
                 {plan.popular && (
                   <div className="bg-primary text-white text-sm font-bold py-1 px-4 rounded-t-lg flex items-center justify-center gap-1">
