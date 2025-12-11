@@ -2,6 +2,7 @@
 
 import React from 'react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { interstitials, InterstitialScreen as InterstitialData } from '@/data/questions'
 import { ROUTES } from '@/lib/routes'
@@ -112,11 +113,14 @@ export default function InterstitialScreen({ interstitialId }: InterstitialScree
           <div className="w-full grid grid-cols-[1fr,auto,1fr] gap-4 items-center mb-8">
             {/* Before */}
             <div className="card p-4 text-center">
-              <div className="w-32 h-32 mx-auto mb-2 rounded-full overflow-hidden shadow-lg">
-                <img 
+              <div className="w-32 h-32 mx-auto mb-2 rounded-full overflow-hidden shadow-lg relative bg-background-secondary">
+                <Image 
                   src={beforeImage} 
                   alt="Before" 
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="128px"
+                  className="object-cover"
+                  priority
                 />
               </div>
               <p className="text-sm text-text-tertiary">Before</p>
@@ -124,21 +128,19 @@ export default function InterstitialScreen({ interstitialId }: InterstitialScree
             
             {/* Arrow */}
             <div className="flex flex-col items-center">
-              <motion.div
-                animate={{ x: [0, 5, 0] }}
-                transition={{ duration: 1, repeat: Infinity }}
-              >
-                <ArrowRight className="w-6 h-6 text-primary" />
-              </motion.div>
+              <ArrowRight className="w-6 h-6 text-primary" />
             </div>
             
             {/* After */}
             <div className="card p-4 text-center border-primary border-2">
-              <div className="w-32 h-32 mx-auto mb-2 rounded-full overflow-hidden shadow-lg">
-                <img 
+              <div className="w-32 h-32 mx-auto mb-2 rounded-full overflow-hidden shadow-lg relative bg-background-secondary">
+                <Image 
                   src={afterImage} 
                   alt="After" 
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="128px"
+                  className="object-cover"
+                  priority
                 />
               </div>
               <p className="text-sm text-text-tertiary">After</p>
@@ -170,18 +172,16 @@ export default function InterstitialScreen({ interstitialId }: InterstitialScree
         <>
           {/* Background Image for science/expert/stat */}
           {getBackgroundImage(interstitial.type) && (
-            <motion.div
-              className="w-full max-w-md mb-6 rounded-2xl overflow-hidden"
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: 0.1, duration: 0.4 }}
-            >
-              <img 
+            <div className="w-full max-w-md mb-6 rounded-2xl overflow-hidden relative aspect-video bg-background-secondary">
+              <Image 
                 src={getBackgroundImage(interstitial.type)!} 
                 alt="" 
-                className="w-full h-auto object-cover"
+                fill
+                sizes="(max-width: 768px) 100vw, 448px"
+                className="object-cover"
+                priority
               />
-            </motion.div>
+            </div>
           )}
           
           {/* Icon - only show if no background image */}
@@ -234,25 +234,22 @@ export default function InterstitialScreen({ interstitialId }: InterstitialScree
           
           {/* Expert avatars for expert type */}
           {interstitial.type === 'expert' && (
-            <motion.div
-              className="flex -space-x-4 mb-8"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.6 }}
-            >
+            <div className="flex -space-x-4 mb-8">
               {[1, 2, 3].map((i) => (
                 <div
                   key={i}
-                  className="w-14 h-14 rounded-full border-4 border-background-primary overflow-hidden"
+                  className="w-14 h-14 rounded-full border-4 border-background-primary overflow-hidden relative bg-background-secondary"
                 >
-                  <img 
+                  <Image 
                     src={`/images/map/avatar-${i}.png`}
                     alt=""
-                    className="w-full h-full object-cover"
+                    fill
+                    sizes="56px"
+                    className="object-cover"
                   />
                 </div>
               ))}
-            </motion.div>
+            </div>
           )}
           
           {/* CTA Button */}

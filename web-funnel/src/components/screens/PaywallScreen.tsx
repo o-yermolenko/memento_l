@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
 import { useFunnelStore } from '@/store/funnelStore'
 import { useSupabase } from '@/components/SupabaseProvider'
@@ -233,11 +234,14 @@ function PaywallContent() {
               <span className="inline-block px-3 py-1 bg-red-100 text-red-600 rounded-full text-sm font-medium mb-3">
                 Now
               </span>
-              <div className="w-full aspect-square max-w-[160px] mx-auto mb-3 rounded-full overflow-hidden border-4 border-red-400">
-                <img 
+              <div className="w-full aspect-square max-w-[160px] mx-auto mb-3 rounded-full overflow-hidden border-4 border-red-400 relative bg-background-secondary">
+                <Image 
                   src={beforeImage} 
                   alt="Before" 
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="160px"
+                  className="object-cover"
+                  priority
                 />
               </div>
             </div>
@@ -254,11 +258,14 @@ function PaywallContent() {
               <span className="inline-block px-3 py-1 bg-primary text-white rounded-full text-sm font-medium mb-3">
                 Your Goal
               </span>
-              <div className="w-full aspect-square max-w-[160px] mx-auto mb-3 rounded-full overflow-hidden border-4 border-primary">
-                <img 
+              <div className="w-full aspect-square max-w-[160px] mx-auto mb-3 rounded-full overflow-hidden border-4 border-primary relative bg-background-secondary">
+                <Image 
                   src={afterImage} 
                   alt="After" 
-                  className="w-full h-full object-cover"
+                  fill
+                  sizes="160px"
+                  className="object-cover"
+                  priority
                 />
               </div>
             </div>
