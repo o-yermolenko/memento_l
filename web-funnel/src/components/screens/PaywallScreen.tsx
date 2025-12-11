@@ -361,25 +361,6 @@ export default function PaywallScreen() {
             Emotional Blueprint!
           </h3>
           
-          {/* Stats visualization - simple and clean */}
-          <div className="flex justify-center gap-8 mb-6">
-            <div className="text-center">
-              <div className="w-16 h-16 rounded-full border-4 border-[#D94F30] flex items-center justify-center mb-2">
-                <span className="text-lg font-bold text-[#D94F30]">45%</span>
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 rounded-full border-4 border-[#F59E0B] flex items-center justify-center mb-2">
-                <span className="text-lg font-bold text-[#F59E0B]">77%</span>
-              </div>
-            </div>
-            <div className="text-center">
-              <div className="w-16 h-16 rounded-full border-4 border-[#22C55E] flex items-center justify-center mb-2">
-                <span className="text-lg font-bold text-[#22C55E]">83%</span>
-              </div>
-            </div>
-          </div>
-
           <div className="space-y-4">
             <div>
               <p className="text-3xl font-bold text-primary">83%</p>
