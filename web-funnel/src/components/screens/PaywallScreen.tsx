@@ -148,16 +148,21 @@ function PaywallContent() {
       const plan = plans.find(p => p.id === selectedPlan)
       if (!plan) return
       
-      // Create pending purchase record in Supabase
-      await createPurchase({
-        session_id: sessionId ?? undefined,
-        email: profile.email,
-        plan_type: plan.id,
-        amount: plan.price,
-        currency: 'EUR',
-        status: 'pending',
-        payment_provider: 'stripe',
-      })
+      // Try to create pending purchase record in Supabase (non-blocking)
+      try {
+        await createPurchase({
+          session_id: sessionId ?? undefined,
+          email: profile.email,
+          plan_type: plan.id,
+          amount: plan.price,
+          currency: 'EUR',
+          status: 'pending',
+          payment_provider: 'stripe',
+        })
+      } catch (purchaseError) {
+        // Log but don't block - payment tracking will happen via webhook
+        console.error('Error creating purchase:', purchaseError)
+      }
       
       // Create Stripe Checkout session
       const response = await fetch('/api/stripe/checkout', {
