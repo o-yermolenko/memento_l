@@ -10,12 +10,14 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@stripe/stripe-js": "^8.5.3",
     "@supabase/supabase-js": "^2.87.1",
     "framer-motion": "^10.16.16",
     "lucide-react": "^0.303.0",
     "next": "14.0.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "stripe": "^20.0.0",
     "zustand": "^4.4.7"
   },
   "devDependencies": {

@@ -33,6 +33,30 @@ cd web-funnel
 npm install
 ```
 
+### Environment Variables
+
+Create a `.env.local` file with the following variables:
+
+```bash
+# Supabase Configuration
+NEXT_PUBLIC_SUPABASE_URL=https://your-project.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+
+# Stripe Configuration
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_your-publishable-key
+STRIPE_SECRET_KEY=sk_test_your-secret-key
+STRIPE_WEBHOOK_SECRET=whsec_your-webhook-secret
+
+# Stripe Price IDs (create in Stripe Dashboard)
+STRIPE_PRICE_1_WEEK=price_your-1-week-price-id
+STRIPE_PRICE_4_WEEK=price_your-4-week-price-id
+STRIPE_PRICE_12_WEEK=price_your-12-week-price-id
+
+# Application URL
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
 ### Development
 
 ```bash
@@ -223,11 +247,49 @@ export const funnelFlow: ScreenConfig[] = [
 
 Edit `tailwind.config.ts` or CSS variables in `globals.css`.
 
+## 💳 Stripe Setup
+
+### 1. Create Stripe Products & Prices
+
+1. Go to [Stripe Dashboard → Products](https://dashboard.stripe.com/products)
+2. Create three products with recurring prices:
+   - **1-Week Trial:** €6.99/week
+   - **4-Week Plan:** €19.99/4 weeks
+   - **12-Week Plan:** €39.99/12 weeks
+3. Copy each price ID (starts with `price_`)
+
+### 2. Set Up Webhooks
+
+1. Go to [Stripe Dashboard → Webhooks](https://dashboard.stripe.com/webhooks)
+2. Add endpoint: `https://your-domain.com/api/stripe/webhook`
+3. Listen for events:
+   - `checkout.session.completed`
+   - `customer.subscription.created`
+   - `customer.subscription.updated`
+   - `customer.subscription.deleted`
+   - `invoice.paid`
+   - `invoice.payment_failed`
+4. Copy the webhook signing secret
+
+### 3. Local Development with Stripe CLI
+
+```bash
+# Install Stripe CLI
+brew install stripe/stripe-cli/stripe
+
+# Login to Stripe
+stripe login
+
+# Forward webhooks to local server
+stripe listen --forward-to localhost:3000/api/stripe/webhook
+```
+
 ## 📱 Production Checklist
 
 - [ ] Replace placeholder avatar images with real photography
 - [ ] Add proper analytics tracking (GA4, Meta Pixel, etc.)
-- [ ] Integrate payment processor (Stripe, etc.)
+- [x] Integrate payment processor (Stripe)
+- [x] Set up payment webhooks
 - [ ] Set up email capture backend
 - [ ] Add error boundary for graceful error handling
 - [ ] Implement A/B testing infrastructure
@@ -235,6 +297,7 @@ Edit `tailwind.config.ts` or CSS variables in `globals.css`.
 - [ ] Mobile app deep linking
 - [ ] Performance optimization (image lazy loading)
 - [ ] CDN setup for assets
+- [ ] Configure Stripe production keys
 
 ## 📈 Expected Metrics
 

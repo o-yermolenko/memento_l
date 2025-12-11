@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, createContext, useContext, useState, useCallback } from 'react'
+import { useEffect, createContext, useContext, useState, useCallback, useRef } from 'react'
 import {
   createSession,
   updateSession,
@@ -38,29 +38,30 @@ export function useSupabase() {
 export function SupabaseProvider({ children }: { children: React.ReactNode }) {
   const [sessionId, setSessionId] = useState<string | null>(null)
   const [isReady, setIsReady] = useState(false)
+  const [mounted, setMounted] = useState(false)
+  const initRef = useRef(false)
 
-  const {
-    profile,
-    currentStep,
-    primaryPattern,
-    secondaryPattern,
-    emotionalBlueprintScore,
-    readinessLevel,
-  } = useFunnelStore()
-
-  // Initialize session on mount
+  // Mark as mounted (client-side only)
   useEffect(() => {
+    setMounted(true)
+    setIsReady(true) // Mark ready immediately - Supabase syncing is optional/async
+  }, [])
+
+  // Initialize session on mount (only on client)
+  useEffect(() => {
+    if (!mounted || initRef.current) return
+    initRef.current = true
+    
     async function init() {
       try {
         // Check for existing session
         const existingId = sessionStorage.getItem(SESSION_STORAGE_KEY)
         if (existingId) {
           setSessionId(existingId)
-          setIsReady(true)
           return
         }
 
-        // Create new session
+        // Create new session (don't block if it fails)
         const utmParams = getUTMParams()
         const session = await createSession({
           ...utmParams,
@@ -70,16 +71,14 @@ export function SupabaseProvider({ children }: { children: React.ReactNode }) {
         
         sessionStorage.setItem(SESSION_STORAGE_KEY, session.id)
         setSessionId(session.id)
-        setIsReady(true)
       } catch (error) {
         console.error('Failed to initialize Supabase session:', error)
-        // Still mark as ready so the app can function without backend
-        setIsReady(true)
+        // App continues to work without backend
       }
     }
 
     init()
-  }, [])
+  }, [mounted])
 
   // Sync answer to Supabase
   const syncAnswer = useCallback(async (questionId: string, value: string | string[], score?: number) => {
@@ -97,60 +96,63 @@ export function SupabaseProvider({ children }: { children: React.ReactNode }) {
     }
   }, [sessionId])
 
-  // Sync profile to Supabase
+  // Sync profile to Supabase - get fresh data from store
   const syncProfile = useCallback(async () => {
     if (!sessionId) return
 
     try {
+      const state = useFunnelStore.getState()
       await updateSession(sessionId, {
-        gender: profile.gender ?? undefined,
-        age_range: profile.age ?? undefined,
-        name: profile.name || undefined,
-        email: profile.email || undefined,
-        email_opt_in: profile.emailOptIn,
-        current_step: currentStep,
+        gender: state.profile.gender ?? undefined,
+        age_range: state.profile.age ?? undefined,
+        name: state.profile.name || undefined,
+        email: state.profile.email || undefined,
+        email_opt_in: state.profile.emailOptIn,
+        current_step: state.currentStep,
       })
     } catch (error) {
       console.error('Failed to sync profile:', error)
     }
-  }, [sessionId, profile, currentStep])
+  }, [sessionId])
 
-  // Save lead when email is captured
+  // Save lead when email is captured - get fresh data from store
   const syncLead = useCallback(async () => {
-    if (!profile.email) return
+    const state = useFunnelStore.getState()
+    if (!state.profile.email) return
 
     try {
       await saveLead({
         session_id: sessionId ?? undefined,
-        email: profile.email,
-        name: profile.name || undefined,
-        gender: profile.gender ?? undefined,
-        age_range: profile.age ?? undefined,
-        email_opt_in: profile.emailOptIn,
-        primary_pattern: primaryPattern || undefined,
-        secondary_pattern: secondaryPattern || undefined,
-        readiness_level: readinessLevel || undefined,
+        email: state.profile.email,
+        name: state.profile.name || undefined,
+        gender: state.profile.gender ?? undefined,
+        age_range: state.profile.age ?? undefined,
+        email_opt_in: state.profile.emailOptIn,
+        primary_pattern: state.primaryPattern || undefined,
+        secondary_pattern: state.secondaryPattern || undefined,
+        readiness_level: state.readinessLevel || undefined,
       })
     } catch (error) {
       console.error('Failed to save lead:', error)
     }
-  }, [sessionId, profile, primaryPattern, secondaryPattern, readinessLevel])
+  }, [sessionId])
 
-  // Complete the session with final results
+  // Complete the session with final results - get fresh data from store
   const syncCompletion = useCallback(async () => {
     if (!sessionId) return
 
     try {
+      const state = useFunnelStore.getState()
       await completeSession(sessionId, {
-        primaryPattern,
-        secondaryPattern,
-        emotionalBlueprintScore,
-        readinessLevel,
+        primaryPattern: state.primaryPattern,
+        secondaryPattern: state.secondaryPattern,
+        emotionalBlueprintScore: state.emotionalBlueprintScore,
+        readinessLevel: state.readinessLevel,
       })
     } catch (error) {
       console.error('Failed to complete session:', error)
     }
-  }, [sessionId, primaryPattern, secondaryPattern, emotionalBlueprintScore, readinessLevel])
+  }, [sessionId])
 
   return (
     <SupabaseContext.Provider

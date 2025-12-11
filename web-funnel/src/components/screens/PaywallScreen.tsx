@@ -1,33 +1,38 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
+import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { useFunnelStore } from '@/store/funnelStore'
 import { useSupabase } from '@/components/SupabaseProvider'
 import { createPurchase } from '@/lib/supabase'
-import { Check, X, Star, Shield, HelpCircle, ChevronDown, ChevronUp, Award } from 'lucide-react'
+import { getStripe } from '@/lib/stripe'
+import { Check, X, Star, Shield, HelpCircle, ChevronDown, ChevronUp, Award, AlertCircle } from 'lucide-react'
 
 // Pricing plans
 const plans = [
   {
-    id: '7-day',
-    name: '7-DAY PLAN',
-    price: 49.99,
-    perDay: 7.14,
+    id: '1-week',
+    name: '1-WEEK TRIAL',
+    originalPrice: 13.86,
+    price: 6.99,
+    perDay: 0.99,
     popular: false,
   },
   {
-    id: '1-month',
-    name: '1-MONTH PLAN',
-    price: 49.99,
-    perDay: 1.66,
+    id: '4-week',
+    name: '4-WEEK PLAN',
+    originalPrice: 39.99,
+    price: 19.99,
+    perDay: 0.71,
     popular: true,
   },
   {
-    id: '3-month',
-    name: '3-MONTH PLAN',
-    price: 99.99,
-    perDay: 1.11,
+    id: '12-week',
+    name: '12-WEEK PLAN',
+    originalPrice: 79.99,
+    price: 39.99,
+    perDay: 0.48,
     popular: false,
   },
 ]
@@ -104,12 +109,23 @@ const reviews = [
   },
 ]
 
-export default function PaywallScreen() {
+function PaywallContent() {
+  const searchParams = useSearchParams()
   const { profile, primaryPattern } = useFunnelStore()
   const { sessionId } = useSupabase()
-  const [selectedPlan, setSelectedPlan] = useState('1-month')
+  const [selectedPlan, setSelectedPlan] = useState('4-week')
   const [expandedFaq, setExpandedFaq] = useState<number | null>(null)
   const [isProcessing, setIsProcessing] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  // Check if payment was canceled
+  useEffect(() => {
+    if (searchParams.get('canceled') === 'true') {
+      setError('Payment was canceled. Please try again when you\'re ready.')
+      // Clear the URL parameter
+      window.history.replaceState({}, '', '/paywall')
+    }
+  }, [searchParams])
 
   // Gender-specific transformation images
   const isFemale = profile.gender === 'female'
@@ -118,30 +134,68 @@ export default function PaywallScreen() {
 
   const handleGetPlan = async () => {
     if (isProcessing) return
+    
+    // Validate email
+    if (!profile.email) {
+      setError('Please complete the quiz to provide your email before purchasing.')
+      return
+    }
+    
     setIsProcessing(true)
+    setError(null)
     
     try {
       // Get selected plan details
       const plan = plans.find(p => p.id === selectedPlan)
       if (!plan) return
       
-      // Create purchase record in Supabase
-      if (profile.email) {
-        await createPurchase({
-          session_id: sessionId ?? undefined,
-          email: profile.email,
-          plan_type: plan.id,
-          amount: plan.price,
-          currency: 'EUR',
-          status: 'pending',
-        })
-      }
+      // Create pending purchase record in Supabase
+      await createPurchase({
+        session_id: sessionId ?? undefined,
+        email: profile.email,
+        plan_type: plan.id,
+        amount: plan.price,
+        currency: 'EUR',
+        status: 'pending',
+        payment_provider: 'stripe',
+      })
       
-      // In production, this would redirect to payment processor (Stripe, etc.)
-      console.log('Plan selected:', selectedPlan)
-      alert('Payment flow would start here!')
-    } catch (error) {
-      console.error('Failed to create purchase:', error)
+      // Create Stripe Checkout session
+      const response = await fetch('/api/stripe/checkout', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          planId: selectedPlan,
+          email: profile.email,
+          sessionId: sessionId,
+          name: profile.name,
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to create checkout session')
+      }
+
+      // Redirect to Stripe Checkout
+      const stripe = await getStripe()
+      if (stripe && data.sessionId) {
+        const { error: stripeError } = await stripe.redirectToCheckout({
+          sessionId: data.sessionId,
+        })
+        if (stripeError) {
+          throw new Error(stripeError.message)
+        }
+      } else if (data.url) {
+        // Fallback: redirect directly to checkout URL
+        window.location.href = data.url
+      }
+    } catch (err) {
+      console.error('Payment error:', err)
+      setError(err instanceof Error ? err.message : 'Failed to start payment. Please try again.')
     } finally {
       setIsProcessing(false)
     }
@@ -169,13 +223,13 @@ export default function PaywallScreen() {
           animate={{ opacity: 1, y: 0 }}
           className="bg-white rounded-2xl p-6 mb-6 shadow-sm"
         >
-          <div className="grid grid-cols-[1fr,auto,1fr] gap-4 mb-6">
+          <div className="grid grid-cols-[1fr,auto,1fr] gap-3 mb-6">
             {/* Now */}
             <div className="text-center">
               <span className="inline-block px-3 py-1 bg-red-100 text-red-600 rounded-full text-sm font-medium mb-3">
                 Now
               </span>
-              <div className="w-full aspect-square max-w-[140px] mx-auto mb-3 rounded-full overflow-hidden border-3 border-red-200">
+              <div className="w-full aspect-square max-w-[160px] mx-auto mb-3 rounded-full overflow-hidden border-4 border-red-200">
                 <img 
                   src={beforeImage} 
                   alt="Before" 
@@ -187,7 +241,7 @@ export default function PaywallScreen() {
             {/* Arrow */}
             <div className="flex items-center justify-center text-text-tertiary">
               <div className="flex flex-col items-center">
-                <span className="text-2xl">»</span>
+                <span className="text-3xl">»</span>
               </div>
             </div>
 
@@ -196,7 +250,7 @@ export default function PaywallScreen() {
               <span className="inline-block px-3 py-1 bg-primary text-white rounded-full text-sm font-medium mb-3">
                 Your Goal
               </span>
-              <div className="w-full aspect-square max-w-[140px] mx-auto mb-3 rounded-full overflow-hidden border-3 border-primary">
+              <div className="w-full aspect-square max-w-[160px] mx-auto mb-3 rounded-full overflow-hidden border-4 border-primary">
                 <img 
                   src={afterImage} 
                   alt="After" 
@@ -326,13 +380,18 @@ export default function PaywallScreen() {
                   </div>
                   <div className="text-left">
                     <p className="font-bold text-text-primary">{plan.name}</p>
-                    <p className="text-text-tertiary text-sm">€{plan.price}</p>
+                    <p className="text-sm">
+                      <span className="text-text-tertiary line-through mr-1">€{plan.originalPrice}</span>
+                      <span className="text-text-secondary font-semibold">€{plan.price}</span>
+                    </p>
                   </div>
                 </div>
-                <div className="bg-background-secondary px-3 py-2 rounded-lg text-right">
-                  <span className="text-text-tertiary text-xs">€</span>
-                  <span className="text-2xl font-bold text-text-primary">{Math.floor(plan.perDay)}</span>
-                  <span className="text-text-primary font-bold">{(plan.perDay % 1).toFixed(2).substring(1)}</span>
+                <div className="bg-background-secondary px-4 py-3 rounded-lg text-center">
+                  <div className="flex items-baseline justify-center">
+                    <span className="text-text-tertiary text-sm mr-0.5">€</span>
+                    <span className="text-2xl font-bold text-text-primary">{plan.perDay.toFixed(2).split('.')[0]}</span>
+                    <span className="text-xl font-bold text-text-primary">.{plan.perDay.toFixed(2).split('.')[1]}</span>
+                  </div>
                   <p className="text-xs text-text-tertiary">per day</p>
                 </div>
               </div>
@@ -340,14 +399,44 @@ export default function PaywallScreen() {
           ))}
         </motion.div>
 
+        {/* Error Message */}
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4 flex items-start gap-3"
+          >
+            <AlertCircle className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" />
+            <div>
+              <p className="text-red-700 text-sm">{error}</p>
+              <button
+                onClick={() => setError(null)}
+                className="text-red-500 text-sm underline mt-1"
+              >
+                Dismiss
+              </button>
+            </div>
+          </motion.div>
+        )}
+
         {/* CTA Button */}
         <motion.button
           onClick={handleGetPlan}
-          className="w-full bg-primary text-white font-bold py-4 px-6 rounded-full text-lg mb-4"
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          disabled={isProcessing}
+          className={`w-full bg-primary text-white font-bold py-4 px-6 rounded-full text-lg mb-4 flex items-center justify-center gap-2 ${
+            isProcessing ? 'opacity-75 cursor-not-allowed' : ''
+          }`}
+          whileHover={isProcessing ? {} : { scale: 1.02 }}
+          whileTap={isProcessing ? {} : { scale: 0.98 }}
         >
-          GET MY PLAN
+          {isProcessing ? (
+            <>
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              Processing...
+            </>
+          ) : (
+            'GET MY PLAN'
+          )}
         </motion.button>
 
         {/* Subscription disclaimer */}
@@ -587,13 +676,18 @@ export default function PaywallScreen() {
                     </div>
                     <div className="text-left">
                       <p className="font-bold text-text-primary">{plan.name}</p>
-                      <p className="text-text-tertiary text-sm">€{plan.price}</p>
+                      <p className="text-sm">
+                        <span className="text-text-tertiary line-through mr-1">€{plan.originalPrice}</span>
+                        <span className="text-text-secondary font-semibold">€{plan.price}</span>
+                      </p>
                     </div>
                   </div>
-                  <div className="bg-background-secondary px-3 py-2 rounded-lg text-right">
-                    <span className="text-text-tertiary text-xs">€</span>
-                    <span className="text-2xl font-bold text-text-primary">{Math.floor(plan.perDay)}</span>
-                    <span className="text-text-primary font-bold">{(plan.perDay % 1).toFixed(2).substring(1)}</span>
+                  <div className="bg-background-secondary px-4 py-3 rounded-lg text-center">
+                    <div className="flex items-baseline justify-center">
+                      <span className="text-text-tertiary text-sm mr-0.5">€</span>
+                      <span className="text-2xl font-bold text-text-primary">{plan.perDay.toFixed(2).split('.')[0]}</span>
+                      <span className="text-xl font-bold text-text-primary">.{plan.perDay.toFixed(2).split('.')[1]}</span>
+                    </div>
                     <p className="text-xs text-text-tertiary">per day</p>
                   </div>
                 </div>
@@ -603,9 +697,19 @@ export default function PaywallScreen() {
 
           <button
             onClick={handleGetPlan}
-            className="w-full bg-primary text-white font-bold py-4 px-6 rounded-full text-lg mb-4"
+            disabled={isProcessing}
+            className={`w-full bg-primary text-white font-bold py-4 px-6 rounded-full text-lg mb-4 flex items-center justify-center gap-2 ${
+              isProcessing ? 'opacity-75 cursor-not-allowed' : ''
+            }`}
           >
-            GET MY PLAN
+            {isProcessing ? (
+              <>
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                Processing...
+              </>
+            ) : (
+              'GET MY PLAN'
+            )}
           </button>
 
           <p className="text-xs text-text-tertiary text-center mb-4">
@@ -677,5 +781,17 @@ export default function PaywallScreen() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function PaywallScreen() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-background-primary flex items-center justify-center">
+        <div className="w-16 h-16 border-4 border-primary border-t-transparent rounded-full animate-spin" />
+      </div>
+    }>
+      <PaywallContent />
+    </Suspense>
   )
 }
