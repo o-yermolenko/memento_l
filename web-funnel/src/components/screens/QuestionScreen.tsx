@@ -70,14 +70,14 @@ const LikertIcon = ({ index, isSelected }: { index: number; isSelected: boolean 
   }
 }
 
-// Dynamic selection counter text
+// Dynamic selection counter text (count is shown separately in highlighted span)
 function getSelectionText(count: number, minSelect: number): string {
   if (count === 0) return 'Select all that apply'
-  if (count < minSelect) return `${count} selected — select at least ${minSelect}`
-  if (count === 1) return '1 selected — you can choose more'
-  if (count === 2) return '2 selected — great choices'
-  if (count >= 3) return `${count} selected — we understand`
-  return `${count} selected`
+  if (count < minSelect) return `selected — select at least ${minSelect}`
+  if (count === 1) return 'selected — you can choose more'
+  if (count === 2) return 'selected — great choices'
+  if (count >= 3) return 'selected — we understand'
+  return 'selected'
 }
 
 export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
