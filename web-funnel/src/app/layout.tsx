@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
+import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { SupabaseProvider } from '@/components/SupabaseProvider'
 import { MetaPixel } from '@/components/MetaPixel'
@@ -44,6 +45,7 @@ export default function RootLayout({
         <SupabaseProvider>
           {children}
         </SupabaseProvider>
+        <Analytics />
       </body>
     </html>
   )
