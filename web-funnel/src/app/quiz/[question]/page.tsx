@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import { AnimatePresence } from 'framer-motion'
 import { useParams, notFound } from 'next/navigation'
 import Header from '@/components/Header'
 import { QuestionScreen } from '@/components/screens'
@@ -22,9 +21,8 @@ export default function QuizPage() {
     <main className="min-h-screen bg-background-primary">
       <Header />
       <div className="max-w-2xl mx-auto">
-        <AnimatePresence mode="wait">
-          <QuestionScreen questionIndex={questionIndex} />
-        </AnimatePresence>
+        {/* QuestionScreen handles its own AnimatePresence internally */}
+        <QuestionScreen questionIndex={questionIndex} />
       </div>
     </main>
   )

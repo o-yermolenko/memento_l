@@ -39,6 +39,57 @@ const reviews = [
   },
 ]
 
+// Animation variants
+const screenVariants = {
+  initial: { opacity: 0, x: 40 },
+  animate: { 
+    opacity: 1, 
+    x: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 300,
+      damping: 30,
+    }
+  },
+  exit: { 
+    opacity: 0, 
+    x: -40,
+    transition: { duration: 0.15, ease: 'easeIn' }
+  },
+}
+
+const modalVariants = {
+  initial: { opacity: 0, scale: 0.9, y: 20 },
+  animate: { 
+    opacity: 1, 
+    scale: 1, 
+    y: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 300,
+      damping: 25,
+    }
+  },
+  exit: { 
+    opacity: 0, 
+    scale: 0.95, 
+    y: 10,
+    transition: { duration: 0.15 }
+  },
+}
+
+const backdropVariants = {
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
+}
+
+const reviewVariants = {
+  initial: { opacity: 0, y: 10 },
+  animate: { opacity: 1, y: 0 },
+  exit: { opacity: 0, y: -10 },
+}
+
 export default function LoadingScreen() {
   const router = useRouter()
   const { calculateResults } = useFunnelStore()
@@ -53,7 +104,8 @@ export default function LoadingScreen() {
   
   useEffect(() => {
     calculateResults()
-  }, [calculateResults])
+    router.prefetch(ROUTES.results)
+  }, [calculateResults, router])
   
   // Main progress logic
   useEffect(() => {
@@ -69,11 +121,10 @@ export default function LoadingScreen() {
             setCurrentQuestionIndex(i)
             setShowModal(true)
             setIsPaused(true)
-            return prev // Don't increment, pause here
+            return prev
           }
         }
         
-        // Check if complete
         if (newProgress >= 100) {
           setIsComplete(true)
           return 100
@@ -81,7 +132,7 @@ export default function LoadingScreen() {
         
         return newProgress
       })
-    }, 50) // ~5 seconds total for 100%
+    }, 50)
     
     return () => clearInterval(interval)
   }, [isPaused, isComplete])
@@ -94,13 +145,13 @@ export default function LoadingScreen() {
     return () => clearInterval(interval)
   }, [])
   
-  // Navigate when complete and all questions answered
+  // Navigate when complete
   useEffect(() => {
     if (isComplete && !showModal && !hasNavigated.current) {
       hasNavigated.current = true
       const timeout = setTimeout(() => {
         router.push(ROUTES.results)
-      }, 800)
+      }, 500)
       return () => clearTimeout(timeout)
     }
   }, [isComplete, showModal, router])
@@ -111,7 +162,6 @@ export default function LoadingScreen() {
     setIsPaused(false)
   }, [currentQuestionIndex])
   
-  // Calculate which stages are complete based on progress
   const getStageStatus = (index: number) => {
     const stageSize = 100 / loadingStages.length
     const stageStart = index * stageSize
@@ -135,146 +185,163 @@ export default function LoadingScreen() {
   const review = reviews[currentReview]
   
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="flex flex-col items-center min-h-[80vh] px-4 py-8"
-    >
-      {/* Main headline */}
-      <motion.div 
-        className="text-center mb-8"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
+    <AnimatePresence mode="wait">
+      <motion.div
+        key="loading-screen"
+        variants={screenVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        className="flex flex-col items-center min-h-[80vh] px-4 py-8"
       >
-        <h2 className="text-2xl md:text-3xl font-bold text-text-primary mb-2">
-          Creating your
-        </h2>
-        <h2 className="text-2xl md:text-3xl font-bold">
-          <span className="text-primary">personalized Emotional</span>
-        </h2>
-        <h2 className="text-2xl md:text-3xl font-bold">
-          <span className="text-primary">Blueprint</span>
-        </h2>
-      </motion.div>
-      
-      {/* Progress stages */}
-      <motion.div 
-        className="w-full max-w-md mb-8"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-      >
-        {loadingStages.map((stage, index) => {
-          const status = getStageStatus(index)
-          const stageProgress = getStageProgress(index)
-          
-          return (
-            <div key={stage.id} className="mb-4">
-              <div className="flex items-center justify-between mb-2">
-                <span className={`font-medium ${status === 'pending' ? 'text-text-tertiary' : 'text-text-primary'}`}>
-                  {stage.label}
-                </span>
-                {status === 'completed' ? (
-                  <div className="w-6 h-6 rounded-full bg-primary flex items-center justify-center">
-                    <Check className="w-4 h-4 text-white" />
+        {/* Main headline */}
+        <motion.div 
+          className="text-center mb-8"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+        >
+          <h2 className="text-2xl md:text-3xl font-bold text-text-primary mb-2">
+            Creating your
+          </h2>
+          <h2 className="text-2xl md:text-3xl font-bold">
+            <span className="text-primary">personalized Emotional</span>
+          </h2>
+          <h2 className="text-2xl md:text-3xl font-bold">
+            <span className="text-primary">Blueprint</span>
+          </h2>
+        </motion.div>
+        
+        {/* Progress stages */}
+        <div className="w-full max-w-md mb-8">
+          {loadingStages.map((stage, index) => {
+            const status = getStageStatus(index)
+            const stageProgress = getStageProgress(index)
+            
+            return (
+              <motion.div 
+                key={stage.id} 
+                className="mb-4"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.2 + index * 0.1 }}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <span className={`font-medium transition-colors duration-300 ${status === 'pending' ? 'text-text-tertiary' : 'text-text-primary'}`}>
+                    {stage.label}
+                  </span>
+                  {status === 'completed' ? (
+                    <motion.div 
+                      className="w-6 h-6 rounded-full bg-primary flex items-center justify-center"
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                    >
+                      <Check className="w-4 h-4 text-white" />
+                    </motion.div>
+                  ) : status === 'current' ? (
+                    <span className="text-sm text-text-tertiary">{stageProgress}%</span>
+                  ) : null}
+                </div>
+                {status === 'current' && (
+                  <div className="h-2 bg-background-secondary rounded-full overflow-hidden">
+                    <motion.div 
+                      className="h-full bg-primary rounded-full"
+                      initial={{ width: 0 }}
+                      animate={{ width: `${stageProgress}%` }}
+                      transition={{ duration: 0.1 }}
+                    />
                   </div>
-                ) : status === 'current' ? (
-                  <span className="text-sm text-text-tertiary">{stageProgress}%</span>
-                ) : null}
-              </div>
-              {status === 'current' && (
-                <div className="h-2 bg-background-secondary rounded-full overflow-hidden">
+                )}
+                {status === 'completed' && (
                   <motion.div 
-                    className="h-full bg-primary rounded-full"
-                    initial={{ width: 0 }}
-                    animate={{ width: `${stageProgress}%` }}
-                    transition={{ duration: 0.1 }}
+                    className="h-0.5 bg-primary/30 rounded-full"
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: 1 }}
+                    transition={{ duration: 0.3 }}
                   />
+                )}
+              </motion.div>
+            )
+          })}
+        </div>
+        
+        {/* Review card with crossfade animation */}
+        <div className="w-full max-w-md">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentReview}
+              variants={reviewVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              transition={{ duration: 0.3 }}
+              className="card p-5"
+            >
+              <div className="flex gap-1 mb-3">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <div key={i} className="w-6 h-6 bg-primary flex items-center justify-center">
+                    <Star className="w-4 h-4 fill-white text-white" />
+                  </div>
+                ))}
+              </div>
+              
+              <h4 className="font-bold text-text-primary mb-1 flex items-center justify-between">
+                {review.title}
+                <span className="text-sm font-normal text-text-tertiary">{review.author}</span>
+              </h4>
+              
+              <p className="text-text-secondary text-sm leading-relaxed">
+                {review.text}
+              </p>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+        
+        {/* Modal question overlay */}
+        <AnimatePresence>
+          {showModal && (
+            <motion.div 
+              className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 px-4"
+              variants={backdropVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+            >
+              <motion.div 
+                className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl"
+                variants={modalVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                <p className="text-sm text-text-tertiary text-center mb-2">
+                  To move forward, specify
+                </p>
+                <h3 className="text-xl font-bold text-text-primary text-center mb-6">
+                  {modalQuestions[currentQuestionIndex]?.question}
+                </h3>
+                <div className="flex gap-3">
+                  <motion.button
+                    onClick={handleModalAnswer}
+                    className="flex-1 py-3 px-6 bg-background-secondary text-text-primary font-semibold rounded-full select-none touch-manipulation"
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    No
+                  </motion.button>
+                  <motion.button
+                    onClick={handleModalAnswer}
+                    className="flex-1 py-3 px-6 bg-primary text-white font-semibold rounded-full select-none touch-manipulation"
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    Yes
+                  </motion.button>
                 </div>
-              )}
-              {status === 'completed' && (
-                <div className="h-0.5 bg-primary/30 rounded-full" />
-              )}
-            </div>
-          )
-        })}
-      </motion.div>
-      
-      {/* Review card */}
-      <motion.div 
-        className="w-full max-w-md"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-      >
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentReview}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            className="card p-5"
-          >
-            <div className="flex gap-1 mb-3">
-              {[1, 2, 3, 4, 5].map((i) => (
-                <div key={i} className="w-6 h-6 bg-primary flex items-center justify-center">
-                  <Star className="w-4 h-4 fill-white text-white" />
-                </div>
-              ))}
-            </div>
-            
-            <h4 className="font-bold text-text-primary mb-1 flex items-center justify-between">
-              {review.title}
-              <span className="text-sm font-normal text-text-tertiary">{review.author}</span>
-            </h4>
-            
-            <p className="text-text-secondary text-sm leading-relaxed">
-              {review.text}
-            </p>
-          </motion.div>
+              </motion.div>
+            </motion.div>
+          )}
         </AnimatePresence>
       </motion.div>
-      
-      {/* Modal question overlay */}
-      <AnimatePresence>
-        {showModal && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 px-4"
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white rounded-2xl p-6 max-w-sm w-full shadow-xl"
-            >
-              <p className="text-sm text-text-tertiary text-center mb-2">
-                To move forward, specify
-              </p>
-              <h3 className="text-xl font-bold text-text-primary text-center mb-6">
-                {modalQuestions[currentQuestionIndex]?.question}
-              </h3>
-              <div className="flex gap-3">
-                <button
-                  onClick={handleModalAnswer}
-                  className="flex-1 py-3 px-6 bg-background-secondary text-text-primary font-semibold rounded-full hover:bg-background-secondary/80 transition-colors"
-                >
-                  No
-                </button>
-                <button
-                  onClick={handleModalAnswer}
-                  className="flex-1 py-3 px-6 bg-background-secondary text-text-primary font-semibold rounded-full hover:bg-background-secondary/80 transition-colors"
-                >
-                  Yes
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </motion.div>
+    </AnimatePresence>
   )
 }

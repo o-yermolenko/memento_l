@@ -1,8 +1,7 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useTransition } from 'react'
 import { useRouter } from 'next/navigation'
-import { motion } from 'framer-motion'
 import { useFunnelStore } from '@/store/funnelStore'
 import { useSupabase } from '@/components/SupabaseProvider'
 import { ROUTES } from '@/lib/routes'
@@ -16,7 +15,7 @@ const intensityLevels = {
   veryHigh: { label: 'Very High', color: 'text-red-500', bgColor: 'bg-red-50', position: 90 },
 }
 
-// Pattern descriptions with detailed explanations
+// Pattern descriptions
 const patternData: Record<string, {
   description: string
   intensityExplanation: string
@@ -72,57 +71,44 @@ export default function ResultsSummaryScreen() {
   const { profile, primaryPattern, readinessLevel } = useFunnelStore()
   const { syncCompletion, syncLead } = useSupabase()
   const hasSynced = useRef(false)
+  const [isPending, startTransition] = useTransition()
   
-  // Sync completion to Supabase when results are shown
   useEffect(() => {
+    router.prefetch(ROUTES.paywall)
     if (!hasSynced.current) {
       hasSynced.current = true
       syncCompletion()
-      syncLead() // Update lead with final results
+      syncLead()
     }
-  }, [syncCompletion, syncLead])
+  }, [syncCompletion, syncLead, router])
   
   const handleContinue = () => {
-    router.push(ROUTES.paywall)
+    startTransition(() => {
+      router.push(ROUTES.paywall)
+    })
   }
   
   const pattern = patternData[primaryPattern] || patternData['The Overthinker']
   const patternName = primaryPattern || 'The Overthinker'
   
-  // Determine intensity level based on readiness (inverse - higher readiness = more awareness of high intensity)
   const intensityScore = readinessLevel || 85
   const intensityLevel = intensityScore > 80 ? 'high' : intensityScore > 60 ? 'moderate' : 'low'
   const intensity = intensityLevels[intensityLevel]
   
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      className="pb-8"
-    >
+    <div className="pb-8">
       {/* Header */}
-      <motion.div 
-        className="text-center px-4 pt-6 pb-4"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
-      >
+      <div className="text-center px-4 pt-6 pb-4">
         <p className="text-primary font-semibold text-sm uppercase tracking-wide mb-2">
           Your Emotional Blueprint
         </p>
         <h2 className="text-2xl md:text-3xl font-bold text-text-primary">
           {profile.name ? `${profile.name}, here's what we found` : 'Here\'s what we found'}
         </h2>
-      </motion.div>
+      </div>
       
-      {/* Emotional Intensity Level Card - Like Liven */}
-      <motion.div 
-        className="mx-4 card p-5 mb-5"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-      >
+      {/* Emotional Intensity Level Card */}
+      <div className="mx-4 card p-5 mb-5">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-bold text-text-primary">Emotional Intensity Level</h3>
           <span className={`px-3 py-1 rounded-full text-sm font-semibold ${intensity.color} ${intensity.bgColor}`}>
@@ -132,15 +118,10 @@ export default function ResultsSummaryScreen() {
         
         {/* Gradient bar with indicator */}
         <div className="relative mb-2">
-          {/* Gradient bar */}
           <div className="h-3 rounded-full bg-gradient-to-r from-blue-400 via-green-400 via-yellow-400 via-orange-400 to-red-500" />
-          
-          {/* Indicator */}
-          <motion.div 
-            className="absolute top-1/2 -translate-y-1/2"
-            initial={{ left: '0%' }}
-            animate={{ left: `${intensity.position}%` }}
-            transition={{ delay: 0.5, duration: 0.8, type: 'spring' }}
+          <div 
+            className="absolute top-1/2 -translate-y-1/2 transition-all duration-500"
+            style={{ left: `${intensity.position}%` }}
           >
             <div className="relative">
               <div className="w-5 h-5 rounded-full bg-white border-4 border-text-primary shadow-lg" />
@@ -149,10 +130,9 @@ export default function ResultsSummaryScreen() {
                 <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-text-primary" />
               </div>
             </div>
-          </motion.div>
+          </div>
         </div>
         
-        {/* Scale labels */}
         <div className="flex justify-between text-xs text-text-tertiary mb-4">
           <span>Low</span>
           <span>Normal</span>
@@ -160,7 +140,6 @@ export default function ResultsSummaryScreen() {
           <span>High</span>
         </div>
         
-        {/* Explanation box */}
         <div className={`p-4 rounded-xl ${intensity.bgColor} border-l-4 ${intensity.label === 'High' ? 'border-l-orange-500' : intensity.label === 'Very High' ? 'border-l-red-500' : 'border-l-yellow-500'}`}>
           <div className="flex items-start gap-3">
             <AlertCircle className={`w-5 h-5 flex-shrink-0 mt-0.5 ${intensity.color}`} />
@@ -172,15 +151,10 @@ export default function ResultsSummaryScreen() {
             </div>
           </div>
         </div>
-      </motion.div>
+      </div>
       
       {/* Primary Pattern Card */}
-      <motion.div 
-        className="mx-4 card p-5 mb-5"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.3 }}
-      >
+      <div className="mx-4 card p-5 mb-5">
         <div className="flex items-center gap-4 mb-3">
           <div className="p-3 rounded-full bg-primary/10 text-primary">
             <Heart className="w-6 h-6" />
@@ -193,15 +167,10 @@ export default function ResultsSummaryScreen() {
         <p className="text-text-secondary leading-relaxed">
           {pattern.description}
         </p>
-      </motion.div>
+      </div>
       
-      {/* Trait Cards Grid - Like Liven */}
-      <motion.div 
-        className="mx-4 grid grid-cols-2 gap-3 mb-5"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.4 }}
-      >
+      {/* Trait Cards Grid */}
+      <div className="mx-4 grid grid-cols-2 gap-3 mb-5">
         <div className="card p-4">
           <div className="flex items-center gap-2 mb-1">
             <div className="w-8 h-8 rounded-full bg-orange-100 flex items-center justify-center">
@@ -241,15 +210,10 @@ export default function ResultsSummaryScreen() {
           <p className="text-xs text-text-tertiary">Growth Path</p>
           <p className="font-semibold text-text-primary">{pattern.growthPath}</p>
         </div>
-      </motion.div>
+      </div>
       
       {/* Readiness Score */}
-      <motion.div 
-        className="mx-4 card p-5 mb-5"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.5 }}
-      >
+      <div className="mx-4 card p-5 mb-5">
         <div className="flex items-center justify-between mb-3">
           <div>
             <p className="text-sm text-text-tertiary">Your Readiness Level</p>
@@ -260,25 +224,18 @@ export default function ResultsSummaryScreen() {
           </span>
         </div>
         <div className="h-2 bg-background-secondary rounded-full overflow-hidden">
-          <motion.div 
-            className="h-full bg-gradient-to-r from-primary to-accent-gold rounded-full"
-            initial={{ width: 0 }}
-            animate={{ width: `${readinessLevel || 85}%` }}
-            transition={{ delay: 0.7, duration: 0.8 }}
+          <div 
+            className="h-full bg-gradient-to-r from-primary to-accent-gold rounded-full transition-all duration-500"
+            style={{ width: `${readinessLevel || 85}%` }}
           />
         </div>
         <p className="text-sm text-text-tertiary mt-3">
           You're highly ready for positive change. Based on your responses, you have strong potential for transformation.
         </p>
-      </motion.div>
+      </div>
       
       {/* Key Insights */}
-      <motion.div 
-        className="mx-4 mb-8"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-      >
+      <div className="mx-4 mb-8">
         <h3 className="text-lg font-semibold text-text-primary mb-4">Key Insights</h3>
         <div className="space-y-3">
           {[
@@ -294,22 +251,18 @@ export default function ResultsSummaryScreen() {
             </div>
           ))}
         </div>
-      </motion.div>
+      </div>
       
       {/* CTA */}
-      <motion.div 
-        className="px-4"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7 }}
-      >
+      <div className="px-4">
         <button
           onClick={handleContinue}
-          className="btn-primary w-full text-lg py-4"
+          disabled={isPending}
+          className="btn-primary w-full text-lg py-4 active:scale-[0.98] transition-transform duration-150 disabled:opacity-50"
         >
           Continue
         </button>
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   )
 }

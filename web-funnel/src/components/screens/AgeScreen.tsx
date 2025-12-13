@@ -1,10 +1,14 @@
 'use client'
 
-import React from 'react'
+import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useFunnelStore, AgeRange } from '@/store/funnelStore'
+import { ChevronRight, Check } from 'lucide-react'
 import { ROUTES } from '@/lib/routes'
+
+// Selection feedback delay
+const SELECTION_DELAY = 400
 
 const ageOptions: { label: string; value: AgeRange }[] = [
   { label: '18-24', value: '18-24' },
@@ -15,68 +19,189 @@ const ageOptions: { label: string; value: AgeRange }[] = [
   { label: '65+', value: '65+' },
 ]
 
+// Animation variants
+const screenVariants = {
+  initial: { opacity: 0, x: 40 },
+  animate: { 
+    opacity: 1, 
+    x: 0,
+    transition: {
+      type: 'spring',
+      stiffness: 300,
+      damping: 30,
+    }
+  },
+  exit: { 
+    opacity: 0, 
+    x: -40,
+    transition: { duration: 0.15, ease: 'easeIn' }
+  },
+}
+
+const optionVariants = {
+  initial: { opacity: 0, y: 15 },
+  animate: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: {
+      delay: 0.05 + i * 0.04,
+      type: 'spring',
+      stiffness: 400,
+      damping: 25,
+    },
+  }),
+}
+
+const checkVariants = {
+  initial: { scale: 0, opacity: 0 },
+  animate: {
+    scale: 1,
+    opacity: 1,
+    transition: {
+      type: 'spring',
+      stiffness: 500,
+      damping: 25,
+    },
+  },
+}
+
 export default function AgeScreen() {
   const router = useRouter()
   const { setAge } = useFunnelStore()
+  const [selectedAge, setSelectedAge] = useState<AgeRange | null>(null)
+  const [isNavigating, setIsNavigating] = useState(false)
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   
-  const handleSelect = (age: AgeRange) => {
+  // Prefetch next route
+  useEffect(() => {
+    router.prefetch(ROUTES.consent)
+  }, [router])
+  
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current)
+      }
+    }
+  }, [])
+  
+  const handleSelect = useCallback((age: AgeRange) => {
+    // Prevent double-taps
+    if (isNavigating || selectedAge !== null) return
+    
+    // Show selection immediately
+    setSelectedAge(age)
+    setIsNavigating(true)
     setAge(age)
-    router.push(ROUTES.consent)
-  }
+    
+    // Navigate after delay
+    timeoutRef.current = setTimeout(() => {
+      router.push(ROUTES.consent)
+    }, SELECTION_DELAY)
+  }, [isNavigating, selectedAge, setAge, router])
   
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
-      transition={{ duration: 0.4 }}
-      className="flex flex-col items-center px-4 py-8"
-    >
-      {/* Question */}
-      <motion.div 
-        className="text-center mb-8"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1 }}
+    <AnimatePresence mode="wait">
+      <motion.div
+        key="age-screen"
+        variants={screenVariants}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        className="flex flex-col items-center px-4 py-8"
       >
-        <h2 className="text-2xl md:text-3xl font-bold text-text-primary mb-3 font-serif">
-          What chapter of life are you in?
-        </h2>
-        <p className="text-text-secondary">
-          We use this to personalize your experience
-        </p>
+        {/* Question */}
+        <motion.div 
+          className="text-center mb-8"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.05 }}
+        >
+          <h2 className="text-2xl md:text-3xl font-bold text-text-primary mb-3 font-serif">
+            What chapter of life are you in?
+          </h2>
+          <p className="text-text-secondary">
+            We use this to personalize your experience
+          </p>
+        </motion.div>
+        
+        {/* Age options */}
+        <div className="w-full max-w-md space-y-3">
+          {ageOptions.map((option, index) => {
+            const isSelected = selectedAge === option.value
+            const isOther = selectedAge !== null && selectedAge !== option.value
+            
+            return (
+              <motion.button
+                key={option.value}
+                variants={optionVariants}
+                initial="initial"
+                animate="animate"
+                custom={index}
+                onClick={() => handleSelect(option.value)}
+                disabled={isNavigating}
+                className={`
+                  w-full option-tile text-left text-lg font-medium text-text-primary 
+                  flex items-center justify-between group
+                  select-none touch-manipulation
+                  ${isSelected ? 'selected' : ''}
+                  ${isOther ? 'opacity-40' : ''}
+                `}
+                whileTap={{ scale: 0.97 }}
+              >
+                {/* Selection indicator */}
+                <div className="flex items-center gap-4">
+                  <motion.div
+                    className={`
+                      w-10 h-10 rounded-full flex items-center justify-center
+                      transition-colors duration-200
+                      ${isSelected 
+                        ? 'bg-primary text-white' 
+                        : 'bg-background-secondary text-text-tertiary group-hover:bg-primary/10 group-hover:text-primary'
+                      }
+                    `}
+                    animate={isSelected ? { scale: [1, 1.1, 1] } : { scale: 1 }}
+                    transition={{ duration: 0.25 }}
+                  >
+                    {isSelected ? (
+                      <motion.div
+                        variants={checkVariants}
+                        initial="initial"
+                        animate="animate"
+                      >
+                        <Check className="w-5 h-5" />
+                      </motion.div>
+                    ) : (
+                      <div className="w-5 h-5 border-2 border-current rounded-full flex items-center justify-center">
+                        <div className="w-0 h-0 rounded-full bg-current transition-all group-hover:w-2 group-hover:h-2" />
+                      </div>
+                    )}
+                  </motion.div>
+                  
+                  <span className={`
+                    transition-colors duration-200
+                    ${isSelected ? 'text-primary' : ''}
+                  `}>
+                    {option.label}
+                  </span>
+                </div>
+                
+                {/* Arrow */}
+                <motion.div
+                  animate={isSelected ? { x: 4 } : { x: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
+                  <ChevronRight className={`
+                    w-5 h-5 transition-colors duration-200
+                    ${isSelected ? 'text-primary' : 'text-text-tertiary group-hover:text-primary'}
+                  `} />
+                </motion.div>
+              </motion.button>
+            )
+          })}
+        </div>
       </motion.div>
-      
-      {/* Age options */}
-      <motion.div 
-        className="w-full max-w-md space-y-3"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.2 }}
-      >
-        {ageOptions.map((option, index) => (
-          <motion.button
-            key={option.value}
-            onClick={() => handleSelect(option.value)}
-            className="w-full option-tile text-left text-lg font-medium text-text-primary flex items-center justify-between group"
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 + index * 0.05 }}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            <span>{option.label}</span>
-            <svg 
-              className="w-5 h-5 text-text-tertiary group-hover:text-primary group-hover:translate-x-1 transition-all" 
-              fill="none" 
-              viewBox="0 0 24 24" 
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </motion.button>
-        ))}
-      </motion.div>
-    </motion.div>
+    </AnimatePresence>
   )
 }

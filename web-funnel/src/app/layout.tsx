@@ -17,6 +17,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 1,
   userScalable: false,
+  viewportFit: 'cover', // Enables safe area insets on notched iPhones
 }
 
 export const metadata: Metadata = {

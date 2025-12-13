@@ -50,6 +50,76 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* ========================================
+   iOS Safari Touch Optimizations
+   ======================================== */
+
+/* Prevent iOS tap highlight - we use custom animations instead */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Ensure smooth touch scrolling */
+html, body {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent pull-to-refresh and overscroll bounce on iOS Safari */
+html {
+  overscroll-behavior: none;
+  overscroll-behavior-y: none;
+}
+
+body {
+  overscroll-behavior-y: none;
+}
+
+/* Prevent zoom on input focus in iOS */
+input, select, textarea {
+  font-size: 16px !important;
+}
+
+/* Touch manipulation for interactive elements - improves responsiveness */
+button, 
+a, 
+[role="button"],
+.option-tile,
+.card {
+  touch-action: manipulation;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Hardware acceleration for smoother animations on mobile */
+.option-tile,
+.card,
+.btn-primary,
+.btn-secondary {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* ========================================
+   Safe Area Insets for Notched iPhones
+   ======================================== */
+
+/* Safe area padding for headers */
+.safe-area-top {
+  padding-top: env(safe-area-inset-top, 0);
+}
+
+/* Safe area padding for bottom elements */
+.safe-area-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* Safe area padding for horizontal edges */
+.safe-area-x {
+  padding-left: env(safe-area-inset-left, 0);
+  padding-right: env(safe-area-inset-right, 0);
+}
+
 /* All text uses Inter (like Liven) */
 .font-body {
   font-family: var(--font-inter), 'Inter', system-ui, sans-serif;
@@ -95,15 +165,23 @@ body {
   @apply bg-primary text-white font-semibold py-4 px-8 rounded-pill
          transition-all duration-200 ease-out
          hover:bg-primary-dark hover:shadow-lg
-         active:scale-[0.98]
          disabled:opacity-50 disabled:cursor-not-allowed;
+  /* Active state animation handled by Framer Motion for better mobile feel */
+}
+
+.btn-primary:active:not(:disabled) {
+  background-color: var(--color-primary-dark);
+  transform: scale(0.98);
 }
 
 .btn-secondary {
   @apply bg-transparent border-2 border-primary text-primary font-semibold py-4 px-8 rounded-pill
          transition-all duration-200 ease-out
-         hover:bg-primary hover:text-white
-         active:scale-[0.98];
+         hover:bg-primary hover:text-white;
+}
+
+.btn-secondary:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 /* Card styles */
@@ -115,12 +193,20 @@ body {
 .option-tile {
   @apply bg-background-card rounded-option border border-border p-4
          transition-all duration-200 ease-out cursor-pointer
-         hover:border-primary hover:shadow-option-hover
-         active:scale-[0.98];
+         hover:border-primary hover:shadow-option-hover;
+  /* Removed active:scale - handled by Framer Motion for smoother feel */
 }
 
 .option-tile.selected {
   @apply border-primary border-2 bg-primary/5;
+  /* Add subtle inner glow for selected state */
+  box-shadow: inset 0 0 0 1px var(--color-primary), 0 0 0 3px rgba(217, 79, 48, 0.15);
+}
+
+/* Selection animation class - applied via JS */
+.option-tile.selecting {
+  @apply border-primary border-2 bg-primary/10;
+  box-shadow: inset 0 0 0 2px var(--color-primary), 0 0 0 4px rgba(217, 79, 48, 0.2);
 }
 
 /* Progress bar animation */
