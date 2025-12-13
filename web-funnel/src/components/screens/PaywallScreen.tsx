@@ -3,6 +3,7 @@
 import React, { useState, useEffect, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import Image from 'next/image'
+import { motion } from 'framer-motion'
 import { useFunnelStore } from '@/store/funnelStore'
 import { useSupabase } from '@/components/SupabaseProvider'
 import { createPurchase } from '@/lib/supabase'
@@ -92,19 +93,19 @@ const reviews = [
   {
     title: 'It has really changed my life',
     author: 'Sarah M.',
-    photo: '/images/testimonials/sarah.png',
+    photo: '/images/testimonials/sarah.jpg',
     text: 'I have been using Memento for three months now. During this time, I have been able to understand my emotional triggers and respond differently. It has truly transformed how I handle stress.',
   },
   {
     title: 'Finally something that works',
     author: 'James L.',
-    photo: '/images/testimonials/james.png',
+    photo: '/images/testimonials/james.jpg',
     text: 'After trying many wellness apps, Memento actually addresses the root causes. I feel more in control of my emotions than ever before. The personalized approach makes all the difference.',
   },
   {
     title: 'Eye-opening experience',
     author: 'Michelle K.',
-    photo: '/images/testimonials/michelle.png',
+    photo: '/images/testimonials/michelle.jpg',
     text: "I'm not new to my own struggles with emotions. Memento helped me see patterns I never noticed before. Such valuable insights for understanding my inner self.",
   },
 ]
@@ -129,8 +130,8 @@ function PaywallContent() {
 
   // Gender-specific transformation images
   const isFemale = profile.gender === 'female'
-  const beforeImage = isFemale ? '/images/transformation/before-female.png' : '/images/transformation/before.png'
-  const afterImage = isFemale ? '/images/transformation/after-female.png' : '/images/transformation/after.png'
+  const beforeImage = isFemale ? '/images/transformation/before-female.jpg' : '/images/transformation/before.jpg'
+  const afterImage = isFemale ? '/images/transformation/after-female.jpg' : '/images/transformation/after.jpg'
 
   const handleGetPlan = async () => {
     if (isProcessing) return

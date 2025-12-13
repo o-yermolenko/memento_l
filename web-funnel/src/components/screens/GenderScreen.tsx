@@ -3,6 +3,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
+import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useFunnelStore, Gender } from '@/store/funnelStore'
 import { ChevronRight, Check } from 'lucide-react'
@@ -82,8 +83,8 @@ export default function GenderScreen() {
   }, [isNavigating, selectedGender, setGender, router])
   
   const genderOptions: { gender: Gender; label: string; image: string }[] = [
-    { gender: 'male', label: 'Male', image: '/images/avatars/male.png' },
-    { gender: 'female', label: 'Female', image: '/images/avatars/female.png' },
+    { gender: 'male', label: 'Male', image: '/images/avatars/male.jpg' },
+    { gender: 'female', label: 'Female', image: '/images/avatars/female.jpg' },
   ]
   
   return (
@@ -215,9 +216,9 @@ export default function GenderScreen() {
           transition={{ delay: 0.4 }}
         >
           By clicking "Male" or "Female" you agree with the{' '}
-          <a href="#" style={{ color: '#D94F30' }} className="hover:underline">Terms of Use and Service</a>,{' '}
-          <a href="#" style={{ color: '#D94F30' }} className="hover:underline">Privacy Policy</a>,{' '}
-          <a href="#" style={{ color: '#D94F30' }} className="hover:underline">Subscription Policy</a> and{' '}
+          <Link href="/terms" style={{ color: '#D94F30' }} className="hover:underline">Terms of Use and Service</Link>,{' '}
+          <Link href="/privacy" style={{ color: '#D94F30' }} className="hover:underline">Privacy Policy</Link>,{' '}
+          <Link href="/subscription" style={{ color: '#D94F30' }} className="hover:underline">Subscription Policy</Link> and{' '}
           <a href="#" style={{ color: '#D94F30' }} className="hover:underline">Cookie Policy</a>
         </motion.p>
       </motion.div>

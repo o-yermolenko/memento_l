@@ -8,13 +8,13 @@ import { ROUTES } from '@/lib/routes'
 
 // Avatar positions on world map
 const avatarPins = [
-  { x: 15, y: 35, photo: '/images/map/avatar-3.png' },
-  { x: 25, y: 25, photo: '/images/map/avatar-1.png' },
-  { x: 35, y: 15, photo: '/images/map/avatar-5.png' },
-  { x: 48, y: 20, photo: '/images/map/avatar-4.png' },
-  { x: 52, y: 35, photo: '/images/map/avatar-2.png' },
-  { x: 65, y: 25, photo: '/images/map/avatar-7.png' },
-  { x: 75, y: 30, photo: '/images/map/avatar-6.png' },
+  { x: 15, y: 35, photo: '/images/map/avatar-3.jpg' },
+  { x: 25, y: 25, photo: '/images/map/avatar-1.jpg' },
+  { x: 35, y: 15, photo: '/images/map/avatar-5.jpg' },
+  { x: 48, y: 20, photo: '/images/map/avatar-4.jpg' },
+  { x: 52, y: 35, photo: '/images/map/avatar-2.jpg' },
+  { x: 65, y: 25, photo: '/images/map/avatar-7.jpg' },
+  { x: 75, y: 30, photo: '/images/map/avatar-6.jpg' },
 ]
 
 // Animation variants

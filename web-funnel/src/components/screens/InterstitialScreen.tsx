@@ -47,11 +47,11 @@ const getIcon = (type: InterstitialData['type']) => {
 const getBackgroundImage = (type: InterstitialData['type']) => {
   switch (type) {
     case 'science':
-      return '/images/interstitials/science.png'
+      return '/images/interstitials/science.jpg'
     case 'expert':
-      return '/images/interstitials/expert.png'
+      return '/images/interstitials/expert.jpg'
     case 'stat':
-      return '/images/interstitials/progress.png'
+      return '/images/interstitials/progress.jpg'
     default:
       return null
   }
@@ -86,8 +86,8 @@ export default function InterstitialScreen({ interstitialId }: InterstitialScree
   
   // Gender-specific transformation images
   const isFemale = profile.gender === 'female'
-  const beforeImage = isFemale ? '/images/transformation/before-female.png' : '/images/transformation/before.png'
-  const afterImage = isFemale ? '/images/transformation/after-female.png' : '/images/transformation/after.png'
+  const beforeImage = isFemale ? '/images/transformation/before-female.jpg' : '/images/transformation/before.jpg'
+  const afterImage = isFemale ? '/images/transformation/after-female.jpg' : '/images/transformation/after.jpg'
   
   // Prefetch next route
   useEffect(() => {
@@ -307,7 +307,7 @@ export default function InterstitialScreen({ interstitialId }: InterstitialScree
                     className="w-14 h-14 rounded-full border-4 border-background-primary overflow-hidden relative bg-background-secondary"
                   >
                     <Image 
-                      src={`/images/map/avatar-${i}.png`}
+                      src={`/images/map/avatar-${i}.jpg`}
                       alt=""
                       fill
                       sizes="56px"
