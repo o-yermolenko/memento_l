@@ -227,9 +227,122 @@ a,
          focus:border-primary focus:ring-2 focus:ring-primary/20;
 }
 
-/* Animation utilities */
+/* ========================================
+   GPU-Accelerated CSS Animations
+   (Better mobile performance than JS-driven)
+   ======================================== */
+
+/* Base fade in */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Fade in with upward slide */
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Fade in from right (for page transitions) */
+@keyframes fade-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Scale pop for selections */
+@keyframes scale-pop {
+  0% {
+    transform: scale(0);
+  }
+  70% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Subtle pulse for CTAs */
+@keyframes pulse-subtle {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 4px 16px rgba(217, 79, 48, 0.2);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 6px 24px rgba(217, 79, 48, 0.3);
+  }
+}
+
+/* Breathe animation for ambient elements */
+@keyframes breathe {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.02);
+  }
+}
+
+/* Animation classes */
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out forwards;
+}
+
+.animate-fade-in-up {
+  opacity: 0;
+  animation: fade-in-up 0.25s ease-out forwards;
+}
+
+.animate-fade-in-right {
+  opacity: 0;
+  animation: fade-in-right 0.3s ease-out forwards;
+}
+
+.animate-scale-pop {
+  animation: scale-pop 0.25s ease-out forwards;
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s ease-in-out infinite;
+}
+
+.animate-breathe {
+  animation: breathe 4s ease-in-out infinite;
+}
+
+/* Animation delays for staggered effects */
+.animation-delay-50 { animation-delay: 50ms; }
+.animation-delay-100 { animation-delay: 100ms; }
+.animation-delay-150 { animation-delay: 150ms; }
+.animation-delay-200 { animation-delay: 200ms; }
+.animation-delay-250 { animation-delay: 250ms; }
+.animation-delay-300 { animation-delay: 300ms; }
+.animation-delay-350 { animation-delay: 350ms; }
+.animation-delay-400 { animation-delay: 400ms; }
+
+/* Legacy animation utilities */
 .animate-in {
-  animation: slideUp 0.4s ease-out forwards;
+  animation: fade-in-up 0.4s ease-out forwards;
 }
 
 @keyframes slideUp {
@@ -243,7 +356,7 @@ a,
   }
 }
 
-/* Staggered animation delay */
+/* Staggered animation delay (legacy) */
 .stagger-1 { animation-delay: 0.1s; }
 .stagger-2 { animation-delay: 0.2s; }
 .stagger-3 { animation-delay: 0.3s; }

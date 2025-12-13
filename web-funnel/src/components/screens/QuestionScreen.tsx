@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useRef } from 'react'
 import { useRouter } from 'next/navigation'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { useFunnelStore } from '@/store/funnelStore'
 import { useSupabase } from '@/components/SupabaseProvider'
 import { quizQuestions } from '@/data/questions'
@@ -68,6 +68,16 @@ const LikertIcon = ({ index, isSelected }: { index: number; isSelected: boolean 
     default:
       return <Circle className={baseClass} />
   }
+}
+
+// Dynamic selection counter text
+function getSelectionText(count: number, minSelect: number): string {
+  if (count === 0) return 'Select all that apply'
+  if (count < minSelect) return `${count} selected — select at least ${minSelect}`
+  if (count === 1) return '1 selected — you can choose more'
+  if (count === 2) return '2 selected — great choices'
+  if (count >= 3) return `${count} selected — we understand`
+  return `${count} selected`
 }
 
 export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
@@ -173,24 +183,45 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
   
   const isMultiSelect = question.multiSelect || question.type === 'multiple'
   const canSubmit = selectedValues.length >= (question.minSelect || 1)
+  const minSelect = question.minSelect || 1
   
   return (
-    <motion.div
+    <div
       key={question.id}
-      initial={{ opacity: 0, x: 30 }}
-      animate={{ opacity: 1, x: 0 }}
-      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className="flex flex-col items-center px-4 py-6"
+      className="flex flex-col items-center px-4 py-6 animate-fade-in-right"
     >
       {/* Question */}
-      <div className="text-center mb-6 max-w-lg">
+      <div className="text-center mb-6 max-w-lg animate-fade-in">
         <h2 className="text-xl md:text-2xl font-semibold text-text-primary mb-2 leading-relaxed">
           {question.question}
         </h2>
         {question.description && (
-          <p className="text-text-secondary text-sm">
+          <p className="text-text-secondary text-sm animate-fade-in animation-delay-100">
             {question.description}
           </p>
+        )}
+        
+        {/* Dynamic selection counter for multi-select */}
+        {isMultiSelect && (
+          <div className="mt-3 h-5 flex items-center justify-center animate-fade-in animation-delay-100">
+            <AnimatePresence mode="wait">
+              <motion.p
+                key={selectedValues.length}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.15 }}
+                className="text-text-tertiary text-sm"
+              >
+                {selectedValues.length > 0 && (
+                  <span className="text-primary font-semibold mr-1">
+                    {selectedValues.length}
+                  </span>
+                )}
+                {getSelectionText(selectedValues.length, minSelect)}
+              </motion.p>
+            </AnimatePresence>
+          </div>
         )}
       </div>
       
@@ -204,44 +235,39 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
               const isPending = pendingSelection === option.id
               
               return (
-                <motion.button
+                <button
                   key={option.id}
-                  initial={{ opacity: 0, y: 15 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + index * 0.05, type: 'spring', stiffness: 400, damping: 25 }}
                   onClick={() => handleSingleSelect(option.id, option.score)}
                   disabled={isNavigating}
                   className={`
                     flex-1 max-w-[90px] aspect-square card flex items-center justify-center
                     select-none touch-manipulation
-                    transition-colors duration-200
+                    transition-all duration-200 active:scale-95
+                    animate-fade-in-up
                     ${isSelected 
                       ? 'border-primary border-2 bg-primary/10' 
                       : 'hover:border-primary/50 active:bg-primary/5'
                     }
                     ${isNavigating && !isPending ? 'opacity-40' : ''}
                   `}
-                  whileTap={{ scale: 0.95 }}
+                  style={{ animationDelay: `${100 + index * 50}ms` }}
                 >
-                  <motion.div
-                    animate={isPending ? { scale: [1, 1.15, 1] } : { scale: 1 }}
-                    transition={{ duration: 0.3 }}
-                  >
+                  <div className={isPending ? 'animate-scale-pop' : ''}>
                     <LikertIcon index={index} isSelected={isSelected} />
-                  </motion.div>
-                </motion.button>
+                  </div>
+                </button>
               )
             })}
           </div>
           
           {/* Labels at the ends */}
-          <div className="flex justify-between mt-3 px-2">
+          <div className="flex justify-between mt-3 px-2 animate-fade-in animation-delay-300">
             <span className="text-sm text-text-tertiary">Strongly disagree</span>
             <span className="text-sm text-text-tertiary">Strongly agree</span>
           </div>
         </div>
       ) : (
-        // Regular vertical options
+        // Regular vertical options - CSS animations for smooth mobile
         <div className="w-full max-w-md space-y-3">
           {question.options.map((option, index) => {
             const isStored = selectedValues.includes(option.id)
@@ -249,23 +275,22 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
             const isSelected = isPending || isStored
             
             return (
-              <motion.button
+              <button
                 key={option.id}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.1 + index * 0.05, type: 'spring', stiffness: 400, damping: 25 }}
                 onClick={() => isMultiSelect ? handleMultiSelect(option.id) : handleSingleSelect(option.id, option.score)}
                 disabled={isNavigating && !isMultiSelect}
                 className={`
                   w-full option-tile text-left flex items-center gap-4 group
                   select-none touch-manipulation
+                  active:scale-[0.98] transition-transform duration-150
+                  animate-fade-in-up
                   ${isSelected ? 'selected' : ''}
                   ${isNavigating && !isPending && !isMultiSelect ? 'opacity-40' : ''}
                 `}
-                whileTap={{ scale: 0.97 }}
+                style={{ animationDelay: `${100 + index * 50}ms` }}
               >
                 {/* Selection indicator / icon */}
-                <motion.div 
+                <div 
                   className={`
                     flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center
                     transition-colors duration-200
@@ -274,8 +299,6 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
                       : 'bg-background-secondary text-text-tertiary group-hover:bg-primary/10 group-hover:text-primary'
                     }
                   `}
-                  animate={isPending ? { scale: [1, 1.1, 1] } : { scale: 1 }}
-                  transition={{ duration: 0.25 }}
                 >
                   {isMultiSelect ? (
                     isSelected ? (
@@ -304,7 +327,7 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
                       </div>
                     )
                   )}
-                </motion.div>
+                </div>
                 
                 {/* Label */}
                 <span className={`
@@ -316,17 +339,14 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
                 
                 {/* Arrow for single select */}
                 {!isMultiSelect && (
-                  <motion.div
-                    animate={isPending ? { x: 4 } : { x: 0 }}
-                    transition={{ duration: 0.2 }}
-                  >
+                  <div className={`transition-transform duration-200 ${isPending ? 'translate-x-1' : ''}`}>
                     <ChevronRight className={`
                       w-5 h-5 transition-colors duration-200
                       ${isSelected ? 'text-primary' : 'text-text-tertiary group-hover:text-primary'}
                     `} />
-                  </motion.div>
+                  </div>
                 )}
-              </motion.button>
+              </button>
             )
           })}
         </div>
@@ -334,27 +354,23 @@ export default function QuestionScreen({ questionIndex }: QuestionScreenProps) {
         
       {/* Submit button for multi-select */}
       {isMultiSelect && (
-        <motion.div 
-          className="mt-8 w-full max-w-md"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
+        <div 
+          className="mt-8 w-full max-w-md animate-fade-in-up"
+          style={{ animationDelay: '300ms' }}
         >
-          <motion.button
+          <button
             onClick={handleMultiSubmit}
             disabled={!canSubmit || isNavigating}
-            className="btn-primary w-full select-none touch-manipulation"
-            whileTap={{ scale: 0.98 }}
+            className={`
+              btn-primary w-full select-none touch-manipulation
+              active:scale-[0.98] transition-transform
+              ${canSubmit && !isNavigating ? 'animate-pulse-subtle' : ''}
+            `}
           >
             {isNavigating ? 'Loading...' : 'Continue'}
-          </motion.button>
-          {question.minSelect && selectedValues.length < question.minSelect && (
-            <p className="text-center text-sm text-text-tertiary mt-2">
-              Select at least {question.minSelect} option{question.minSelect > 1 ? 's' : ''}
-            </p>
-          )}
-        </motion.div>
+          </button>
+        </div>
       )}
-    </motion.div>
+    </div>
   )
 }
