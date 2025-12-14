@@ -220,9 +220,18 @@ export async function saveLead(data: LeadInsert): Promise<Lead> {
   if (!isSupabaseConfigured || !supabase) {
     return {
       id: generateLocalId(),
+      session_id: data.session_id ?? null,
+      email: data.email,
+      name: data.name ?? null,
+      gender: data.gender ?? null,
+      age_range: data.age_range ?? null,
+      email_opt_in: data.email_opt_in ?? false,
+      primary_pattern: data.primary_pattern ?? null,
+      secondary_pattern: data.secondary_pattern ?? null,
+      readiness_level: data.readiness_level ?? null,
       created_at: new Date().toISOString(),
-      ...data,
-    } as Lead
+      converted_at: null,
+    }
   }
 
   const { data: lead, error } = await supabase
@@ -250,9 +259,18 @@ export async function updateLeadWithResults(email: string, results: {
   if (!isSupabaseConfigured || !supabase) {
     return {
       id: generateLocalId(),
+      session_id: null,
       email,
-      ...results,
-    } as Lead
+      name: null,
+      gender: null,
+      age_range: null,
+      email_opt_in: false,
+      primary_pattern: results.primaryPattern,
+      secondary_pattern: results.secondaryPattern,
+      readiness_level: results.readinessLevel,
+      created_at: new Date().toISOString(),
+      converted_at: null,
+    }
   }
 
   const updateData = {
@@ -287,10 +305,17 @@ export async function createPurchase(data: PurchaseInsert): Promise<Purchase> {
   if (!isSupabaseConfigured || !supabase) {
     return {
       id: generateLocalId(),
+      lead_id: data.lead_id ?? null,
+      session_id: data.session_id ?? null,
+      email: data.email,
+      plan_type: data.plan_type,
+      amount: data.amount,
+      currency: data.currency ?? 'EUR',
+      payment_provider: data.payment_provider ?? null,
+      payment_id: data.payment_id ?? null,
+      status: data.status ?? 'pending',
       created_at: new Date().toISOString(),
-      status: 'pending',
-      ...data,
-    } as Purchase
+    }
   }
 
   const { data: purchase, error } = await supabase
@@ -314,9 +339,17 @@ export async function updatePurchaseStatus(purchaseId: string, status: 'complete
   if (!isSupabaseConfigured || !supabase) {
     return {
       id: purchaseId,
+      lead_id: null,
+      session_id: null,
+      email: '',
+      plan_type: '',
+      amount: 0,
+      currency: 'EUR',
+      payment_provider: 'stripe',
+      payment_id: paymentId ?? null,
       status,
-      payment_id: paymentId,
-    } as Purchase
+      created_at: new Date().toISOString(),
+    }
   }
 
   const updateData = { 
