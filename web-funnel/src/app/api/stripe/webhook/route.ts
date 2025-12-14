@@ -3,6 +3,7 @@ import { headers } from 'next/headers'
 import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 import { createServerClient } from '@/lib/supabase/client'
+import type { SupabaseClient } from '@supabase/supabase-js'
 
 export const dynamic = 'force-dynamic'
 
@@ -31,12 +32,19 @@ export async function POST(request: NextRequest) {
   }
 
   const supabase = createServerClient()
+  
+  // Warn if Supabase is not configured (webhook will still acknowledge receipt)
+  if (!supabase) {
+    console.warn('Supabase not configured - webhook received but data not persisted')
+  }
 
   try {
     switch (event.type) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session
-        await handleCheckoutComplete(session, supabase)
+        if (supabase) {
+          await handleCheckoutComplete(session, supabase)
+        }
         break
       }
 
@@ -49,7 +57,9 @@ export async function POST(request: NextRequest) {
 
       case 'customer.subscription.deleted': {
         const subscription = event.data.object as Stripe.Subscription
-        await handleSubscriptionCanceled(subscription, supabase)
+        if (supabase) {
+          await handleSubscriptionCanceled(subscription, supabase)
+        }
         break
       }
 
@@ -64,7 +74,7 @@ export async function POST(request: NextRequest) {
         console.log('Invoice payment failed:', invoice.id)
         // Get subscription ID from invoice lines
         const subscriptionId = invoice.lines?.data?.[0]?.subscription
-        if (subscriptionId && typeof subscriptionId === 'string') {
+        if (supabase && subscriptionId && typeof subscriptionId === 'string') {
           await supabase
             .from('purchases')
             .update({ status: 'failed' })
@@ -86,7 +96,7 @@ export async function POST(request: NextRequest) {
 
 async function handleCheckoutComplete(
   session: Stripe.Checkout.Session,
-  supabase: ReturnType<typeof createServerClient>
+  supabase: SupabaseClient
 ) {
   const { planId, funnel_session_id, email } = session.metadata || {}
   const customerEmail = session.customer_details?.email || email
@@ -135,7 +145,7 @@ async function handleCheckoutComplete(
 
 async function handleSubscriptionCanceled(
   subscription: Stripe.Subscription,
-  supabase: ReturnType<typeof createServerClient>
+  supabase: SupabaseClient
 ) {
   console.log('Subscription canceled:', subscription.id)
   await supabase
