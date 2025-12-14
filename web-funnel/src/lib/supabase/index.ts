@@ -1,4 +1,4 @@
-export { supabase, createServerClient } from './client'
+export { supabase, createServerClient, isSupabaseConfigured } from './client'
 export type {
   Database,
   FunnelSession,

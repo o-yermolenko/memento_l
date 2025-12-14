@@ -1,4 +1,4 @@
-import { supabase } from './client'
+import { supabase, isSupabaseConfigured } from './client'
 import type { 
   FunnelSession,
   FunnelSessionInsert, 
@@ -11,6 +11,11 @@ import type {
   PurchaseInsert 
 } from './types'
 
+// Generate a local session ID when Supabase is not configured
+function generateLocalId(): string {
+  return `local-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`
+}
+
 // ============================================
 // SESSION MANAGEMENT
 // ============================================
@@ -19,6 +24,16 @@ import type {
  * Create a new funnel session
  */
 export async function createSession(data?: Partial<FunnelSessionInsert>): Promise<FunnelSession> {
+  // If Supabase is not configured, return a mock session
+  if (!isSupabaseConfigured || !supabase) {
+    return {
+      id: generateLocalId(),
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      ...data,
+    } as FunnelSession
+  }
+
   const insertData = {
     ...data,
     device_type: getDeviceType(),
@@ -43,6 +58,10 @@ export async function createSession(data?: Partial<FunnelSessionInsert>): Promis
  * Update an existing funnel session
  */
 export async function updateSession(sessionId: string, data: FunnelSessionUpdate): Promise<FunnelSession> {
+  if (!isSupabaseConfigured || !supabase) {
+    return { id: sessionId, ...data } as FunnelSession
+  }
+
   const { data: session, error } = await supabase
     .from('funnel_sessions')
     .update(data as Record<string, unknown>)
@@ -62,6 +81,10 @@ export async function updateSession(sessionId: string, data: FunnelSessionUpdate
  * Get a session by ID
  */
 export async function getSession(sessionId: string): Promise<FunnelSession | null> {
+  if (!isSupabaseConfigured || !supabase) {
+    return null
+  }
+
   const { data: session, error } = await supabase
     .from('funnel_sessions')
     .select('*')
@@ -102,6 +125,14 @@ export async function completeSession(sessionId: string, results: {
  * Save or update a quiz answer
  */
 export async function saveAnswer(data: FunnelAnswerInsert): Promise<FunnelAnswer> {
+  if (!isSupabaseConfigured || !supabase) {
+    return {
+      id: generateLocalId(),
+      created_at: new Date().toISOString(),
+      ...data,
+    } as FunnelAnswer
+  }
+
   const insertData = {
     ...data,
     value: typeof data.value === 'string' ? data.value : JSON.stringify(data.value),
@@ -125,6 +156,17 @@ export async function saveAnswer(data: FunnelAnswerInsert): Promise<FunnelAnswer
  * Save multiple answers at once
  */
 export async function saveAnswersBatch(sessionId: string, answers: Array<{ questionId: string; value: string | string[]; score?: number }>): Promise<FunnelAnswer[]> {
+  if (!isSupabaseConfigured || !supabase) {
+    return answers.map(a => ({
+      id: generateLocalId(),
+      session_id: sessionId,
+      question_id: a.questionId,
+      value: a.value,
+      score: a.score ?? null,
+      created_at: new Date().toISOString(),
+    })) as FunnelAnswer[]
+  }
+
   const formattedAnswers = answers.map(a => ({
     session_id: sessionId,
     question_id: a.questionId,
@@ -149,6 +191,10 @@ export async function saveAnswersBatch(sessionId: string, answers: Array<{ quest
  * Get all answers for a session
  */
 export async function getSessionAnswers(sessionId: string): Promise<FunnelAnswer[]> {
+  if (!isSupabaseConfigured || !supabase) {
+    return []
+  }
+
   const { data: answers, error } = await supabase
     .from('funnel_answers')
     .select('*')
@@ -171,6 +217,14 @@ export async function getSessionAnswers(sessionId: string): Promise<FunnelAnswer
  * Create or update a lead
  */
 export async function saveLead(data: LeadInsert): Promise<Lead> {
+  if (!isSupabaseConfigured || !supabase) {
+    return {
+      id: generateLocalId(),
+      created_at: new Date().toISOString(),
+      ...data,
+    } as Lead
+  }
+
   const { data: lead, error } = await supabase
     .from('leads')
     .upsert(data as Record<string, unknown>, { onConflict: 'email' })
@@ -193,6 +247,14 @@ export async function updateLeadWithResults(email: string, results: {
   secondaryPattern: string
   readinessLevel: number
 }): Promise<Lead> {
+  if (!isSupabaseConfigured || !supabase) {
+    return {
+      id: generateLocalId(),
+      email,
+      ...results,
+    } as Lead
+  }
+
   const updateData = {
     primary_pattern: results.primaryPattern,
     secondary_pattern: results.secondaryPattern,
@@ -222,6 +284,15 @@ export async function updateLeadWithResults(email: string, results: {
  * Create a purchase record
  */
 export async function createPurchase(data: PurchaseInsert): Promise<Purchase> {
+  if (!isSupabaseConfigured || !supabase) {
+    return {
+      id: generateLocalId(),
+      created_at: new Date().toISOString(),
+      status: 'pending',
+      ...data,
+    } as Purchase
+  }
+
   const { data: purchase, error } = await supabase
     .from('purchases')
     .insert(data as Record<string, unknown>)
@@ -240,6 +311,14 @@ export async function createPurchase(data: PurchaseInsert): Promise<Purchase> {
  * Update purchase status
  */
 export async function updatePurchaseStatus(purchaseId: string, status: 'completed' | 'failed' | 'refunded', paymentId?: string): Promise<Purchase> {
+  if (!isSupabaseConfigured || !supabase) {
+    return {
+      id: purchaseId,
+      status,
+      payment_id: paymentId,
+    } as Purchase
+  }
+
   const updateData = { 
     status, 
     payment_id: paymentId ?? undefined 
