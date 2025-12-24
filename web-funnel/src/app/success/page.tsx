@@ -5,7 +5,7 @@ import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { Check, PartyPopper, Heart, Star, Sparkles, ArrowRight } from 'lucide-react'
 import { useFunnelStore } from '@/store/funnelStore'
-import { trackPurchase } from '@/lib/meta-pixel'
+import { trackPurchase, generateEventId } from '@/lib/meta-pixel'
 
 // Confetti particle component
 function ConfettiParticle({ delay, x }: { delay: number; x: number }) {
@@ -42,7 +42,9 @@ function SuccessContent() {
   const sessionId = searchParams.get('session_id')
 
   useEffect(() => {
-    // Fire Meta Pixel Purchase event once
+    // Fire Meta Pixel Purchase event once (client-side)
+    // The server-side CAPI event is fired by the Stripe webhook
+    // Using the same eventId ensures Meta deduplicates them
     if (!hasFiredPixel && sessionId) {
       // Get the plan price from localStorage or default
       const selectedPlan = localStorage.getItem('selectedPlan') || '4-week'
@@ -53,9 +55,17 @@ function SuccessContent() {
       }
       const value = prices[selectedPlan] || 19.99
       
-      trackPurchase(value, 'EUR')
+      // Get the event ID from localStorage (set during checkout) for deduplication
+      // If not found, generate a new one (server event may not deduplicate in this case)
+      const storedEventId = localStorage.getItem('purchaseEventId')
+      const eventId = storedEventId || generateEventId()
+      
+      trackPurchase(value, 'USD', eventId)
       setHasFiredPixel(true)
-      console.log('Meta Pixel: Purchase event fired', { value, currency: 'EUR' })
+      
+      // Clean up stored event ID
+      localStorage.removeItem('purchaseEventId')
+      console.log('Meta Pixel: Purchase event fired (client-side)', { value, currency: 'USD', eventId })
     }
 
     // Simulate brief loading

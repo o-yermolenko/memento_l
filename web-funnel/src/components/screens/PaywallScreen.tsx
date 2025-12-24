@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 import { useFunnelStore } from '@/store/funnelStore'
 import { useSupabase } from '@/components/SupabaseProvider'
 import { createPurchase } from '@/lib/supabase'
-import { trackInitiateCheckout } from '@/lib/meta-pixel'
+import { trackInitiateCheckout, generateEventId } from '@/lib/meta-pixel'
 import { Check, X, Star, Shield, HelpCircle, ChevronDown, ChevronUp, Award, AlertCircle } from 'lucide-react'
 
 // Pricing plans - Updated Dec 2024
@@ -150,11 +150,15 @@ function PaywallContent() {
       const plan = plans.find(p => p.id === selectedPlan)
       if (!plan) return
       
-      // Track InitiateCheckout event for Meta Pixel
-      trackInitiateCheckout(plan.price, 'EUR')
+      // Generate event ID for Meta Pixel deduplication between client & server
+      const eventId = generateEventId()
       
-      // Save selected plan for success page
+      // Track InitiateCheckout event for Meta Pixel (client-side)
+      trackInitiateCheckout(plan.price, 'USD', eventId)
+      
+      // Save selected plan and eventId for success page (for Purchase event deduplication)
       localStorage.setItem('selectedPlan', selectedPlan)
+      localStorage.setItem('purchaseEventId', eventId)
       
       // Try to create pending purchase record in Supabase (non-blocking)
       try {
@@ -163,7 +167,7 @@ function PaywallContent() {
           email: profile.email,
           plan_type: plan.id,
           amount: plan.price,
-          currency: 'EUR',
+          currency: 'USD',
           status: 'pending',
           payment_provider: 'stripe',
         })
@@ -172,7 +176,7 @@ function PaywallContent() {
         console.error('Error creating purchase:', purchaseError)
       }
       
-      // Create Stripe Checkout session
+      // Create Stripe Checkout session with eventId for CAPI deduplication
       const response = await fetch('/api/stripe/checkout', {
         method: 'POST',
         headers: {
@@ -183,6 +187,7 @@ function PaywallContent() {
           email: profile.email,
           sessionId: sessionId,
           name: profile.name,
+          eventId: eventId, // For Meta CAPI deduplication
         }),
       })
 

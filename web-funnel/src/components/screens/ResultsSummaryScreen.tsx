@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useFunnelStore } from '@/store/funnelStore'
 import { useSupabase } from '@/components/SupabaseProvider'
 import { ROUTES } from '@/lib/routes'
+import { trackCompleteRegistration, generateEventId } from '@/lib/meta-pixel'
 import { Heart, Brain, Shield, Zap, AlertCircle, Check } from 'lucide-react'
 
 // Emotional intensity level data
@@ -77,6 +78,12 @@ export default function ResultsSummaryScreen() {
     router.prefetch(ROUTES.paywall)
     if (!hasSynced.current) {
       hasSynced.current = true
+      
+      // Track CompleteRegistration for Meta Pixel (quiz completed = registration complete)
+      const eventId = generateEventId()
+      trackCompleteRegistration(eventId)
+      console.log('Meta Pixel: CompleteRegistration event fired', { eventId })
+      
       syncCompletion()
       syncLead()
     }

@@ -4,6 +4,7 @@ import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 import { createServerClient } from '@/lib/supabase/client'
 import type { SupabaseClient } from '@supabase/supabase-js'
+import { trackPurchaseServer, generateEventId } from '@/lib/meta-capi'
 
 export const dynamic = 'force-dynamic'
 
@@ -96,19 +97,45 @@ export async function POST(request: NextRequest) {
 
 async function handleCheckoutComplete(
   session: Stripe.Checkout.Session,
-  supabase: SupabaseClient
+  supabase: SupabaseClient | null
 ) {
-  const { planId, funnel_session_id, email } = session.metadata || {}
+  const { planId, funnel_session_id, email, event_id } = session.metadata || {}
   const customerEmail = session.customer_details?.email || email
+  const customerName = session.customer_details?.name
+  const amount = (session.amount_total || 0) / 100
+  const currency = session.currency?.toUpperCase() || 'USD'
   
   console.log('Checkout completed:', {
     sessionId: session.id,
     customerId: session.customer,
     subscriptionId: session.subscription,
     email: customerEmail,
+    amount,
+    currency,
   })
 
+  // 🔥 Fire Meta Conversions API Purchase event (SERVER-SIDE)
+  // This is the reliable way to track - even if client pixel is blocked
   if (customerEmail) {
+    const capiEventId = event_id || generateEventId()
+    
+    try {
+      await trackPurchaseServer({
+        email: customerEmail,
+        value: amount,
+        currency,
+        eventId: capiEventId,
+        firstName: customerName?.split(' ')[0],
+        sourceUrl: 'https://memento.app/success',
+      })
+      console.log('✅ Meta CAPI Purchase event sent:', { email: customerEmail, amount, currency, eventId: capiEventId })
+    } catch (error) {
+      console.error('❌ Meta CAPI Purchase event failed:', error)
+    }
+  }
+
+  // Update Supabase if configured
+  if (supabase && customerEmail) {
     // Update existing pending purchase or create new one
     const { error } = await supabase
       .from('purchases')
@@ -126,8 +153,8 @@ async function handleCheckoutComplete(
       await supabase.from('purchases').insert({
         email: customerEmail,
         plan_type: planId || 'unknown',
-        amount: (session.amount_total || 0) / 100,
-        currency: session.currency?.toUpperCase() || 'EUR',
+        amount,
+        currency,
         status: 'completed',
         payment_provider: 'stripe',
         payment_id: session.subscription as string,

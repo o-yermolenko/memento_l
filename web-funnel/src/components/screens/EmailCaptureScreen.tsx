@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { useFunnelStore } from '@/store/funnelStore'
 import { useSupabase } from '@/components/SupabaseProvider'
 import { ROUTES } from '@/lib/routes'
+import { trackLead, generateEventId } from '@/lib/meta-pixel'
 import { Mail, Shield, ArrowRight } from 'lucide-react'
 
 // Animation variants
@@ -72,6 +73,11 @@ export default function EmailCaptureScreen() {
     
     setIsNavigating(true)
     setEmail(email)
+    
+    // Track Lead event for Meta Pixel (email captured = lead)
+    const leadEventId = generateEventId()
+    trackLead(leadEventId)
+    console.log('Meta Pixel: Lead event fired', { email, eventId: leadEventId })
     
     // Sync to Supabase in background (fire and forget)
     syncProfile()
