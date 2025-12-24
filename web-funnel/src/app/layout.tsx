@@ -4,6 +4,7 @@ import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { SupabaseProvider } from '@/components/SupabaseProvider'
 import { MetaPixel } from '@/components/MetaPixel'
+import { PostHogProvider } from '@/components/PostHogProvider'
 
 // Inter - clean, geometric sans-serif (like Liven)
 const inter = Inter({
@@ -45,14 +46,17 @@ export default function RootLayout({
         <link rel="dns-prefetch" href="https://connect.facebook.net" />
         <link rel="dns-prefetch" href="https://www.facebook.com" />
         <link rel="dns-prefetch" href="https://js.stripe.com" />
+        <link rel="dns-prefetch" href="https://us.i.posthog.com" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
       </head>
       <body className={`${inter.variable} antialiased bg-background-primary min-h-screen`}>
         <MetaPixel />
-        <SupabaseProvider>
-          {children}
-        </SupabaseProvider>
+        <PostHogProvider>
+          <SupabaseProvider>
+            {children}
+          </SupabaseProvider>
+        </PostHogProvider>
         <Analytics />
       </body>
     </html>
