@@ -14,6 +14,27 @@ const nextConfig = {
     minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
   },
 
+  // PostHog reverse proxy - bypasses ad blockers by routing through our domain
+  async rewrites() {
+    return [
+      {
+        source: "/ingest/static/:path*",
+        destination: "https://us-assets.i.posthog.com/static/:path*",
+      },
+      {
+        source: "/ingest/:path*",
+        destination: "https://us.i.posthog.com/:path*",
+      },
+      {
+        source: "/ingest/decide",
+        destination: "https://us.i.posthog.com/decide",
+      },
+    ];
+  },
+
+  // Ensure /ingest paths aren't treated as pages
+  skipTrailingSlashRedirect: true,
+
   // Optimize bundles
   compiler: {
     // Remove console.logs in production
