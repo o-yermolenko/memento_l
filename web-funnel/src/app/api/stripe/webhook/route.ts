@@ -4,7 +4,7 @@ import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 import { createServerClient } from '@/lib/supabase/client'
 import type { SupabaseClient } from '@supabase/supabase-js'
-import { trackPurchaseServer, generateEventId } from '@/lib/meta-capi'
+import { trackPurchaseServer } from '@/lib/meta-capi'
 
 export const dynamic = 'force-dynamic'
 
@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
       case 'checkout.session.completed': {
         const session = event.data.object as Stripe.Checkout.Session
         if (supabase) {
-          await handleCheckoutComplete(session, supabase)
+          await handleCheckoutComplete(session, supabase, event.id)
         }
         break
       }
@@ -97,7 +97,8 @@ export async function POST(request: NextRequest) {
 
 async function handleCheckoutComplete(
   session: Stripe.Checkout.Session,
-  supabase: SupabaseClient | null
+  supabase: SupabaseClient | null,
+  stripeEventId: string // Stripe's unique event ID for deduplication
 ) {
   const { planId, funnel_session_id, email } = session.metadata || {}
   const customerEmail = session.customer_details?.email || email
@@ -112,23 +113,23 @@ async function handleCheckoutComplete(
     email: customerEmail,
     amount,
     currency,
+    stripeEventId,
   })
 
   // 🔥 Fire Meta Conversions API Purchase event (SERVER-SIDE ONLY)
   // This is the reliable way to track - no client pixel needed
+  // Use Stripe's event.id for deduplication - it's the same across webhook retries
   if (customerEmail) {
-    const capiEventId = generateEventId()
-    
     try {
       await trackPurchaseServer({
         email: customerEmail,
         value: amount,
         currency,
-        eventId: capiEventId,
+        eventId: stripeEventId, // Use Stripe event ID for Meta deduplication (prevents duplicates on webhook retry)
         firstName: customerName?.split(' ')[0],
         sourceUrl: 'https://quizl-memento.com/checkout/success',
       })
-      console.log('✅ Meta CAPI Purchase event sent:', { email: customerEmail, amount, currency, eventId: capiEventId })
+      console.log('✅ Meta CAPI Purchase event sent:', { email: customerEmail, amount, currency, eventId: stripeEventId })
     } catch (error) {
       console.error('❌ Meta CAPI Purchase event failed:', error)
     }
