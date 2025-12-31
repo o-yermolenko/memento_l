@@ -56,9 +56,9 @@ export default function SocialProofScreen() {
   const [isNavigating, setIsNavigating] = useState(false)
   const timeoutRef = useRef<NodeJS.Timeout | null>(null)
   
-  // Prefetch next route
+  // Prefetch next route (index 0 = emotional-intensity, first quiz question)
   useEffect(() => {
-    router.prefetch(ROUTES.quiz(1))
+    router.prefetch(ROUTES.quiz(0))
   }, [router])
   
   // Cleanup timeout on unmount
@@ -77,7 +77,7 @@ export default function SocialProofScreen() {
     
     // Small delay for button feedback
     timeoutRef.current = setTimeout(() => {
-      router.push(ROUTES.quiz(1))
+      router.push(ROUTES.quiz(0))
     }, 150)
   }, [isNavigating, router])
   

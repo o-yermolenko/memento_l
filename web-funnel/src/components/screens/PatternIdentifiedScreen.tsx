@@ -44,7 +44,8 @@ export default function PatternIdentifiedScreen() {
   }
   
   const pattern = getDetectedPattern()
-  const nextRoute = ROUTES.quiz(9)
+  // After pattern identified, go to self-criticism (index 8)
+  const nextRoute = ROUTES.quiz(8)
   
   // Prefetch next route
   useEffect(() => {

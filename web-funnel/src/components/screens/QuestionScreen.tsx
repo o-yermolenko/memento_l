@@ -34,8 +34,8 @@ const getNextRouteForQuestion = (questionIndex: number): string => {
   if (questionIndex === 21) {
     return ROUTES.interstitial('social_proof_2')
   }
-  // Otherwise, next question
-  return ROUTES.quiz(questionIndex + 2)
+  // Otherwise, next question (0-based index, so +1 for next)
+  return ROUTES.quiz(questionIndex + 1)
 }
 
 

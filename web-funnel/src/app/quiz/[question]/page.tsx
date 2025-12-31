@@ -5,17 +5,19 @@ import { useParams, notFound } from 'next/navigation'
 import Header from '@/components/Header'
 import { QuestionScreen } from '@/components/screens'
 import { quizQuestions } from '@/data/questions'
+import { getQuestionIndexFromSlug } from '@/lib/routes'
 
 export default function QuizPage() {
   const params = useParams()
-  const questionNumber = parseInt(params.question as string, 10)
+  const slug = params.question as string
   
-  // Validate question number
-  if (isNaN(questionNumber) || questionNumber < 1 || questionNumber > quizQuestions.length) {
+  // Get question index from semantic slug
+  const questionIndex = getQuestionIndexFromSlug(slug)
+  
+  // Validate: must be a valid slug mapping to a question
+  if (questionIndex === -1 || questionIndex >= quizQuestions.length) {
     notFound()
   }
-  
-  const questionIndex = questionNumber - 1
   
   return (
     <main className="min-h-screen bg-background-primary">

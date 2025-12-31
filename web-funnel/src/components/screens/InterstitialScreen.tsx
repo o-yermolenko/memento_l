@@ -13,17 +13,17 @@ interface InterstitialScreenProps {
   interstitialId: string
 }
 
-// Map interstitial to next route
+// Map interstitial to next route (using 0-based question indices)
 const getNextRouteForInterstitial = (interstitialId: string): string => {
   switch (interstitialId) {
     case 'science':
-      return ROUTES.quiz(15)
+      return ROUTES.quiz(14)  // last-calm (index 14)
     case 'expert_review':
-      return ROUTES.quiz(22)
+      return ROUTES.quiz(21)  // daily-time (index 21)
     case 'social_proof_2':
       return ROUTES.email
     default:
-      return ROUTES.quiz(1)
+      return ROUTES.quiz(0)   // emotional-intensity (index 0)
   }
 }
 
