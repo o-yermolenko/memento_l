@@ -5,7 +5,6 @@ import { useSearchParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { Check, PartyPopper, Heart, Star, Sparkles, ArrowRight } from 'lucide-react'
 import { useFunnelStore } from '@/store/funnelStore'
-import { trackPurchase, generateEventId } from '@/lib/meta-pixel'
 
 // Confetti particle component
 function ConfettiParticle({ delay, x }: { delay: number; x: number }) {
@@ -36,47 +35,25 @@ function SuccessContent() {
   const searchParams = useSearchParams()
   const { profile, primaryPattern } = useFunnelStore()
   const [isLoading, setIsLoading] = useState(true)
-  const [hasFiredPixel, setHasFiredPixel] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false)
   
   const sessionId = searchParams.get('session_id')
-  const urlEventId = searchParams.get('event_id')
 
   useEffect(() => {
-    // Fire Meta Pixel Purchase event once (client-side)
-    // The server-side CAPI event is fired by the Stripe webhook
-    // Using the same eventId ensures Meta deduplicates them
-    if (!hasFiredPixel && sessionId) {
-      // Get the plan price from localStorage or default
-      const selectedPlan = localStorage.getItem('selectedPlan') || '4-week'
-      const prices: Record<string, number> = {
-        '1-week': 6.99,
-        '4-week': 19.99,
-        '12-week': 39.99,
-      }
-      const value = prices[selectedPlan] || 19.99
-      
-      // Get event ID from URL (passed via Stripe success_url) for reliable deduplication
-      // This ensures client-side and server-side events use the SAME eventId
-      // Fallback to localStorage then generate new (but URL is most reliable)
-      const storedEventId = localStorage.getItem('purchaseEventId')
-      const eventId = urlEventId || storedEventId || generateEventId()
-      
-      trackPurchase(value, 'USD', eventId)
-      setHasFiredPixel(true)
-      
-      // Clean up stored event ID
-      localStorage.removeItem('purchaseEventId')
-      console.log('Meta Pixel: Purchase event fired (client-side)', { value, currency: 'USD', eventId, source: urlEventId ? 'url' : storedEventId ? 'localStorage' : 'generated' })
-    }
+    // Purchase tracking is handled server-side via Stripe webhook → Meta CAPI
+    // No client-side tracking needed here (more reliable, no ad blocker issues)
+    
+    // Clean up any stored event IDs from previous implementation
+    localStorage.removeItem('purchaseEventId')
+    localStorage.removeItem('selectedPlan')
 
-    // Simulate brief loading
+    // Simulate brief loading then show confetti
     const timer = setTimeout(() => {
       setIsLoading(false)
       setShowConfetti(true)
     }, 1500)
     return () => clearTimeout(timer)
-  }, [sessionId, hasFiredPixel, urlEventId])
+  }, [sessionId])
 
   if (isLoading) {
     return (

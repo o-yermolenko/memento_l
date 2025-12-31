@@ -7,7 +7,7 @@ import { motion } from 'framer-motion'
 import { useFunnelStore } from '@/store/funnelStore'
 import { useSupabase } from '@/components/SupabaseProvider'
 import { createPurchase } from '@/lib/supabase'
-import { trackInitiateCheckout, generateEventId } from '@/lib/meta-pixel'
+import { trackInitiateCheckout } from '@/lib/meta-pixel'
 import { Check, X, Star, Shield, HelpCircle, ChevronDown, ChevronUp, Award, AlertCircle } from 'lucide-react'
 
 // Pricing plans - Updated Dec 2024
@@ -150,15 +150,8 @@ function PaywallContent() {
       const plan = plans.find(p => p.id === selectedPlan)
       if (!plan) return
       
-      // Generate event ID for Meta Pixel deduplication between client & server
-      const eventId = generateEventId()
-      
       // Track InitiateCheckout event for Meta Pixel (client-side)
-      trackInitiateCheckout(plan.price, 'USD', eventId)
-      
-      // Save selected plan and eventId for success page (for Purchase event deduplication)
-      localStorage.setItem('selectedPlan', selectedPlan)
-      localStorage.setItem('purchaseEventId', eventId)
+      trackInitiateCheckout(plan.price, 'USD')
       
       // Try to create pending purchase record in Supabase (non-blocking)
       try {
@@ -176,7 +169,8 @@ function PaywallContent() {
         console.error('Error creating purchase:', purchaseError)
       }
       
-      // Create Stripe Checkout session with eventId for CAPI deduplication
+      // Create Stripe Checkout session
+      // Purchase tracking handled server-side via webhook → Meta CAPI
       const response = await fetch('/api/stripe/checkout', {
         method: 'POST',
         headers: {
@@ -187,7 +181,6 @@ function PaywallContent() {
           email: profile.email,
           sessionId: sessionId,
           name: profile.name,
-          eventId: eventId, // For Meta CAPI deduplication
         }),
       })
 

@@ -99,7 +99,7 @@ async function handleCheckoutComplete(
   session: Stripe.Checkout.Session,
   supabase: SupabaseClient | null
 ) {
-  const { planId, funnel_session_id, email, event_id } = session.metadata || {}
+  const { planId, funnel_session_id, email } = session.metadata || {}
   const customerEmail = session.customer_details?.email || email
   const customerName = session.customer_details?.name
   const amount = (session.amount_total || 0) / 100
@@ -114,10 +114,10 @@ async function handleCheckoutComplete(
     currency,
   })
 
-  // 🔥 Fire Meta Conversions API Purchase event (SERVER-SIDE)
-  // This is the reliable way to track - even if client pixel is blocked
+  // 🔥 Fire Meta Conversions API Purchase event (SERVER-SIDE ONLY)
+  // This is the reliable way to track - no client pixel needed
   if (customerEmail) {
-    const capiEventId = event_id || generateEventId()
+    const capiEventId = generateEventId()
     
     try {
       await trackPurchaseServer({

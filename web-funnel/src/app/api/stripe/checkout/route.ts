@@ -4,12 +4,11 @@ import { stripe, STRIPE_PLANS, PlanId } from '@/lib/stripe'
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
-    const { planId, email, sessionId, name, eventId } = body as {
+    const { planId, email, sessionId, name } = body as {
       planId: PlanId
       email: string
       sessionId?: string
       name?: string
-      eventId?: string // For Meta Pixel deduplication
     }
 
     // Validate plan
@@ -63,13 +62,12 @@ export async function POST(request: NextRequest) {
           quantity: 1,
         },
       ],
-      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&event_id=${eventId || ''}`,
+      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`,
       cancel_url: `${origin}/checkout/paywall?canceled=true`,
       metadata: {
         planId,
         funnel_session_id: sessionId || '',
         email,
-        event_id: eventId || '', // For Meta CAPI deduplication
       },
       subscription_data: {
         metadata: {
