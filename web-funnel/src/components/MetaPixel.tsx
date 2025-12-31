@@ -6,11 +6,12 @@ import { useEffect } from 'react'
 import { META_PIXEL_ID, trackPageView, trackEvent } from '@/lib/meta-pixel'
 
 // Map routes to funnel stages for Meta tracking
+// URL Standard: /onboarding/*, /quiz/*, /insight/*, /capture/*, /results/*, /checkout/*
 const FUNNEL_STAGES: Record<string, { step: number; stage: string; name: string }> = {
   '/': { step: 1, stage: 'entry', name: 'Gender Selection' },
-  '/age': { step: 2, stage: 'entry', name: 'Age Selection' },
-  '/consent': { step: 3, stage: 'entry', name: 'Consent' },
-  '/social-proof': { step: 4, stage: 'entry', name: 'Social Proof' },
+  '/onboarding/age': { step: 2, stage: 'entry', name: 'Age Selection' },
+  '/onboarding/consent': { step: 3, stage: 'entry', name: 'Consent' },
+  '/onboarding/welcome': { step: 4, stage: 'entry', name: 'Social Proof' },
   
   // Quiz questions
   '/quiz/1': { step: 5, stage: 'quiz', name: 'Quiz Q1' },
@@ -22,7 +23,7 @@ const FUNNEL_STAGES: Record<string, { step: number; stage: string; name: string 
   '/quiz/7': { step: 11, stage: 'quiz', name: 'Quiz Q7' },
   '/quiz/8': { step: 12, stage: 'quiz', name: 'Quiz Q8' },
   
-  '/pattern-identified': { step: 13, stage: 'interstitial', name: 'Pattern Identified' },
+  '/insight/pattern': { step: 13, stage: 'interstitial', name: 'Pattern Identified' },
   
   '/quiz/9': { step: 14, stage: 'quiz', name: 'Quiz Q9' },
   '/quiz/10': { step: 15, stage: 'quiz', name: 'Quiz Q10' },
@@ -31,7 +32,7 @@ const FUNNEL_STAGES: Record<string, { step: number; stage: string; name: string 
   '/quiz/13': { step: 18, stage: 'quiz', name: 'Quiz Q13' },
   '/quiz/14': { step: 19, stage: 'quiz', name: 'Quiz Q14' },
   
-  '/interstitial/science': { step: 20, stage: 'interstitial', name: 'Science Backing' },
+  '/insight/science': { step: 20, stage: 'interstitial', name: 'Science Backing' },
   
   '/quiz/15': { step: 21, stage: 'quiz', name: 'Quiz Q15' },
   '/quiz/16': { step: 22, stage: 'quiz', name: 'Quiz Q16' },
@@ -41,24 +42,24 @@ const FUNNEL_STAGES: Record<string, { step: number; stage: string; name: string 
   '/quiz/20': { step: 26, stage: 'quiz', name: 'Quiz Q20' },
   '/quiz/21': { step: 27, stage: 'quiz', name: 'Quiz Q21' },
   
-  '/interstitial/expert_review': { step: 28, stage: 'interstitial', name: 'Expert Review' },
+  '/insight/expert_review': { step: 28, stage: 'interstitial', name: 'Expert Review' },
   
   '/quiz/22': { step: 29, stage: 'quiz', name: 'Quiz Q22' },
   
-  '/interstitial/social_proof_2': { step: 30, stage: 'interstitial', name: 'Social Proof 2' },
+  '/insight/social_proof_2': { step: 30, stage: 'interstitial', name: 'Social Proof 2' },
   
   // Lead capture
-  '/email': { step: 31, stage: 'lead_capture', name: 'Email Capture' },
-  '/email-optin': { step: 32, stage: 'lead_capture', name: 'Email Opt-in' },
-  '/name': { step: 33, stage: 'lead_capture', name: 'Name Capture' },
+  '/capture/email': { step: 31, stage: 'lead_capture', name: 'Email Capture' },
+  '/capture/email-optin': { step: 32, stage: 'lead_capture', name: 'Email Opt-in' },
+  '/capture/name': { step: 33, stage: 'lead_capture', name: 'Name Capture' },
   
   // Results
-  '/loading': { step: 34, stage: 'results', name: 'Loading Analysis' },
-  '/results': { step: 35, stage: 'results', name: 'Results Summary' },
+  '/results/loading': { step: 34, stage: 'results', name: 'Loading Analysis' },
+  '/results/summary': { step: 35, stage: 'results', name: 'Results Summary' },
   
-  // Conversion
-  '/paywall': { step: 36, stage: 'conversion', name: 'Paywall' },
-  '/success': { step: 37, stage: 'conversion', name: 'Purchase Success' },
+  // Checkout/Conversion
+  '/checkout/paywall': { step: 36, stage: 'conversion', name: 'Paywall' },
+  '/checkout/success': { step: 37, stage: 'conversion', name: 'Purchase Success' },
 }
 
 const TOTAL_FUNNEL_STEPS = 37

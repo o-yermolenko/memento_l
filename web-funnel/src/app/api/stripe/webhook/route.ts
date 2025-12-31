@@ -126,7 +126,7 @@ async function handleCheckoutComplete(
         currency,
         eventId: capiEventId,
         firstName: customerName?.split(' ')[0],
-        sourceUrl: 'https://memento.app/success',
+        sourceUrl: 'https://quizl-memento.com/checkout/success',
       })
       console.log('✅ Meta CAPI Purchase event sent:', { email: customerEmail, amount, currency, eventId: capiEventId })
     } catch (error) {

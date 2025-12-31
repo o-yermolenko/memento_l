@@ -124,7 +124,7 @@ function PaywallContent() {
     if (searchParams.get('canceled') === 'true') {
       setError('Payment was canceled. Please try again when you\'re ready.')
       // Clear the URL parameter
-      window.history.replaceState({}, '', '/paywall')
+      window.history.replaceState({}, '', '/checkout/paywall')
     }
   }, [searchParams])
 

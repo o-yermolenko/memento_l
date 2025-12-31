@@ -113,7 +113,7 @@ export async function trackPurchaseServer({
     event_name: 'Purchase',
     event_time: Math.floor(Date.now() / 1000),
     event_id: eventId,
-    event_source_url: sourceUrl || 'https://memento.app/success',
+    event_source_url: sourceUrl || 'https://quizl-memento.com/checkout/success',
     action_source: 'website',
     user_data: {
       em: [hashedEmail],
