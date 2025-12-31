@@ -63,8 +63,8 @@ export async function POST(request: NextRequest) {
           quantity: 1,
         },
       ],
-      success_url: `${origin}/success?session_id={CHECKOUT_SESSION_ID}&event_id=${eventId || ''}`,
-      cancel_url: `${origin}/paywall?canceled=true`,
+      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}&event_id=${eventId || ''}`,
+      cancel_url: `${origin}/checkout/paywall?canceled=true`,
       metadata: {
         planId,
         funnel_session_id: sessionId || '',

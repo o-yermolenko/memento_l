@@ -1,32 +1,40 @@
 // Route configuration for the funnel
 // Maps funnel flow to URL paths
+// 
+// URL STANDARD (see 02_Funnels/README.md):
+// - /onboarding/* - Demographics, social proof
+// - /quiz/*       - Core quiz questions
+// - /insight/*    - Research stats, transformations
+// - /results/*    - Analysis, loading screens
+// - /capture/*    - Lead capture
+// - /checkout/*   - Payment flow
 
 export const ROUTES = {
-  // Entry
+  // Entry / Onboarding
   gender: '/',
-  age: '/age',
-  consent: '/consent',
-  socialProof: '/social-proof',
+  age: '/onboarding/age',
+  consent: '/onboarding/consent',
+  socialProof: '/onboarding/welcome',
   
-  // Quiz
+  // Quiz questions
   quiz: (questionNumber: number) => `/quiz/${questionNumber}`,
   
-  // Interstitials
-  patternIdentified: '/pattern-identified',
-  interstitial: (id: string) => `/interstitial/${id}`,
+  // Insights / Interstitials
+  patternIdentified: '/insight/pattern',
+  interstitial: (id: string) => `/insight/${id}`,
   
   // Lead capture
-  email: '/email',
-  emailOptin: '/email-optin',
-  name: '/name',
+  email: '/capture/email',
+  emailOptin: '/capture/email-optin',
+  name: '/capture/name',
   
   // Results
-  loading: '/loading',
-  results: '/results',
+  loading: '/results/loading',
+  results: '/results/summary',
   
-  // Conversion
-  paywall: '/paywall',
-  success: '/success',
+  // Checkout / Conversion
+  paywall: '/checkout/paywall',
+  success: '/checkout/success',
 } as const
 
 // Funnel flow with routes
