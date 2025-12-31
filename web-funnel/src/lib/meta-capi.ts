@@ -1,10 +1,11 @@
 // Meta Conversions API (CAPI) - Server-side event tracking
 // This ensures reliable tracking even when client-side pixel is blocked
 
-const PIXEL_ID = process.env.META_PIXEL_ID || '2399093320506915'
-const ACCESS_TOKEN = process.env.META_CAPI_ACCESS_TOKEN
+// Environment variables (standardized naming)
+const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || process.env.META_PIXEL_ID || '2399093320506915'
+const META_CAPI_ACCESS_TOKEN = process.env.META_CAPI_ACCESS_TOKEN
 
-const CAPI_URL = `https://graph.facebook.com/v18.0/${PIXEL_ID}/events`
+const CAPI_URL = `https://graph.facebook.com/v18.0/${META_PIXEL_ID}/events`
 
 export interface CAPIEventData {
   event_name: 'Purchase' | 'Lead' | 'InitiateCheckout' | 'CompleteRegistration' | 'PageView'
@@ -47,7 +48,7 @@ export function generateEventId(): string {
 
 // Send event to Meta Conversions API
 export async function sendCAPIEvent(eventData: CAPIEventData): Promise<boolean> {
-  if (!ACCESS_TOKEN) {
+  if (!META_CAPI_ACCESS_TOKEN) {
     console.warn('META_CAPI_ACCESS_TOKEN not configured - skipping server-side event')
     return false
   }
@@ -55,7 +56,7 @@ export async function sendCAPIEvent(eventData: CAPIEventData): Promise<boolean> 
   try {
     const payload = {
       data: [eventData],
-      access_token: ACCESS_TOKEN,
+      access_token: META_CAPI_ACCESS_TOKEN,
     }
 
     const response = await fetch(CAPI_URL, {
